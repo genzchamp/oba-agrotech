@@ -37,3 +37,36 @@ img{display:block;width:100%;height:100%;object-fit:cover}
   .section{padding:85px 6vw}.intro-grid,.feature,.framework,.tools-grid{grid-template-columns:1fr;gap:45px}.intro h2,.feature h2,.section-head h2,.framework h2,.tools h2{font-size:clamp(42px,12vw,58px)}.feature{padding-top:25px}.feature-image{height:450px}.solution-grid{grid-template-columns:1fr}.solution-card{min-height:450px}.icon{margin-top:55px;margin-bottom:60px}.framework-visual{height:480px}.framework-badge{right:10px}.stats{grid-template-columns:1fr}.stats>div{padding:45px 6vw;display:flex;align-items:center;gap:25px}.stats p{margin:0}.section-head{display:block}.section-head>p{margin-top:20px}.tool-list article{grid-template-columns:25px 1fr}.tool-list b{display:none}.cta{padding:90px 6vw}.cta-actions{flex-direction:column;align-items:center}.footer-top{display:block}.footer-top p{text-align:left;margin-top:35px}.footer-bottom{display:block;line-height:1.8}.footer-bottom div{margin-top:10px;flex-wrap:wrap}.hero-proof{gap:18px}.hero-proof span{font-size:8px}
 }
 @media(max-width:420px){.hero h1{font-size:51px}.hero-image-wrap{height:440px}.hero-visual{min-height:440px}.hero-proof{justify-content:space-between}.hero-proof div{gap:5px}.floating-card{padding:12px;font-size:9px}.card-bottom b{font-size:10px}}
+
+
+
+
+/* OBA Logo — mobile-first sizing */
+.site-header .brand {
+  display: flex;
+  align-items: center;
+  height: 52px;
+  width: auto;
+}
+
+.site-header .brand img {
+  display: block;
+  width: 145px;
+  height: 52px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.footer-brand img {
+  display: block;
+  width: 160px;
+  height: auto;
+  object-fit: contain;
+}
+
+@media (min-width: 768px) {
+  .site-header .brand img {
+    width: 175px;
+    height: 58px;
+  }
+}
