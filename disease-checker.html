@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#062719">
+  <meta name="description" content="OBA AgroTech Poultry Disease Checker — structured poultry health decision support for farmers.">
+  <title>Poultry Disease Checker | OBA AgroTech</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --green: #062719;
+      --green-2: #0b3b27;
+      --lime: #dfff62;
+      --cream: #f6f5ef;
+      --white: #ffffff;
+      --muted: #6c756f;
+      --line: rgba(6, 39, 25, 0.12);
+      --danger: #a93232;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "DM Sans", sans-serif;
+      background: var(--cream);
+      color: var(--green);
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--green);
+      color: white;
+      padding: 18px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-inner {
+      max-width: 900px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: white;
+    }
+
+    .brand img {
+      width: 145px;
+      height: 52px;
+      object-fit: contain;
+      object-position: left center;
+    }
+
+    .back-link {
+      color: white;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      opacity: .85;
+    }
+
+    main {
+      width: min(100% - 32px, 900px);
+      margin: auto;
+      padding: 45px 0 70px;
+    }
+
+    .hero {
+      margin-bottom: 30px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      margin-bottom: 15px;
+    }
+
+    .eyebrow i {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: "Manrope", sans-serif;
+    }
+
+    h1 {
+      font-size: clamp(34px, 8vw, 64px);
+      line-height: .98;
+      letter-spacing: -.045em;
+      max-width: 700px;
+    }
+
+    h1 em {
+      font-style: normal;
+      opacity: .45;
+    }
+
+    .hero p {
+      margin-top: 18px;
+      max-width: 650px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .checker {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: 0 20px 60px rgba(6,39,25,.07);
+    }
+
+    .progress {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 25px;
+    }
+
+    .progress span {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      color: var(--muted);
+    }
+
+    .progress-line {
+      flex: 1;
+      height: 5px;
+      background: #e9ece7;
+      border-radius: 99px;
+      margin-left: 15px;
+      overflow: hidden;
+    }
+
+    .progress-line div {
+      width: 20%;
+      height: 100%;
+      background: var(--green);
+      border-radius: inherit;
+    }
+
+    .question {
+      margin-bottom: 25px;
+    }
+
+    .question label {
+      display: block;
+      font-family: "Manrope", sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 7px;
+    }
+
+    .question small {
+      display: block;
+      color: var(--muted);
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    select,
+    textarea,
+    input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 15px;
+      font: inherit;
+      color: var(--green);
+      background: #fafbf8;
+      outline: none;
+    }
+
+    select:focus,
+    textarea:focus,
+    input:focus {
+      border-color: var(--green);
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .option {
+      position: relative;
+    }
+
+    .option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .option label {
+      display: block;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      background: #fafbf8;
+      transition: .2s ease;
+    }
+
+    .option input:checked + label {
+      background: var(--green);
+      color: white;
+      border-color: var(--green);
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 15px 22px;
+    }
+
+    .primary {
+      background: var(--green);
+      color: white;
+      flex: 1;
+    }
+
+    .secondary {
+      background: #edf0eb;
+      color: var(--green);
+    }
+
+    .notice {
+      margin-top: 22px;
+      padding: 16px;
+      border-radius: 14px;
+      background: #f0f4ed;
+      color: #566059;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    #results {
+      display: none;
+      margin-top: 25px;
+    }
+
+    .result-card {
+      border-radius: 22px;
+      background: var(--green);
+      color: white;
+      padding: 25px;
+    }
+
+    .result-card .label {
+      color: var(--lime);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .12em;
+    }
+
+    .result-card h2 {
+      margin-top: 8px;
+      font-size: 28px;
+    }
+
+    .result-card p {
+      margin-top: 12px;
+      color: rgba(255,255,255,.72);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .result-box {
+      margin-top: 18px;
+      padding: 16px;
+      background: rgba(255,255,255,.07);
+      border-radius: 14px;
+    }
+
+    .result-box strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .urgent {
+      border-left: 4px solid var(--lime);
+    }
+
+    .footer-note {
+      text-align: center;
+      margin-top: 30px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        width: min(100% - 22px, 900px);
+        padding-top: 30px;
+      }
+
+      .checker {
+        padding: 17px;
+        border-radius: 20px;
+      }
+
+      .option-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .brand img {
+        width: 125px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="brand">
+      <img src="oba-logo-header-transparent.png" alt="OBA AgroTech">
+    </a>
+
+    <a href="index.html" class="back-link">← Back to OBA AgroTech</a>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="eyebrow"><i></i> OBA FARM INTELLIGENCE</div>
+
+    <h1>
+      Poultry Disease<br>
+      <em>Checker.</em>
+    </h1>
+
+    <p>
+      A structured poultry-health decision-support tool designed to help
+      farmers organize symptoms, identify potential areas of concern and
+      decide when closer professional attention may be needed.
+    </p>
+  </section>
+
+  <section class="checker">
+
+    <div class="progress">
+      <span>FLOCK ASSESSMENT · 01</span>
+      <div class="progress-line">
+        <div></div>
+      </div>
+    </div>
+
+    <div class="question">
+      <label for="birdType">What type of birds are you assessing?</label>
+      <small>Select the flock category that best matches the birds.</small>
+
+      <select id="birdType">
+        <option value="">Select bird type</option>
+        <option>Broilers</option>
+        <option>Layers</option>
+        <option>Pullets</option>
+        <option>Breeders</option>
+        <option>Chicks</option>
+        <option>Other poultry</option>
+      </select>
+    </div>
+
+    <div class="question">
+      <label for="age">Approximate bird age</label>
+      <small>Enter the age in weeks where possible.</small>
+
+      <input id="age" type="number" min="0" max="200" placeholder="e.g. 6">
+    </div>
+
+    <div class="question">
+      <label>What symptoms are you observing?</label>
+      <small>Select everything that applies.</small>
+
+      <div class="option-grid">
+
+        <div class="option">
+          <input type="checkbox" id="respiratory" name="symptom" value="respiratory">
+          <label for="respiratory">Respiratory signs</label>
+        </div>
+
+        <div class="option">
+          <input type="checkbox" id="diarrhea" name="symptom" value="diarrhea">
+          <label for="diarrhea">Diarrhea / abnormal droppings</label>
+        </div>
+
+        <div class="option">
+          <input type="checkbox" id="blood" name="symptom" value="blood">
+          <label for="blood">Blood in droppings</label>
+        </div>
+
+        <div class="option">
+          <input type="checkbox" id="weakness" name="symptom" value="weakness">
+          <label for="weakness">Weakness / depression</label>
+        </div>
+
+        <div class="option">
+          <input type="checkbox" id="lameness" name="symptom" value="lameness">
+          <label for="lameness">Lameness / swollen joints</label>
+        </div>
+
+        <div class="option">
+          <input type="checkbox" id="nervous" name="symptom" value="nervous">
+          <label for="nervous">Nervous signs</label>
+        </div>
+
+        <div class="option">
+          <input type="checkbox" id="production" name="symptom" value="production">
+          <label for="production">Drop in production</label>
+        </div>
+
+        <div class="option">
+          <input type="checkbox" id="mortality" name="symptom" value="mortality">
+          <label for="mortality">Increased mortality</label>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="question">
+      <label for="mortalityRate">What is the current mortality situation?</label>
+      <small>If there is no unusual mortality, select "Normal".</small>
+
+      <select id="mortalityRate">
+        <option value="">Select one</option>
+        <option>Normal</option>
+        <option>Slight increase</option>
+        <option>Noticeable increase</option>
+        <option>Rapid / severe increase</option>
+      </select>
+    </div>
+
+    <div class="question">
+      <label for="notes">Other observations</label>
+      <small>
+        Tell us anything else you have noticed — feed intake, water intake,
+        egg quality, behavior, vaccination history, recent treatments, etc.
+      </small>
+
+      <textarea id="notes" placeholder="Describe what you're seeing..."></textarea>
+    </div>
+
+    <div class="actions">
+      <button class="primary" onclick="runAssessment()">
+        Analyze flock ↗
+      </button>
+
+      <button class="secondary" onclick="resetChecker()">
+        Reset
+      </button>
+    </div>
+
+    <div class="notice">
+      <strong>
