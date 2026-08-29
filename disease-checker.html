@@ -505,3 +505,141 @@
 
     <div class="notice">
       <strong>
+
+
+
+<script>
+function runAssessment() {
+  const birdType = document.getElementById("birdType").value;
+  const age = document.getElementById("age").value;
+  const mortality = document.getElementById("mortalityRate").value;
+
+  const symptoms = Array.from(
+    document.querySelectorAll('input[name="symptom"]:checked')
+  ).map(function(input) {
+    return input.value;
+  });
+
+  if (!birdType || !age || symptoms.length === 0) {
+    alert(
+      "Please select the bird type, enter the bird age and select at least one symptom."
+    );
+    return;
+  }
+
+  let concern = "General flock health concern";
+  let explanation =
+    "The information entered suggests that the flock needs closer observation and a more complete assessment.";
+  let urgency = "MONITOR & ASSESS";
+  let nextStep =
+    "Review the flock closely, check environmental conditions, feed and water intake, vaccination history and recent management changes.";
+
+  if (symptoms.includes("blood")) {
+    concern = "Possible intestinal / coccidial concern";
+    explanation =
+      "Blood in droppings can be associated with intestinal disease, including coccidial conditions, but other causes are possible.";
+    urgency = "PROMPT ATTENTION";
+    nextStep =
+      "Inspect affected birds and droppings closely, review litter and management conditions, and seek veterinary assessment promptly.";
+  } else if (
+    symptoms.includes("respiratory") &&
+    symptoms.includes("weakness")
+  ) {
+    concern = "Possible respiratory disease concern";
+    explanation =
+      "Respiratory signs combined with weakness can occur with several infectious and environmental conditions.";
+    urgency = "PROMPT ATTENTION";
+    nextStep =
+      "Review ventilation, dust and ammonia exposure, vaccination history and recent disease events. Professional assessment is recommended.";
+  } else if (symptoms.includes("lameness")) {
+    concern = "Possible locomotor / joint health concern";
+    explanation =
+      "Lameness or swollen joints may be associated with trauma, nutritional issues or infectious joint conditions.";
+    urgency = "PROMPT ATTENTION";
+    nextStep =
+      "Inspect housing, flooring and affected birds. Professional assessment is recommended, particularly when swelling or increasing lameness is present.";
+  } else if (
+    symptoms.includes("production") &&
+    birdType === "Layers"
+  ) {
+    concern = "Possible layer performance concern";
+    explanation =
+      "A production decline can have nutritional, environmental, management, reproductive or disease-related causes.";
+    urgency = "INVESTIGATE";
+    nextStep =
+      "Review feed quality, water intake, lighting, flock age, vaccination history, stressors and recent disease events.";
+  } else if (symptoms.includes("diarrhea")) {
+    concern = "Possible gastrointestinal concern";
+    explanation =
+      "Abnormal droppings can result from infectious disease, feed changes, water quality, parasites or management factors.";
+    urgency = "INVESTIGATE";
+    nextStep =
+      "Assess droppings, feed and water changes, litter condition and recent treatments. Seek professional assessment if the problem persists or worsens.";
+  }
+
+  if (mortality === "Rapid / severe increase") {
+    urgency = "URGENT";
+    nextStep =
+      "Treat the situation as urgent. Strengthen biosecurity and contact a poultry veterinarian for immediate assessment.";
+  }
+
+  const results = document.getElementById("results");
+
+  results.innerHTML = `
+    <div class="result-card ${urgency === "URGENT" ? "urgent" : ""}">
+      <div class="label">OBA FLOCK ASSESSMENT</div>
+
+      <h2>${concern}</h2>
+
+      <p>${explanation}</p>
+
+      <div class="result-box">
+        <strong>Assessment level</strong>
+        ${urgency}
+      </div>
+
+      <div class="result-box">
+        <strong>Recommended next step</strong>
+        ${nextStep}
+      </div>
+
+      <div class="result-box">
+        <strong>Assessment profile</strong>
+        ${birdType} · ${age} weeks · ${symptoms.length} selected symptom(s)
+      </div>
+    </div>
+  `;
+
+  results.style.display = "block";
+
+  setTimeout(function() {
+    results.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }, 50);
+}
+
+function resetChecker() {
+  document
+    .querySelectorAll('input[name="symptom"]')
+    .forEach(function(input) {
+      input.checked = false;
+    });
+
+  document.getElementById("birdType").value = "";
+  document.getElementById("age").value = "";
+  document.getElementById("mortalityRate").value = "";
+  document.getElementById("notes").value = "";
+
+  const results = document.getElementById("results");
+
+  results.style.display = "none";
+  results.innerHTML = "";
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+</script>
