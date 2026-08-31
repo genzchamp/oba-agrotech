@@ -870,103 +870,211 @@ function runAssessment() {
 
   /* BLOOD */
 
-  if (symptoms.includes("blood")) {
+  /* SMART SYMPTOM ASSESSMENT */
 
-    concern =
-      "Possible intestinal / coccidial concern";
+if (
+  symptoms.includes("blood") &&
+  symptoms.includes("diarrhea")
+) {
 
-    explanation =
-      "Blood in droppings can be associated with intestinal disease, including coccidial conditions, but other causes are possible.";
+  concern =
+    "Strong intestinal / coccidial concern";
 
-    urgency =
-      "PROMPT ATTENTION";
+  explanation =
+    "Blood together with abnormal droppings can be associated with significant intestinal disease, including coccidial conditions. Other causes are also possible.";
 
-    nextStep =
-      "Inspect affected birds and droppings closely, review litter and management conditions, and seek veterinary assessment promptly.";
-  }
+  urgency =
+    "PROMPT ATTENTION";
 
-
-  /* RESPIRATORY */
-
-  else if (
-    symptoms.includes("respiratory") &&
-    symptoms.includes("weakness")
-  ) {
-
-    concern =
-      "Possible respiratory disease concern";
-
-    explanation =
-      "Respiratory signs combined with weakness can occur with several infectious and environmental conditions.";
-
-    urgency =
-      "PROMPT ATTENTION";
-
-    nextStep =
-      "Review ventilation, dust and ammonia exposure, vaccination history and recent disease events. Professional assessment is recommended.";
-  }
+  nextStep =
+    "Inspect droppings and affected birds closely, assess litter condition and recent management changes, and arrange professional assessment promptly.";
+}
 
 
-  /* JOINT / LAMENESS */
+else if (
+  symptoms.includes("respiratory") &&
+  symptoms.includes("mortality")
+) {
 
-  else if (
-    symptoms.includes("lameness")
-  ) {
+  concern =
+    "Respiratory disease concern with mortality";
 
-    concern =
-      "Possible locomotor / joint health concern";
+  explanation =
+    "Respiratory signs occurring alongside increased mortality deserve closer investigation because infectious and environmental causes may both be involved.";
 
-    explanation =
-      "Lameness or swollen joints may be associated with trauma, nutritional issues or infectious joint conditions.";
+  urgency =
+    "URGENT";
 
-    urgency =
-      "PROMPT ATTENTION";
-
-    nextStep =
-      "Inspect housing, flooring and affected birds. Professional assessment is recommended, particularly when swelling or increasing lameness is present.";
-  }
-
-
-  /* LAYER PRODUCTION */
-
-  else if (
-    symptoms.includes("production") &&
-    birdType === "Layers"
-  ) {
-
-    concern =
-      "Possible layer performance concern";
-
-    explanation =
-      "A production decline can have nutritional, environmental, management, reproductive or disease-related causes.";
-
-    urgency =
-      "INVESTIGATE";
-
-    nextStep =
-      "Review feed quality, water intake, lighting, flock age, vaccination history, stressors and recent disease events.";
-  }
+  nextStep =
+    "Strengthen biosecurity, review ventilation and air quality, separate obviously affected birds where appropriate, and contact a poultry veterinarian promptly.";
+}
 
 
-  /* GASTROINTESTINAL */
+else if (
+  symptoms.includes("respiratory") &&
+  symptoms.includes("weakness")
+) {
 
-  else if (
-    symptoms.includes("diarrhea")
-  ) {
+  concern =
+    "Possible respiratory health concern";
 
-    concern =
-      "Possible gastrointestinal concern";
+  explanation =
+    "Respiratory signs combined with weakness can occur with several infectious, environmental or management-related conditions.";
 
-    explanation =
-      "Abnormal droppings can result from infectious disease, feed changes, water quality, parasites or management factors.";
+  urgency =
+    "PROMPT ATTENTION";
 
-    urgency =
-      "INVESTIGATE";
+  nextStep =
+    "Review ventilation, dust and ammonia exposure, vaccination history and recent disease events. Professional assessment is recommended.";
+}
 
-    nextStep =
-      "Assess droppings, feed and water changes, litter condition and recent treatments. Seek professional assessment if the problem persists or worsens.";
-  }
 
+else if (
+  symptoms.includes("nervous") &&
+  symptoms.includes("weakness")
+) {
+
+  concern =
+    "Possible neurological health concern";
+
+  explanation =
+    "Nervous signs combined with weakness can have several possible causes, including infectious, nutritional, toxic or management-related factors.";
+
+  urgency =
+    "PROMPT ATTENTION";
+
+  nextStep =
+    "Check affected birds carefully, review recent feed changes, vaccination and treatment history, and seek professional veterinary assessment.";
+}
+
+
+else if (
+  symptoms.includes("lameness") &&
+  symptoms.includes("weakness")
+) {
+
+  concern =
+    "Possible locomotor / joint health concern";
+
+  explanation =
+    "Lameness together with weakness may be associated with joint problems, injury, nutritional issues or infectious conditions.";
+
+  urgency =
+    "PROMPT ATTENTION";
+
+  nextStep =
+    "Inspect housing, flooring, affected joints and bird movement. Review nutrition and recent disease events, and seek professional assessment.";
+}
+
+
+else if (
+  symptoms.includes("production") &&
+  symptoms.includes("diarrhea")
+) {
+
+  concern =
+    "Possible health-related production decline";
+
+  explanation =
+    "A production decline occurring alongside abnormal droppings may indicate that flock health, nutrition, water quality or management needs closer investigation.";
+
+  urgency =
+    "INVESTIGATE";
+
+  nextStep =
+    "Review feed and water intake, droppings, flock condition, lighting where applicable, recent treatments and disease history.";
+}
+
+
+else if (
+  symptoms.includes("production") &&
+  birdType === "Layers"
+) {
+
+  concern =
+    "Possible layer performance concern";
+
+  explanation =
+    "A decline in egg production can have nutritional, environmental, management, reproductive or disease-related causes.";
+
+  urgency =
+    "INVESTIGATE";
+
+  nextStep =
+    "Review feed quality, water intake, lighting, flock age, vaccination history, stressors and recent disease events.";
+}
+
+
+else if (
+  symptoms.includes("lameness")
+) {
+
+  concern =
+    "Possible locomotor / joint health concern";
+
+  explanation =
+    "Lameness or swollen joints may be associated with injury, housing conditions, nutritional issues or infectious joint conditions.";
+
+  urgency =
+    "PROMPT ATTENTION";
+
+  nextStep =
+    "Inspect housing, flooring and affected birds. Look for swelling, injuries and difficulty moving, and seek professional assessment if the problem persists or worsens.";
+}
+
+
+else if (
+  symptoms.includes("diarrhea")
+) {
+
+  concern =
+    "Possible gastrointestinal concern";
+
+  explanation =
+    "Abnormal droppings can result from infectious disease, feed changes, water quality, parasites or management factors.";
+
+  urgency =
+    "INVESTIGATE";
+
+  nextStep =
+    "Assess droppings, feed and water changes, litter condition and recent treatments. Seek professional assessment if the problem persists or worsens.";
+}
+
+
+else if (
+  symptoms.includes("respiratory")
+) {
+
+  concern =
+    "Possible respiratory health concern";
+
+  explanation =
+    "Respiratory signs can have infectious, environmental or management-related causes.";
+
+  urgency =
+    "INVESTIGATE";
+
+  nextStep =
+    "Check ventilation, dust, ammonia, stocking density, vaccination history and recent disease events.";
+}
+
+
+else if (
+  symptoms.includes("weakness")
+) {
+
+  concern =
+    "General flock weakness concern";
+
+  explanation =
+    "Weakness or depression can occur with many different health, nutritional, environmental and management conditions.";
+
+  urgency =
+    "INVESTIGATE";
+
+  nextStep =
+    "Check feed and water intake, temperature, ventilation, litter condition and recent health events.";
+}
 
   /* URGENT MORTALITY OVERRIDE */
 
