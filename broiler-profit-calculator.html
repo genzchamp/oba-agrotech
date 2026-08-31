@@ -327,6 +327,28 @@
       }
     }
 
+.result-stat {
+  padding: 15px;
+  background: rgba(255,255,255,.07);
+  border-radius: 14px;
+}
+
+.result-stat small {
+  color: rgba(255,255,255,.55);
+}
+
+.result-stat strong {
+  display: block;
+  margin-top: 5px;
+  font-size: 17px;
+}
+
+@media (max-width: 600px) {
+  #results .result-stat strong {
+    font-size: 15px;
+  }
+}
+
   </style>
 </head>
 
@@ -701,7 +723,20 @@ function calculateProfit() {
       : 0;
 
 
+  const breakEvenPrice =
+    survivingBirds > 0
+      ? totalCost / survivingBirds
+      : 0;
+
+
+  const roi =
+    totalCost > 0
+      ? (profit / totalCost) * 100
+      : 0;
+
+
   let resultTitle = "Estimated Profit";
+
 
   if (profit < 0) {
     resultTitle = "Estimated Loss";
@@ -709,6 +744,7 @@ function calculateProfit() {
 
 
   let resultMessage = "";
+
 
   if (profit > 0) {
 
@@ -802,140 +838,66 @@ function calculateProfit() {
         "
       >
 
-        <div
-          style="
-            padding:15px;
-            background:rgba(255,255,255,.07);
-            border-radius:14px;
-          "
-        >
-          <small style="color:rgba(255,255,255,.55);">
-            Surviving birds
-          </small>
-
-          <strong
-            style="
-              display:block;
-              margin-top:5px;
-              font-size:20px;
-            "
-          >
+        <div class="result-stat">
+          <small>Surviving birds</small>
+          <strong>
             ${Math.round(survivingBirds).toLocaleString("en-NG")}
           </strong>
         </div>
 
 
-        <div
-          style="
-            padding:15px;
-            background:rgba(255,255,255,.07);
-            border-radius:14px;
-          "
-        >
-          <small style="color:rgba(255,255,255,.55);">
-            Mortality
-          </small>
-
-          <strong
-            style="
-              display:block;
-              margin-top:5px;
-              font-size:20px;
-            "
-          >
-            ${mortalityRate}%
+        <div class="result-stat">
+          <small>Estimated birds lost</small>
+          <strong>
+            ${Math.round(mortalityCount).toLocaleString("en-NG")}
           </strong>
         </div>
 
 
-        <div
-          style="
-            padding:15px;
-            background:rgba(255,255,255,.07);
-            border-radius:14px;
-          "
-        >
-          <small style="color:rgba(255,255,255,.55);">
-            Expected revenue
-          </small>
-
-          <strong
-            style="
-              display:block;
-              margin-top:5px;
-              font-size:17px;
-            "
-          >
+        <div class="result-stat">
+          <small>Expected revenue</small>
+          <strong>
             ${formatNaira(revenue)}
           </strong>
         </div>
 
 
-        <div
-          style="
-            padding:15px;
-            background:rgba(255,255,255,.07);
-            border-radius:14px;
-          "
-        >
-          <small style="color:rgba(255,255,255,.55);">
-            Total cost
-          </small>
-
-          <strong
-            style="
-              display:block;
-              margin-top:5px;
-              font-size:17px;
-            "
-          >
+        <div class="result-stat">
+          <small>Total production cost</small>
+          <strong>
             ${formatNaira(totalCost)}
           </strong>
         </div>
 
 
-        <div
-          style="
-            padding:15px;
-            background:rgba(255,255,255,.07);
-            border-radius:14px;
-          "
-        >
-          <small style="color:rgba(255,255,255,.55);">
-            Cost / surviving bird
-          </small>
-
-          <strong
-            style="
-              display:block;
-              margin-top:5px;
-              font-size:17px;
-            "
-          >
+        <div class="result-stat">
+          <small>Cost / surviving bird</small>
+          <strong>
             ${formatNaira(costPerBird)}
           </strong>
         </div>
 
 
-        <div
-          style="
-            padding:15px;
-            background:rgba(255,255,255,.07);
-            border-radius:14px;
-          "
-        >
-          <small style="color:rgba(255,255,255,.55);">
-            Profit / surviving bird
-          </small>
-
-          <strong
-            style="
-              display:block;
-              margin-top:5px;
-              font-size:17px;
-            "
-          >
+        <div class="result-stat">
+          <small>Profit / surviving bird</small>
+          <strong>
             ${formatNaira(profitPerBird)}
+          </strong>
+        </div>
+
+
+        <div class="result-stat">
+          <small>Break-even price / bird</small>
+          <strong>
+            ${formatNaira(breakEvenPrice)}
+          </strong>
+        </div>
+
+
+        <div class="result-stat">
+          <small>Mortality rate</small>
+          <strong>
+            ${mortalityRate}%
           </strong>
         </div>
 
@@ -964,6 +926,33 @@ function calculateProfit() {
           "
         >
           ${profitMargin.toFixed(1)}%
+        </strong>
+
+      </div>
+
+
+      <div
+        style="
+          margin-top:10px;
+          padding:16px;
+          background:rgba(255,255,255,.07);
+          border-radius:14px;
+        "
+      >
+
+        <small style="color:rgba(255,255,255,.55);">
+          Estimated ROI
+        </small>
+
+        <strong
+          style="
+            display:block;
+            margin-top:5px;
+            font-size:22px;
+            color:var(--lime);
+          "
+        >
+          ${roi.toFixed(1)}%
         </strong>
 
       </div>
@@ -1030,7 +1019,6 @@ function resetCalculator() {
   results.innerHTML = "";
 
 }
-
 
 </script>
 
