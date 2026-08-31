@@ -610,9 +610,396 @@
 
 <script>
 
+function formatNaira(amount) {
+  return "₦" + Math.round(amount).toLocaleString("en-NG");
+}
+
+
 function calculateProfit() {
 
-  alert("Calculator engine coming next.");
+  const birdCount =
+    Number(document.getElementById("birdCount").value);
+
+  const mortalityRate =
+    Number(document.getElementById("mortality").value);
+
+  const sellingPrice =
+    Number(document.getElementById("sellingPrice").value);
+
+  const chickCost =
+    Number(document.getElementById("chickCost").value) || 0;
+
+  const feedCost =
+    Number(document.getElementById("feedCost").value) || 0;
+
+  const healthCost =
+    Number(document.getElementById("healthCost").value) || 0;
+
+  const otherCost =
+    Number(document.getElementById("otherCost").value) || 0;
+
+
+  if (!birdCount || birdCount <= 0) {
+    alert("Please enter the number of chicks stocked.");
+    return;
+  }
+
+
+  if (
+    mortalityRate < 0 ||
+    mortalityRate > 100 ||
+    isNaN(mortalityRate)
+  ) {
+    alert("Please enter a mortality rate between 0% and 100%.");
+    return;
+  }
+
+
+  if (!sellingPrice || sellingPrice <= 0) {
+    alert("Please enter the expected selling price per bird.");
+    return;
+  }
+
+
+  const mortalityCount =
+    birdCount * (mortalityRate / 100);
+
+  const survivingBirds =
+    birdCount - mortalityCount;
+
+
+  const totalCost =
+    chickCost +
+    feedCost +
+    healthCost +
+    otherCost;
+
+
+  const revenue =
+    survivingBirds * sellingPrice;
+
+
+  const profit =
+    revenue - totalCost;
+
+
+  const costPerBird =
+    survivingBirds > 0
+      ? totalCost / survivingBirds
+      : 0;
+
+
+  const profitPerBird =
+    survivingBirds > 0
+      ? profit / survivingBirds
+      : 0;
+
+
+  const profitMargin =
+    revenue > 0
+      ? (profit / revenue) * 100
+      : 0;
+
+
+  let resultTitle = "Estimated Profit";
+
+  if (profit < 0) {
+    resultTitle = "Estimated Loss";
+  }
+
+
+  let resultMessage = "";
+
+  if (profit > 0) {
+
+    resultMessage =
+      "Based on the figures entered, this production cycle is projected to generate a positive return.";
+
+  } else if (profit < 0) {
+
+    resultMessage =
+      "Based on the figures entered, projected costs are higher than expected sales revenue.";
+
+  } else {
+
+    resultMessage =
+      "Based on the figures entered, the flock is projected to break even.";
+
+  }
+
+
+  const results =
+    document.getElementById("results");
+
+
+  results.innerHTML = `
+
+    <div
+      style="
+        background:var(--green);
+        color:white;
+        border-radius:24px;
+        padding:24px;
+        box-shadow:0 20px 50px rgba(6,39,25,.15);
+      "
+    >
+
+      <div
+        style="
+          color:var(--lime);
+          font-size:10px;
+          font-weight:800;
+          letter-spacing:.12em;
+        "
+      >
+        OBA FARM PROFIT ASSESSMENT
+      </div>
+
+
+      <h2
+        style="
+          margin-top:8px;
+          font-family:'Manrope',sans-serif;
+          font-size:34px;
+          letter-spacing:-.04em;
+        "
+      >
+        ${resultTitle}
+      </h2>
+
+
+      <div
+        style="
+          margin-top:10px;
+          font-family:'Manrope',sans-serif;
+          font-size:38px;
+          font-weight:800;
+          color:var(--lime);
+        "
+      >
+        ${formatNaira(profit)}
+      </div>
+
+
+      <p
+        style="
+          margin-top:12px;
+          color:rgba(255,255,255,.72);
+          font-size:13px;
+          line-height:1.6;
+        "
+      >
+        ${resultMessage}
+      </p>
+
+
+      <div
+        style="
+          display:grid;
+          grid-template-columns:repeat(2,1fr);
+          gap:10px;
+          margin-top:22px;
+        "
+      >
+
+        <div
+          style="
+            padding:15px;
+            background:rgba(255,255,255,.07);
+            border-radius:14px;
+          "
+        >
+          <small style="color:rgba(255,255,255,.55);">
+            Surviving birds
+          </small>
+
+          <strong
+            style="
+              display:block;
+              margin-top:5px;
+              font-size:20px;
+            "
+          >
+            ${Math.round(survivingBirds).toLocaleString("en-NG")}
+          </strong>
+        </div>
+
+
+        <div
+          style="
+            padding:15px;
+            background:rgba(255,255,255,.07);
+            border-radius:14px;
+          "
+        >
+          <small style="color:rgba(255,255,255,.55);">
+            Mortality
+          </small>
+
+          <strong
+            style="
+              display:block;
+              margin-top:5px;
+              font-size:20px;
+            "
+          >
+            ${mortalityRate}%
+          </strong>
+        </div>
+
+
+        <div
+          style="
+            padding:15px;
+            background:rgba(255,255,255,.07);
+            border-radius:14px;
+          "
+        >
+          <small style="color:rgba(255,255,255,.55);">
+            Expected revenue
+          </small>
+
+          <strong
+            style="
+              display:block;
+              margin-top:5px;
+              font-size:17px;
+            "
+          >
+            ${formatNaira(revenue)}
+          </strong>
+        </div>
+
+
+        <div
+          style="
+            padding:15px;
+            background:rgba(255,255,255,.07);
+            border-radius:14px;
+          "
+        >
+          <small style="color:rgba(255,255,255,.55);">
+            Total cost
+          </small>
+
+          <strong
+            style="
+              display:block;
+              margin-top:5px;
+              font-size:17px;
+            "
+          >
+            ${formatNaira(totalCost)}
+          </strong>
+        </div>
+
+
+        <div
+          style="
+            padding:15px;
+            background:rgba(255,255,255,.07);
+            border-radius:14px;
+          "
+        >
+          <small style="color:rgba(255,255,255,.55);">
+            Cost / surviving bird
+          </small>
+
+          <strong
+            style="
+              display:block;
+              margin-top:5px;
+              font-size:17px;
+            "
+          >
+            ${formatNaira(costPerBird)}
+          </strong>
+        </div>
+
+
+        <div
+          style="
+            padding:15px;
+            background:rgba(255,255,255,.07);
+            border-radius:14px;
+          "
+        >
+          <small style="color:rgba(255,255,255,.55);">
+            Profit / surviving bird
+          </small>
+
+          <strong
+            style="
+              display:block;
+              margin-top:5px;
+              font-size:17px;
+            "
+          >
+            ${formatNaira(profitPerBird)}
+          </strong>
+        </div>
+
+      </div>
+
+
+      <div
+        style="
+          margin-top:10px;
+          padding:16px;
+          background:rgba(255,255,255,.07);
+          border-radius:14px;
+        "
+      >
+
+        <small style="color:rgba(255,255,255,.55);">
+          Estimated profit margin
+        </small>
+
+        <strong
+          style="
+            display:block;
+            margin-top:5px;
+            font-size:22px;
+            color:var(--lime);
+          "
+        >
+          ${profitMargin.toFixed(1)}%
+        </strong>
+
+      </div>
+
+
+      <div
+        style="
+          margin-top:18px;
+          padding-top:17px;
+          border-top:1px solid rgba(255,255,255,.1);
+          color:rgba(255,255,255,.58);
+          font-size:10px;
+          line-height:1.6;
+        "
+      >
+        This is an estimate based on the figures provided.
+        Actual farm performance may differ because of feed
+        consumption, market prices, mortality, growth rate and
+        other production factors.
+      </div>
+
+    </div>
+  `;
+
+
+  results.style.display = "block";
+
+
+  setTimeout(function() {
+
+    results.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+
+  }, 100);
 
 }
 
@@ -633,11 +1020,17 @@ function resetCalculator() {
 
   document.getElementById("otherCost").value = "";
 
-  document.getElementById("results").style.display = "none";
 
-  document.getElementById("results").innerHTML = "";
+  const results =
+    document.getElementById("results");
+
+
+  results.style.display = "none";
+
+  results.innerHTML = "";
 
 }
+
 
 </script>
 
