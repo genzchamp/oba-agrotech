@@ -136,3 +136,41 @@ img{display:block;width:100%;height:100%;object-fit:cover}
     height: 28px;
   }
 }
+
+
+
+.tool-link-card {
+  position: relative;
+  transition: transform .25s ease, background .25s ease;
+}
+
+.tool-link-card:hover {
+  transform: translateY(-3px);
+}
+
+.tool-link-card > a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+  padding: 10px 15px;
+  border-radius: 999px;
+  background: var(--green);
+  color: #fff;
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .02em;
+}
+
+.tool-link-card > a b {
+  font-size: 15px;
+  line-height: 1;
+}
+
+@media (max-width: 600px) {
+  .tool-link-card > a {
+    width: 100%;
+  }
+}
