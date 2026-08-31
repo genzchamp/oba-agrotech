@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#062719">
+
+  <meta
+    name="description"
+    content="OBA AgroTech Broiler Profit Calculator — estimate poultry production costs, revenue and profitability."
+  >
+
+  <title>Broiler Profit Calculator | OBA AgroTech</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+
+    :root {
+      --green: #062719;
+      --green-2: #0b3b27;
+      --lime: #dfff62;
+      --cream: #f6f5ef;
+      --white: #ffffff;
+      --muted: #6c756f;
+      --line: rgba(6, 39, 25, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "DM Sans", sans-serif;
+      background: var(--cream);
+      color: var(--green);
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--cream);
+      padding: 15px 18px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .header-inner {
+      width: min(100%, 900px);
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .brand img {
+      width: 125px;
+      height: 45px;
+      object-fit: contain;
+      object-position: left center;
+    }
+
+    .back-link {
+      color: var(--green);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    main {
+      width: min(calc(100% - 24px), 900px);
+      margin: auto;
+      padding: 38px 0 70px;
+    }
+
+    .hero {
+      margin-bottom: 27px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .13em;
+      margin-bottom: 14px;
+    }
+
+    .eyebrow i {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: "Manrope", sans-serif;
+    }
+
+    h1 {
+      font-size: clamp(36px, 9vw, 66px);
+      line-height: .97;
+      letter-spacing: -.05em;
+      max-width: 700px;
+    }
+
+    h1 em {
+      font-style: normal;
+      opacity: .42;
+    }
+
+    .hero p {
+      max-width: 680px;
+      margin-top: 17px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .calculator {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 20px;
+      box-shadow: 0 20px 60px rgba(6,39,25,.07);
+    }
+
+    .calculator-head {
+      margin-bottom: 25px;
+    }
+
+    .calculator-head span {
+      display: block;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      color: var(--muted);
+      margin-bottom: 7px;
+    }
+
+    .calculator-head h2 {
+      font-size: 25px;
+      letter-spacing: -.035em;
+    }
+
+    .calculator-head p {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .question {
+      margin-bottom: 23px;
+    }
+
+    .question label {
+      display: block;
+      font-family: "Manrope", sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 7px;
+    }
+
+    .question small {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      font: inherit;
+      font-size: 14px;
+      color: var(--green);
+      background: #fafbf8;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(6,39,25,.05);
+    }
+
+    .input-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .section-divider {
+      height: 1px;
+      background: var(--line);
+      margin: 30px 0;
+    }
+
+    .section-title {
+      margin-bottom: 20px;
+    }
+
+    .section-title span {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      color: var(--muted);
+    }
+
+    .section-title h2 {
+      margin-top: 5px;
+      font-size: 22px;
+      letter-spacing: -.03em;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 15px 20px;
+    }
+
+    .primary {
+      flex: 1;
+      background: var(--green);
+      color: white;
+    }
+
+    .secondary {
+      background: #edf0eb;
+      color: var(--green);
+    }
+
+    .notice {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 14px;
+      background: #f0f4ed;
+      color: #566059;
+      font-size: 11px;
+      line-height: 1.65;
+    }
+
+    .notice strong {
+      color: var(--green);
+    }
+
+    #results {
+      display: none;
+      margin-top: 22px;
+    }
+
+    .footer-note {
+      text-align: center;
+      margin-top: 27px;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 600px) {
+
+      header {
+        padding: 13px 14px;
+      }
+
+      .brand img {
+        width: 115px;
+        height: 42px;
+      }
+
+      .back-link {
+        font-size: 11px;
+      }
+
+      main {
+        padding-top: 30px;
+      }
+
+      .calculator {
+        padding: 16px;
+        border-radius: 20px;
+      }
+
+      .input-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .primary,
+      .secondary {
+        width: 100%;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="header-inner">
+
+    <a href="index.html" class="brand">
+      <img
+        src="oba-logo-header-transparent.png"
+        alt="OBA AgroTech"
+      >
+    </a>
+
+    <a href="index.html" class="back-link">
+      ← Back to OBA AgroTech
+    </a>
+
+  </div>
+
+</header>
+
+
+<main>
+
+  <section class="hero">
+
+    <div class="eyebrow">
+      <i></i>
+      OBA FARM INTELLIGENCE
+    </div>
+
+    <h1>
+      Broiler Profit<br>
+      <em>Calculator.</em>
+    </h1>
+
+    <p>
+      Estimate your flock's production costs, expected revenue and
+      potential profit or loss using the numbers that matter most
+      in a broiler production cycle.
+    </p>
+
+  </section>
+
+
+  <section class="calculator">
+
+    <div class="calculator-head">
+
+      <span>FARM PERFORMANCE · 01</span>
+
+      <h2>Production profile</h2>
+
+      <p>
+        Start with the basic information about your flock.
+        You can change the figures at any time.
+      </p>
+
+    </div>
+
+
+    <!-- FLOCK -->
+
+    <div class="question">
+
+      <label for="birdCount">
+        Number of chicks stocked
+      </label>
+
+      <small>
+        Enter the total number of birds placed at the beginning
+        of the production cycle.
+      </small>
+
+      <input
+        id="birdCount"
+        type="number"
+        min="1"
+        placeholder="e.g. 500"
+      >
+
+    </div>
+
+
+    <div class="input-grid">
+
+      <div class="question">
+
+        <label for="mortality">
+          Expected mortality
+        </label>
+
+        <small>
+          Enter as a percentage.
+        </small>
+
+        <input
+          id="mortality"
+          type="number"
+          min="0"
+          max="100"
+          step="0.1"
+          placeholder="e.g. 5"
+        >
+
+      </div>
+
+
+      <div class="question">
+
+        <label for="sellingPrice">
+          Selling price / bird
+        </label>
+
+        <small>
+          Expected price per bird at sale.
+        </small>
+
+        <input
+          id="sellingPrice"
+          type="number"
+          min="0"
+          placeholder="₦ e.g. 8500"
+        >
+
+      </div>
+
+    </div>
+
+
+    <div class="section-divider"></div>
+
+
+    <!-- COSTS -->
+
+    <div class="section-title">
+
+      <span>02 — PRODUCTION COSTS</span>
+
+      <h2>Where is the money going?</h2>
+
+    </div>
+
+
+    <div class="question">
+
+      <label for="chickCost">
+        Cost of day-old chicks
+      </label>
+
+      <small>
+        Total amount spent purchasing the chicks.
+      </small>
+
+      <input
+        id="chickCost"
+        type="number"
+        min="0"
+        placeholder="₦ e.g. 750000"
+      >
+
+    </div>
+
+
+    <div class="question">
+
+      <label for="feedCost">
+        Total feed cost
+      </label>
+
+      <small>
+        Total amount spent on feed for this production cycle.
+      </small>
+
+      <input
+        id="feedCost"
+        type="number"
+        min="0"
+        placeholder="₦ e.g. 1800000"
+      >
+
+    </div>
+
+
+    <div class="input-grid">
+
+      <div class="question">
+
+        <label for="healthCost">
+          Vaccines & medication
+        </label>
+
+        <small>
+          Total health-related expenses.
+        </small>
+
+        <input
+          id="healthCost"
+          type="number"
+          min="0"
+          placeholder="₦ e.g. 150000"
+        >
+
+      </div>
+
+
+      <div class="question">
+
+        <label for="otherCost">
+          Other expenses
+        </label>
+
+        <small>
+          Labour, electricity, transport, litter, etc.
+        </small>
+
+        <input
+          id="otherCost"
+          type="number"
+          min="0"
+          placeholder="₦ e.g. 200000"
+        >
+
+      </div>
+
+    </div>
+
+
+    <div class="actions">
+
+      <button
+        type="button"
+        class="primary"
+        onclick="calculateProfit()"
+      >
+        Calculate profit ↗
+      </button>
+
+      <button
+        type="button"
+        class="secondary"
+        onclick="resetCalculator()"
+      >
+        Reset
+      </button>
+
+    </div>
+
+
+    <div class="notice">
+
+      <strong>How this works:</strong>
+
+      The calculator will estimate surviving birds,
+      projected sales revenue, total production cost,
+      profit or loss and key profitability indicators.
+
+    </div>
+
+  </section>
+
+
+  <!-- RESULTS -->
+
+  <section id="results"></section>
+
+
+  <p class="footer-note">
+
+    OBA AgroTech · Engineering better outcomes for poultry farms.<br>
+
+    Observe → Prevent → Respond → Optimize
+
+  </p>
+
+</main>
+
+
+<script>
+
+function calculateProfit() {
+
+  alert("Calculator engine coming next.");
+
+}
+
+
+function resetCalculator() {
+
+  document.getElementById("birdCount").value = "";
+
+  document.getElementById("mortality").value = "";
+
+  document.getElementById("sellingPrice").value = "";
+
+  document.getElementById("chickCost").value = "";
+
+  document.getElementById("feedCost").value = "";
+
+  document.getElementById("healthCost").value = "";
+
+  document.getElementById("otherCost").value = "";
+
+  document.getElementById("results").style.display = "none";
+
+  document.getElementById("results").innerHTML = "";
+
+}
+
+</script>
+
+</body>
+</html>
