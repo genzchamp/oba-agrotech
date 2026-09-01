@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link
-    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap"
     rel="stylesheet"
   >
 
@@ -30,6 +30,9 @@
       --white: #ffffff;
       --muted: #6c756f;
       --line: rgba(6, 39, 25, 0.12);
+      --soft: #f0f4ed;
+      --danger: #ffb4b4;
+      --warning: #ffe59a;
     }
 
     * {
@@ -65,6 +68,11 @@
       align-items: center;
       justify-content: space-between;
       gap: 15px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
     }
 
     .brand img {
@@ -147,18 +155,19 @@
       margin-bottom: 25px;
     }
 
-    .calculator-head span {
+    .calculator-head span,
+    .section-title span {
       display: block;
       font-size: 10px;
       font-weight: 800;
       letter-spacing: .1em;
       color: var(--muted);
-      margin-bottom: 7px;
     }
 
     .calculator-head h2 {
       font-size: 25px;
       letter-spacing: -.035em;
+      margin-top: 7px;
     }
 
     .calculator-head p {
@@ -223,13 +232,6 @@
       margin-bottom: 20px;
     }
 
-    .section-title span {
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: .12em;
-      color: var(--muted);
-    }
-
     .section-title h2 {
       margin-top: 5px;
       font-size: 22px;
@@ -251,6 +253,10 @@
       padding: 15px 20px;
     }
 
+    button:active {
+      transform: scale(.98);
+    }
+
     .primary {
       flex: 1;
       background: var(--green);
@@ -266,7 +272,7 @@
       margin-top: 20px;
       padding: 15px;
       border-radius: 14px;
-      background: #f0f4ed;
+      background: var(--soft);
       color: #566059;
       font-size: 11px;
       line-height: 1.65;
@@ -279,6 +285,161 @@
     #results {
       display: none;
       margin-top: 22px;
+    }
+
+    .result-card {
+      background: var(--green);
+      color: white;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 20px 50px rgba(6,39,25,.15);
+      overflow: hidden;
+    }
+
+    .result-label {
+      color: var(--lime);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .12em;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 12px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(223,255,98,.12);
+      color: var(--lime);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
+
+    .result-card h2 {
+      margin-top: 12px;
+      font-size: clamp(28px, 7vw, 40px);
+      letter-spacing: -.045em;
+    }
+
+    .profit-number {
+      margin-top: 8px;
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(34px, 9vw, 48px);
+      font-weight: 800;
+      color: var(--lime);
+      letter-spacing: -.04em;
+      overflow-wrap: anywhere;
+    }
+
+    .result-message {
+      margin-top: 12px;
+      color: rgba(255,255,255,.72);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .result-section {
+      margin-top: 24px;
+    }
+
+    .result-section-title {
+      color: rgba(255,255,255,.45);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      margin-bottom: 10px;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .metric {
+      padding: 15px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 14px;
+      min-width: 0;
+    }
+
+    .metric small {
+      display: block;
+      color: rgba(255,255,255,.52);
+      font-size: 10px;
+      line-height: 1.4;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 17px;
+      line-height: 1.25;
+      overflow-wrap: anywhere;
+    }
+
+    .metric.highlight strong {
+      color: var(--lime);
+      font-size: 20px;
+    }
+
+    .insight {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.07);
+    }
+
+    .insight-label {
+      color: var(--lime);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .12em;
+    }
+
+    .insight h3 {
+      margin-top: 7px;
+      font-size: 19px;
+    }
+
+    .insight p {
+      margin-top: 8px;
+      color: rgba(255,255,255,.72);
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    .break-even-box {
+      margin-top: 10px;
+      padding: 16px;
+      border-radius: 14px;
+      background: rgba(223,255,98,.08);
+      border: 1px solid rgba(223,255,98,.14);
+    }
+
+    .break-even-box small {
+      display: block;
+      color: rgba(255,255,255,.55);
+      font-size: 10px;
+    }
+
+    .break-even-box strong {
+      display: block;
+      margin-top: 5px;
+      color: var(--lime);
+      font-size: 21px;
+    }
+
+    .result-disclaimer {
+      margin-top: 20px;
+      padding-top: 17px;
+      border-top: 1px solid rgba(255,255,255,.1);
+      color: rgba(255,255,255,.5);
+      font-size: 10px;
+      line-height: 1.65;
     }
 
     .footer-note {
@@ -325,29 +486,39 @@
       .secondary {
         width: 100%;
       }
+
+      .result-card {
+        padding: 18px;
+        border-radius: 20px;
+      }
+
+      .result-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .metric {
+        padding: 13px;
+      }
+
+      .metric strong {
+        font-size: 15px;
+      }
     }
 
-.result-stat {
-  padding: 15px;
-  background: rgba(255,255,255,.07);
-  border-radius: 14px;
-}
+    @media (max-width: 380px) {
 
-.result-stat small {
-  color: rgba(255,255,255,.55);
-}
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
 
-.result-stat strong {
-  display: block;
-  margin-top: 5px;
-  font-size: 17px;
-}
+      .result-card h2 {
+        font-size: 27px;
+      }
 
-@media (max-width: 600px) {
-  #results .result-stat strong {
-    font-size: 15px;
-  }
-}
+      .profit-number {
+        font-size: 34px;
+      }
+    }
 
   </style>
 </head>
@@ -412,8 +583,6 @@
 
     </div>
 
-
-    <!-- FLOCK -->
 
     <div class="question">
 
@@ -484,8 +653,6 @@
 
     <div class="section-divider"></div>
 
-
-    <!-- COSTS -->
 
     <div class="section-title">
 
@@ -605,16 +772,14 @@
 
       <strong>How this works:</strong>
 
-      The calculator will estimate surviving birds,
-      projected sales revenue, total production cost,
-      profit or loss and key profitability indicators.
+      The calculator estimates surviving birds, projected sales revenue,
+      total production cost, profit or loss, break-even price,
+      estimated profit margin and estimated return on investment.
 
     </div>
 
   </section>
 
-
-  <!-- RESULTS -->
 
   <section id="results"></section>
 
@@ -633,7 +798,9 @@
 <script>
 
 function formatNaira(amount) {
+
   return "₦" + Math.round(amount).toLocaleString("en-NG");
+
 }
 
 
@@ -661,9 +828,16 @@ function calculateProfit() {
     Number(document.getElementById("otherCost").value) || 0;
 
 
+  /*
+    VALIDATION
+  */
+
   if (!birdCount || birdCount <= 0) {
+
     alert("Please enter the number of chicks stocked.");
+
     return;
+
   }
 
 
@@ -672,19 +846,30 @@ function calculateProfit() {
     mortalityRate > 100 ||
     isNaN(mortalityRate)
   ) {
+
     alert("Please enter a mortality rate between 0% and 100%.");
+
     return;
+
   }
 
 
   if (!sellingPrice || sellingPrice <= 0) {
+
     alert("Please enter the expected selling price per bird.");
+
     return;
+
   }
 
 
+  /*
+    CORE CALCULATIONS
+  */
+
   const mortalityCount =
     birdCount * (mortalityRate / 100);
+
 
   const survivingBirds =
     birdCount - mortalityCount;
@@ -717,17 +902,25 @@ function calculateProfit() {
       : 0;
 
 
+  /*
+    PROFIT MARGIN
+
+    Profit Margin =
+    Profit / Revenue × 100
+  */
+
   const profitMargin =
     revenue > 0
       ? (profit / revenue) * 100
       : 0;
 
 
-  const breakEvenPrice =
-    survivingBirds > 0
-      ? totalCost / survivingBirds
-      : 0;
+  /*
+    ROI
 
+    ROI =
+    Profit / Total Cost × 100
+  */
 
   const roi =
     totalCost > 0
@@ -735,13 +928,69 @@ function calculateProfit() {
       : 0;
 
 
-  let resultTitle = "Estimated Profit";
+  /*
+    BREAK-EVEN PRICE
+
+    Minimum selling price per surviving bird
+    needed to recover total production cost.
+  */
+
+  const breakEvenPrice =
+    survivingBirds > 0
+      ? totalCost / survivingBirds
+      : 0;
+
+
+  /*
+    PRICE BUFFER
+
+    Difference between expected selling price
+    and break-even price.
+  */
+
+  const priceBuffer =
+    sellingPrice - breakEvenPrice;
+
+
+  /*
+    PROFITABILITY STATUS
+  */
+
+  let profitabilityStatus =
+    "TIGHT MARGIN";
 
 
   if (profit < 0) {
-    resultTitle = "Estimated Loss";
+
+    profitabilityStatus =
+      "LOSS PROJECTED";
+
+  } else if (profitMargin >= 25) {
+
+    profitabilityStatus =
+      "HEALTHY MARGIN";
+
+  } else if (profitMargin >= 10) {
+
+    profitabilityStatus =
+      "MODERATE MARGIN";
+
   }
 
+
+  /*
+    MAIN RESULT TITLE
+  */
+
+  let resultTitle =
+    profit >= 0
+      ? "Estimated Profit"
+      : "Estimated Loss";
+
+
+  /*
+    MAIN MESSAGE
+  */
 
   let resultMessage = "";
 
@@ -754,7 +1003,7 @@ function calculateProfit() {
   } else if (profit < 0) {
 
     resultMessage =
-      "Based on the figures entered, projected costs are higher than expected sales revenue.";
+      "Based on the figures entered, projected production costs are higher than expected sales revenue.";
 
   } else {
 
@@ -764,222 +1013,404 @@ function calculateProfit() {
   }
 
 
+  /*
+    INTELLIGENCE / INSIGHT
+  */
+
+  let insightTitle =
+    "Positive projected position";
+
+
+  let insightText =
+    "The current assumptions indicate a positive projected return. Keep monitoring mortality, feed expenditure and market price because changes in these areas can materially affect the final result.";
+
+
+  if (profit < 0) {
+
+    insightTitle =
+      "High financial pressure";
+
+
+    insightText =
+      "The current assumptions project a loss. The expected selling price is not high enough to recover the estimated production cost. Review the major cost drivers and expected market price before relying on this projection.";
+
+  } else if (profitMargin < 10) {
+
+    insightTitle =
+      "Limited profitability buffer";
+
+
+    insightText =
+      "The flock is projected to make a profit, but the margin is relatively tight. A rise in feed costs, higher mortality or a lower selling price could significantly reduce the projected return.";
+
+  } else if (mortalityRate >= 8) {
+
+    insightTitle =
+      "Mortality is a pressure point";
+
+
+    insightText =
+      "The projected mortality rate is relatively high and is reducing the number of birds available for sale. Improving flock survival could materially strengthen the financial outcome.";
+
+  } else if (feedCost > totalCost * 0.60) {
+
+    insightTitle =
+      "Feed is the major cost driver";
+
+
+    insightText =
+      "Feed represents a large share of the estimated production cost. Feed efficiency, wastage control and flock performance should be monitored closely because changes in feed expenditure can strongly affect profitability.";
+
+  } else if (priceBuffer > 0) {
+
+    insightTitle =
+      "Selling price is above break-even";
+
+
+    insightText =
+      "The expected selling price is currently above the estimated break-even price. This provides a financial buffer, although actual market prices and production costs may change.";
+
+  }
+
+
+  /*
+    BUILD RESULT
+  */
+
   const results =
     document.getElementById("results");
 
 
   results.innerHTML = `
 
-    <div
-      style="
-        background:var(--green);
-        color:white;
-        border-radius:24px;
-        padding:24px;
-        box-shadow:0 20px 50px rgba(6,39,25,.15);
-      "
-    >
+    <div class="result-card">
 
-      <div
-        style="
-          color:var(--lime);
-          font-size:10px;
-          font-weight:800;
-          letter-spacing:.12em;
-        "
-      >
+      <div class="result-label">
         OBA FARM PROFIT ASSESSMENT
       </div>
 
 
-      <h2
-        style="
-          margin-top:8px;
-          font-family:'Manrope',sans-serif;
-          font-size:34px;
-          letter-spacing:-.04em;
-        "
-      >
+      <div class="status">
+        ${profitabilityStatus}
+      </div>
+
+
+      <h2>
         ${resultTitle}
       </h2>
 
 
-      <div
-        style="
-          margin-top:10px;
-          font-family:'Manrope',sans-serif;
-          font-size:38px;
-          font-weight:800;
-          color:var(--lime);
-        "
-      >
+      <div class="profit-number">
         ${formatNaira(profit)}
       </div>
 
 
-      <p
-        style="
-          margin-top:12px;
-          color:rgba(255,255,255,.72);
-          font-size:13px;
-          line-height:1.6;
-        "
-      >
+      <p class="result-message">
         ${resultMessage}
       </p>
 
 
-      <div
-        style="
-          display:grid;
-          grid-template-columns:repeat(2,1fr);
-          gap:10px;
-          margin-top:22px;
-        "
-      >
+      <!-- FLOCK -->
 
-        <div class="result-stat">
-          <small>Surviving birds</small>
-          <strong>
-            ${Math.round(survivingBirds).toLocaleString("en-NG")}
-          </strong>
+      <div class="result-section">
+
+        <div class="result-section-title">
+          FLOCK POSITION
         </div>
 
 
-        <div class="result-stat">
-          <small>Estimated birds lost</small>
-          <strong>
-            ${Math.round(mortalityCount).toLocaleString("en-NG")}
-          </strong>
-        </div>
+        <div class="result-grid">
+
+          <div class="metric">
+
+            <small>
+              Birds stocked
+            </small>
+
+            <strong>
+              ${Math.round(birdCount).toLocaleString("en-NG")}
+            </strong>
+
+          </div>
 
 
-        <div class="result-stat">
-          <small>Expected revenue</small>
-          <strong>
-            ${formatNaira(revenue)}
-          </strong>
-        </div>
+          <div class="metric">
+
+            <small>
+              Estimated birds lost
+            </small>
+
+            <strong>
+              ${Math.round(mortalityCount).toLocaleString("en-NG")}
+            </strong>
+
+          </div>
 
 
-        <div class="result-stat">
-          <small>Total production cost</small>
-          <strong>
-            ${formatNaira(totalCost)}
-          </strong>
-        </div>
+          <div class="metric highlight">
+
+            <small>
+              Surviving birds
+            </small>
+
+            <strong>
+              ${Math.round(survivingBirds).toLocaleString("en-NG")}
+            </strong>
+
+          </div>
 
 
-        <div class="result-stat">
-          <small>Cost / surviving bird</small>
-          <strong>
-            ${formatNaira(costPerBird)}
-          </strong>
-        </div>
+          <div class="metric">
 
+            <small>
+              Mortality rate
+            </small>
 
-        <div class="result-stat">
-          <small>Profit / surviving bird</small>
-          <strong>
-            ${formatNaira(profitPerBird)}
-          </strong>
-        </div>
+            <strong>
+              ${mortalityRate}%
+            </strong>
 
+          </div>
 
-        <div class="result-stat">
-          <small>Break-even price / bird</small>
-          <strong>
-            ${formatNaira(breakEvenPrice)}
-          </strong>
-        </div>
-
-
-        <div class="result-stat">
-          <small>Mortality rate</small>
-          <strong>
-            ${mortalityRate}%
-          </strong>
         </div>
 
       </div>
 
 
-      <div
-        style="
-          margin-top:10px;
-          padding:16px;
-          background:rgba(255,255,255,.07);
-          border-radius:14px;
-        "
-      >
+      <!-- FINANCIALS -->
 
-        <small style="color:rgba(255,255,255,.55);">
-          Estimated profit margin
-        </small>
+      <div class="result-section">
 
-        <strong
-          style="
-            display:block;
-            margin-top:5px;
-            font-size:22px;
-            color:var(--lime);
-          "
-        >
-          ${profitMargin.toFixed(1)}%
-        </strong>
+        <div class="result-section-title">
+          FINANCIAL POSITION
+        </div>
+
+
+        <div class="result-grid">
+
+          <div class="metric">
+
+            <small>
+              Expected revenue
+            </small>
+
+            <strong>
+              ${formatNaira(revenue)}
+            </strong>
+
+          </div>
+
+
+          <div class="metric">
+
+            <small>
+              Total production cost
+            </small>
+
+            <strong>
+              ${formatNaira(totalCost)}
+            </strong>
+
+          </div>
+
+
+          <div class="metric highlight">
+
+            <small>
+              Estimated profit / loss
+            </small>
+
+            <strong>
+              ${formatNaira(profit)}
+            </strong>
+
+          </div>
+
+
+          <div class="metric">
+
+            <small>
+              Expected selling price
+            </small>
+
+            <strong>
+              ${formatNaira(sellingPrice)}
+            </strong>
+
+          </div>
+
+        </div>
 
       </div>
 
 
-      <div
-        style="
-          margin-top:10px;
-          padding:16px;
-          background:rgba(255,255,255,.07);
-          border-radius:14px;
-        "
-      >
+      <!-- UNIT ECONOMICS -->
 
-        <small style="color:rgba(255,255,255,.55);">
-          Estimated ROI
-        </small>
+      <div class="result-section">
 
-        <strong
-          style="
-            display:block;
-            margin-top:5px;
-            font-size:22px;
-            color:var(--lime);
-          "
-        >
-          ${roi.toFixed(1)}%
-        </strong>
+        <div class="result-section-title">
+          UNIT ECONOMICS
+        </div>
+
+
+        <div class="result-grid">
+
+          <div class="metric">
+
+            <small>
+              Cost / surviving bird
+            </small>
+
+            <strong>
+              ${formatNaira(costPerBird)}
+            </strong>
+
+          </div>
+
+
+          <div class="metric">
+
+            <small>
+              Profit / surviving bird
+            </small>
+
+            <strong>
+              ${formatNaira(profitPerBird)}
+            </strong>
+
+          </div>
+
+
+          <div class="metric highlight">
+
+            <small>
+              Break-even price / bird
+            </small>
+
+            <strong>
+              ${formatNaira(breakEvenPrice)}
+            </strong>
+
+          </div>
+
+
+          <div class="metric">
+
+            <small>
+              Price buffer / bird
+            </small>
+
+            <strong>
+              ${formatNaira(priceBuffer)}
+            </strong>
+
+          </div>
+
+        </div>
 
       </div>
 
 
-      <div
-        style="
-          margin-top:18px;
-          padding-top:17px;
-          border-top:1px solid rgba(255,255,255,.1);
-          color:rgba(255,255,255,.58);
-          font-size:10px;
-          line-height:1.6;
-        "
-      >
-        This is an estimate based on the figures provided.
-        Actual farm performance may differ because of feed
-        consumption, market prices, mortality, growth rate and
-        other production factors.
+      <!-- PROFITABILITY -->
+
+      <div class="result-section">
+
+        <div class="result-section-title">
+          PROFITABILITY INDICATORS
+        </div>
+
+
+        <div class="result-grid">
+
+          <div class="metric highlight">
+
+            <small>
+              Estimated Profit Margin
+            </small>
+
+            <strong>
+              ${profitMargin.toFixed(1)}%
+            </strong>
+
+          </div>
+
+
+          <div class="metric highlight">
+
+            <small>
+              Estimated ROI
+            </small>
+
+            <strong>
+              ${roi.toFixed(1)}%
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <div class="break-even-box">
+
+          <small>
+            Minimum estimated selling price to recover total cost
+          </small>
+
+          <strong>
+            ${formatNaira(breakEvenPrice)} / surviving bird
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <!-- FARM INTELLIGENCE -->
+
+      <div class="insight">
+
+        <div class="insight-label">
+          OBA FARM INTELLIGENCE
+        </div>
+
+
+        <h3>
+          ${insightTitle}
+        </h3>
+
+
+        <p>
+          ${insightText}
+        </p>
+
+      </div>
+
+
+      <div class="result-disclaimer">
+
+        This calculator provides an estimate based on the figures entered.
+        It is not a guarantee of actual farm performance.
+        Actual results may differ because of feed consumption,
+        feed efficiency, mortality, growth rate, market prices,
+        health events, management practices and other farm-specific factors.
+
       </div>
 
     </div>
+
   `;
 
 
+  /*
+    SHOW RESULTS
+  */
+
   results.style.display = "block";
 
+
+  /*
+    SCROLL TO RESULT
+  */
 
   setTimeout(function() {
 
@@ -992,6 +1423,10 @@ function calculateProfit() {
 
 }
 
+
+/*
+  RESET
+*/
 
 function resetCalculator() {
 
@@ -1017,6 +1452,12 @@ function resetCalculator() {
   results.style.display = "none";
 
   results.innerHTML = "";
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 
 }
 
