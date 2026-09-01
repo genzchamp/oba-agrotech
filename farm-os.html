@@ -1,8001 +1,1427 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, viewport-fit=cover"
->
-
-<meta
-  name="theme-color"
-  content="#062719"
->
-
-<meta
-  name="description"
-  content="OBA Farm OS — a mobile-first poultry farm management companion for flock records, health, performance and farm economics."
->
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d2b1e">
+<meta name="description" content="OBA Farm OS — a mobile-first poultry farm management companion for flock records, health, performance and farm economics.">
 <title>OBA Farm OS | OBA AgroTech</title>
-
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link
-  href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
-  rel="stylesheet"
->
-
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400..600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-
 /* =========================================================
    OBA FARM OS — DESIGN SYSTEM
+   Concept: a modern farm ledger — deep forest ink, warm
+   grain-gold accents, parchment surfaces. The app is
+   fundamentally a record book, so the visual language
+   borrows from heritage ledgers while staying fast and
+   thumb-friendly for daily use.
 ========================================================= */
 
 :root{
-
-  --green:#062719;
-  --green-2:#0b3b27;
-
-  --lime:#dfff62;
-
-  --cream:#f6f5ef;
-
-  --white:#ffffff;
-
-  --ink:#10231a;
-
-  --muted:#6c756f;
-
-  --line:rgba(6,39,25,.12);
-
-  --soft:#edf2ec;
-
-  --warning:#f4c84c;
-
-  --danger:#c84b4b;
-
-  --success:#4e9b62;
-
-  --shadow:
-    0 22px 70px rgba(6,39,25,.09);
-
+  --green:#0d2b1e;
+  --green-2:#17513a;
+  --green-3:#0a2116;
+  --lime:#c99a3f;
+  --lime-2:#e6c684;
+  --cream:#f7f1e3;
+  --white:#fffcf5;
+  --ink:#182a1f;
+  --muted:#7a715e;
+  --line:rgba(24,42,31,.13);
+  --soft:#efe6d2;
+  --warning:#dda53c;
+  --danger:#b74d3f;
+  --success:#3e7d51;
+  --shadow:0 26px 64px rgba(13,43,30,.13);
+  --shadow-sm:0 10px 28px rgba(13,43,30,.07);
+  --radius-lg:26px;
+  --radius-md:18px;
+  --radius-sm:12px;
+  --font-display:"Fraunces",Georgia,serif;
+  --font-body:"Inter",-apple-system,sans-serif;
 }
 
-
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-
-html{
-  scroll-behavior:smooth;
-}
-
-
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
 body{
-
-  font-family:"DM Sans",sans-serif;
-
+  font-family:var(--font-body);
   background:var(--cream);
-
   color:var(--ink);
-
   min-height:100vh;
-
-}
-
-
-button,
-input,
-select,
-textarea{
-  font:inherit;
-}
-
-
-button{
-  cursor:pointer;
-}
-
-
-a{
-  color:inherit;
-  text-decoration:none;
-}
-
-
-/* =========================================================
-   TOP BAR
-========================================================= */
-
-.topbar{
-
-  position:sticky;
-
-  top:0;
-
-  z-index:100;
-
-  background:rgba(246,245,239,.94);
-
-  backdrop-filter:blur(18px);
-
-  border-bottom:1px solid var(--line);
-
-}
-
-
-.topbar-inner{
-
-  width:min(100%,1180px);
-
-  margin:auto;
-
-  padding:11px 14px;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:space-between;
-
-  gap:12px;
-
-}
-
-
-.brand img{
-
-  width:118px;
-
-  height:44px;
-
-  object-fit:contain;
-
-  object-position:left center;
-
-}
-
-
-.status{
-
-  display:flex;
-
-  align-items:center;
-
-  gap:7px;
-
-  color:var(--muted);
-
-  font-size:10px;
-
-  font-weight:800;
-
-}
-
-
-.status i{
-
-  width:7px;
-
-  height:7px;
-
-  border-radius:50%;
-
-  background:#55a56c;
-
-  box-shadow:
-    0 0 0 4px rgba(85,165,108,.12);
-
-}
-
-
-/* =========================================================
-   APP
-========================================================= */
-
-.app{
-
-  width:min(100%,1180px);
-
-  margin:auto;
-
-  padding:0 14px 105px;
-
-}
-
-
-/* =========================================================
-   HERO
-========================================================= */
-
-.hero{
-
-  padding:31px 2px 20px;
-
-}
-
-
-.eyebrow{
-
-  display:flex;
-
-  align-items:center;
-
-  gap:8px;
-
-  color:var(--green);
-
-  font-size:10px;
-
-  font-weight:800;
-
-  letter-spacing:.14em;
-
-}
-
-
-.eyebrow i{
-
-  width:7px;
-
-  height:7px;
-
-  border-radius:50%;
-
-  background:var(--green);
-
-}
-
-
-.hero h1{
-
-  margin-top:14px;
-
-  max-width:800px;
-
-  font-family:"Manrope",sans-serif;
-
-  font-size:clamp(40px,8vw,78px);
-
-  line-height:.94;
-
-  letter-spacing:-.06em;
-
-}
-
-
-.hero h1 em{
-
-  font-style:normal;
-
-  color:var(--green);
-
-  opacity:.43;
-
-}
-
-
-.hero p{
-
-  max-width:720px;
-
-  margin-top:18px;
-
-  color:var(--muted);
-
-  font-size:14px;
-
-  line-height:1.75;
-
-}
-
-
-/* =========================================================
-   TOP STAT CARDS
-========================================================= */
-
-.quick{
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(4,1fr);
-
-  gap:10px;
-
-  margin:7px 0 18px;
-
-}
-
-
-.stat{
-
-  background:var(--white);
-
-  border:1px solid var(--line);
-
-  border-radius:20px;
-
-  padding:17px;
-
-  box-shadow:
-    0 12px 35px rgba(6,39,25,.04);
-
-}
-
-
-.stat small{
-
-  display:block;
-
-  color:var(--muted);
-
-  font-size:9px;
-
-  font-weight:800;
-
-  letter-spacing:.08em;
-
-}
-
-
-.stat strong{
-
-  display:block;
-
-  margin-top:8px;
-
-  font-family:"Manrope",sans-serif;
-
-  font-size:25px;
-
-  font-weight:800;
-
-}
-
-
-.stat span{
-
-  display:block;
-
-  margin-top:6px;
-
-  color:var(--muted);
-
-  font-size:10px;
-
-}
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-.nav{
-
-  position:sticky;
-
-  top:67px;
-
-  z-index:90;
-
-  display:flex;
-
-  gap:7px;
-
-  overflow-x:auto;
-
-  padding:8px 0 13px;
-
-  scrollbar-width:none;
-
-  background:
-    linear-gradient(
-      var(--cream) 70%,
-      transparent
-    );
-
-}
-
-
-.nav::-webkit-scrollbar{
-  display:none;
-}
-
-
-.nav button{
-
-  white-space:nowrap;
-
-  border:1px solid var(--line);
-
-  background:rgba(255,255,255,.82);
-
-  color:var(--green);
-
-  padding:10px 14px;
-
-  border-radius:999px;
-
-  font-size:11px;
-
-  font-weight:800;
-
-}
-
-
-.nav button.active{
-
-  background:var(--green);
-
-  color:white;
-
-  border-color:var(--green);
-
-}
-
-
-/* =========================================================
-   SECTIONS
-========================================================= */
-
-.section{
-
-  display:none;
-
-  padding-top:8px;
-
-}
-
-
-.section.active{
-  display:block;
-}
-
-
-.section-head{
-
-  display:flex;
-
-  justify-content:space-between;
-
-  align-items:flex-end;
-
-  gap:15px;
-
-  margin:18px 0;
-
-}
-
-
-.section-head h2{
-
-  margin-top:6px;
-
-  font-family:"Manrope",sans-serif;
-
-  font-size:clamp(26px,5vw,42px);
-
-  line-height:1;
-
-  letter-spacing:-.045em;
-
-}
-
-
-.section-head p{
-
-  max-width:650px;
-
-  margin-top:8px;
-
-  color:var(--muted);
-
-  font-size:12px;
-
-  line-height:1.65;
-
-}
-
-
-/* =========================================================
-   CARDS
-========================================================= */
-
-.grid-2{
-
-  display:grid;
-
-  grid-template-columns:
-    1.05fr .95fr;
-
-  gap:14px;
-
-}
-
-
-.card{
-
-  background:var(--white);
-
-  border:1px solid var(--line);
-
-  border-radius:24px;
-
-  padding:20px;
-
-  box-shadow:var(--shadow);
-
-}
-
-
-.card.dark{
-
-  background:var(--green);
-
-  color:white;
-
-  border-color:transparent;
-
-}
-
-
-.card h3{
-
-  font-family:"Manrope",sans-serif;
-
-  font-size:20px;
-
-  line-height:1.15;
-
-  letter-spacing:-.03em;
-
-}
-
-
-.card .sub{
-
-  margin-top:7px;
-
-  color:var(--muted);
-
-  font-size:11px;
-
-  line-height:1.65;
-
-}
-
-
-.card.dark .sub{
-
-  color:rgba(255,255,255,.62);
-
-}
-
-
-/* =========================================================
-   FORMS
-========================================================= */
-
-.form-grid{
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(2,1fr);
-
-  gap:12px;
-
-}
-
-
-.field{
-
-  margin-top:15px;
-
-}
-
-
-.field:first-child{
-  margin-top:0;
-}
-
-
-.field label{
-
-  display:block;
-
-  margin-bottom:7px;
-
-  font-size:11px;
-
-  font-weight:800;
-
-}
-
-
-.field small{
-
-  display:block;
-
-  margin-bottom:7px;
-
-  color:var(--muted);
-
-  font-size:10px;
-
-  line-height:1.5;
-
-}
-
-
-.dark .field small{
-
-  color:rgba(255,255,255,.55);
-
-}
-
-
-input,
-select,
-textarea{
-
-  width:100%;
-
-  padding:13px;
-
-  border:1px solid var(--line);
-
-  border-radius:13px;
-
-  background:#fafbf8;
-
-  color:var(--green);
-
-  outline:none;
-
-  font-size:13px;
-
-}
-
-
-textarea{
-
-  min-height:100px;
-
-  resize:vertical;
-
-}
-
-
-input:focus,
-select:focus,
-textarea:focus{
-
-  border-color:var(--green);
-
-  box-shadow:
-    0 0 0 3px rgba(6,39,25,.05);
-
-}
-
-
-/* =========================================================
-   BUTTONS
-========================================================= */
-
-.actions{
-
-  display:flex;
-
-  flex-wrap:wrap;
-
-  gap:8px;
-
-  margin-top:18px;
-
-}
-
-
-.btn{
-
-  border:0;
-
-  border-radius:999px;
-
-  padding:12px 16px;
-
-  font-size:12px;
-
-  font-weight:800;
-
-}
-
-
-.btn.primary{
-
-  background:var(--green);
-
-  color:white;
-
-}
-
-
-.btn.lime{
-
-  background:var(--lime);
-
-  color:var(--green);
-
-}
-
-
-.btn.soft{
-
-  background:var(--soft);
-
-  color:var(--green);
-
-}
-
-
-.btn.danger{
-
-  background:#f7e5e5;
-
-  color:#8e3030;
-
-}
-
-
-.btn.full{
-  width:100%;
-}
-
-
-/* =========================================================
-   KPI
-========================================================= */
-
-.kpi-grid{
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(2,1fr);
-
-  gap:10px;
-
-  margin-top:16px;
-
-}
-
-
-.kpi{
-
-  padding:14px;
-
-  border-radius:16px;
-
-  background:#f7f9f5;
-
-  border:1px solid var(--line);
-
-}
-
-
-.kpi small{
-
-  color:var(--muted);
-
-  font-size:9px;
-
-  font-weight:800;
-
-  letter-spacing:.07em;
-
-}
-
-
-.kpi strong{
-
-  display:block;
-
-  margin-top:6px;
-
-  font-family:"Manrope",sans-serif;
-
-  font-size:23px;
-
-}
-
-
-.kpi span{
-
-  display:block;
-
-  margin-top:5px;
-
-  color:var(--muted);
-
-  font-size:10px;
-
-}
-
-
-.dark .kpi{
-
-  background:rgba(255,255,255,.07);
-
-  border-color:
-    rgba(255,255,255,.08);
-
-}
-
-
-.dark .kpi small,
-.dark .kpi span{
-
-  color:rgba(255,255,255,.55);
-
-}
-
-
-/* =========================================================
-   BADGES
-========================================================= */
-
-.badge{
-
-  display:inline-flex;
-
-  align-items:center;
-
-  gap:6px;
-
-  padding:7px 9px;
-
-  border-radius:999px;
-
-  font-size:9px;
-
-  font-weight:800;
-
-  letter-spacing:.05em;
-
-}
-
-
-.badge.good{
-
-  background:#e7f3e8;
-
-  color:#28713d;
-
-}
-
-
-.badge.warn{
-
-  background:#fff4d4;
-
-  color:#8b6a18;
-
-}
-
-
-.badge.danger{
-
-  background:#fae5e5;
-
-  color:#923434;
-
-}
-
-
-.badge.neutral{
-
-  background:#edf0eb;
-
-  color:#566059;
-
-}
-
-
-/* =========================================================
-   NOTICE
-========================================================= */
-
-.notice{
-
-  margin-top:14px;
-
-  padding:14px;
-
-  border-radius:16px;
-
-  background:#f0f4ed;
-
-  color:#566059;
-
-  font-size:10px;
-
-  line-height:1.7;
-
-}
-
-
-.notice strong{
-  color:var(--green);
-}
-
-
-/* =========================================================
-   TIMELINE
-========================================================= */
-
-.timeline{
-
-  margin-top:13px;
-
-}
-
-
-.timeline-item{
-
-  display:grid;
-
-  grid-template-columns:
-    70px 1fr auto;
-
-  gap:10px;
-
-  align-items:start;
-
-  padding:14px 0;
-
-  border-top:1px solid var(--line);
-
-}
-
-
-.timeline-item:first-child{
-  border-top:0;
-}
-
-
-.timeline-date{
-
-  color:var(--muted);
-
-  font-size:9px;
-
-  font-weight:800;
-
-  text-transform:uppercase;
-
-}
-
-
-.timeline-item strong{
-
-  font-size:12px;
-
-}
-
-
-.timeline-item p{
-
-  margin-top:3px;
-
-  color:var(--muted);
-
-  font-size:10px;
-
-  line-height:1.5;
-
-}
-
-
-/* =========================================================
-   TOOLS
-========================================================= */
-
-.tool-grid{
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
-  gap:10px;
-
-}
-
-
-.tool{
-
-  background:var(--white);
-
-  border:1px solid var(--line);
-
-  border-radius:20px;
-
-  padding:17px;
-
-}
-
-
-.tool .number{
-
-  color:var(--muted);
-
-  font-size:9px;
-
-  font-weight:800;
-
-}
-
-
-.tool h3{
-
-  margin-top:7px;
-
-  font-family:"Manrope",sans-serif;
-
-  font-size:16px;
-
-}
-
-
-.tool p{
-
-  margin-top:7px;
-
-  color:var(--muted);
-
-  font-size:10px;
-
-  line-height:1.6;
-
-}
-
-
-.tool button{
-
-  margin-top:13px;
-
-}
-
-
-/* =========================================================
-   TABLE
-========================================================= */
-
-.table-wrap{
-
-  overflow:auto;
-
-  margin-top:14px;
-
-  border:1px solid var(--line);
-
-  border-radius:16px;
-
-}
-
-
-table{
-
-  width:100%;
-
-  min-width:620px;
-
-  border-collapse:collapse;
-
-}
-
-
-th,
-td{
-
-  padding:11px 12px;
-
-  border-bottom:1px solid var(--line);
-
-  text-align:left;
-
-  font-size:10px;
-
-}
-
-
-th{
-
-  color:var(--muted);
-
-  font-size:9px;
-
-  letter-spacing:.06em;
-
-}
-
-
-tr:last-child td{
-  border-bottom:0;
-}
-
-
-/* =========================================================
-   EMPTY
-========================================================= */
-
-.empty{
-
-  margin-top:14px;
-
-  padding:25px 15px;
-
-  text-align:center;
-
-  border:1px dashed var(--line);
-
-  border-radius:16px;
-
-  color:var(--muted);
-
-  font-size:11px;
-
-}
-
-
-.empty strong{
-
-  display:block;
-
-  margin-bottom:4px;
-
-  color:var(--green);
-
-  font-size:14px;
-
-}
-
-
-/* =========================================================
-   MODAL
-========================================================= */
-
-.modal{
-
+  position:relative;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:"";
   position:fixed;
-
   inset:0;
-
-  z-index:500;
-
-  display:none;
-
-  align-items:flex-end;
-
-  justify-content:center;
-
-  padding:12px;
-
+  z-index:-1;
   background:
-    rgba(2,15,9,.58);
-
-  backdrop-filter:blur(8px);
-
-}
-
-
-.modal.open{
-  display:flex;
-}
-
-
-.modal-box{
-
-  width:min(100%,720px);
-
-  max-height:92vh;
-
-  overflow:auto;
-
-  padding:20px;
-
-  border-radius:26px;
-
-  background:var(--cream);
-
-  box-shadow:
-    0 30px 100px rgba(0,0,0,.25);
-
-}
-
-
-.modal-head{
-
-  display:flex;
-
-  justify-content:space-between;
-
-  align-items:center;
-
-  gap:10px;
-
-}
-
-
-.modal-head h2{
-
-  font-family:"Manrope",sans-serif;
-
-  font-size:25px;
-
-  letter-spacing:-.04em;
-
-}
-
-
-.close{
-
-  width:38px;
-
-  height:38px;
-
-  border:0;
-
-  border-radius:50%;
-
-  background:var(--soft);
-
-  color:var(--green);
-
-  font-size:20px;
-
-}
-
-
-.modal-body{
-  margin-top:15px;
-}
-
-
-/* =========================================================
-   RESULTS
-========================================================= */
-
-.result{
-
-  margin-top:16px;
-
-  padding:20px;
-
-  border-radius:22px;
-
-  background:var(--green);
-
-  color:white;
-
-}
-
-
-.result .label{
-
-  color:var(--lime);
-
-  font-size:9px;
-
-  font-weight:800;
-
-  letter-spacing:.12em;
-
-}
-
-
-.result h3{
-
-  margin-top:7px;
-
-  font-family:"Manrope",sans-serif;
-
-  font-size:27px;
-
-}
-
-
-.result p{
-
-  margin-top:8px;
-
-  color:rgba(255,255,255,.68);
-
-  font-size:11px;
-
-  line-height:1.65;
-
-}
-
-
-.result-grid{
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(2,1fr);
-
-  gap:9px;
-
-  margin-top:15px;
-
-}
-
-
-.result-box{
-
-  padding:12px;
-
-  border-radius:13px;
-
-  background:
-    rgba(255,255,255,.07);
-
-}
-
-
-.result-box small{
-
-  color:rgba(255,255,255,.5);
-
-  font-size:9px;
-
-}
-
-
-.result-box strong{
-
-  display:block;
-
-  margin-top:4px;
-
-  font-size:15px;
-
-}
-
-
-.result-highlight{
-
-  margin-top:8px;
-
-  color:var(--lime);
-
-  font-family:"Manrope",sans-serif;
-
-  font-size:32px;
-
-  font-weight:800;
-
-}
-
-
-/* =========================================================
-   BOTTOM MOBILE NAV
-========================================================= */
-
-.bottom-nav{
-
-  position:fixed;
-
-  left:0;
-
-  right:0;
-
-  bottom:0;
-
-  z-index:120;
-
-  border-top:1px solid var(--line);
-
-  background:
-    rgba(255,255,255,.95);
-
-  backdrop-filter:blur(18px);
-
-}
-
-
-.bottom-inner{
-
-  width:min(100%,680px);
-
-  margin:auto;
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(5,1fr);
-
-  padding:
-    7px 8px
-    max(7px,env(safe-area-inset-bottom));
-
-}
-
-
-.bottom-inner button{
-
-  border:0;
-
-  background:transparent;
-
-  color:var(--muted);
-
-  padding:7px 3px;
-
-  font-size:8px;
-
-  font-weight:800;
-
-}
-
-
-.bottom-inner button span{
-
-  display:block;
-
-  margin-bottom:2px;
-
-  font-size:17px;
-
-}
-
-
-.bottom-inner button.active{
-
-  color:var(--green);
-
-}
-
-
-/* =========================================================
-   TOAST
-========================================================= */
-
-.toast{
-
-  position:fixed;
-
-  left:50%;
-
-  bottom:85px;
-
-  z-index:800;
-
-  transform:
-    translate(-50%,20px);
-
-  opacity:0;
-
+    radial-gradient(680px 420px at 88% -8%, rgba(201,154,63,.16), transparent 60%),
+    radial-gradient(600px 500px at -10% 15%, rgba(23,81,58,.10), transparent 55%);
   pointer-events:none;
+}
+button,input,select,textarea{font:inherit;}
+button{cursor:pointer;}
+a{color:inherit;text-decoration:none;}
+::selection{background:var(--lime-2);color:var(--green-3);}
+*:focus-visible{outline:2px solid var(--lime);outline-offset:2px;border-radius:4px;}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important;}}
 
-  padding:12px 15px;
+/* TOP BAR */
+.topbar{position:sticky;top:0;z-index:100;background:rgba(247,241,227,.92);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);}
+.topbar-inner{width:min(100%,1180px);margin:auto;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.brand img{width:118px;height:44px;object-fit:contain;object-position:left center;}
+.status{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:10px;font-weight:700;letter-spacing:.03em;}
+.status i{width:7px;height:7px;border-radius:50%;background:var(--success);box-shadow:0 0 0 4px rgba(62,125,81,.14);flex-shrink:0;}
 
-  border-radius:999px;
+/* APP SHELL */
+.app{width:min(100%,1180px);margin:auto;padding:0 14px 110px;}
 
-  background:var(--green);
+/* HERO */
+.hero{padding:34px 2px 22px;}
+.eyebrow{display:flex;align-items:center;gap:8px;color:var(--green);font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
+.eyebrow i{width:6px;height:6px;border-radius:50%;background:var(--lime);flex-shrink:0;}
+.hero h1{margin-top:16px;max-width:800px;font-family:var(--font-display);font-weight:600;font-size:clamp(40px,8vw,74px);line-height:.98;letter-spacing:-.03em;}
+.hero h1 em{font-style:italic;font-weight:400;color:var(--lime);}
+.hero p{max-width:640px;margin-top:18px;color:var(--muted);font-size:14.5px;line-height:1.75;}
 
-  color:white;
+/* QUICK STATS */
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0 20px;}
+.stat{background:var(--white);border:1px solid var(--line);border-top:2px solid var(--lime);border-radius:var(--radius-md);padding:17px;box-shadow:var(--shadow-sm);}
+.stat small{display:block;color:var(--muted);font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;}
+.stat strong{display:block;margin-top:9px;font-family:var(--font-display);font-size:26px;font-weight:600;letter-spacing:-.01em;}
+.stat span{display:block;margin-top:6px;color:var(--muted);font-size:10.5px;}
 
-  font-size:10px;
+/* NAVIGATION */
+.nav{position:sticky;top:68px;z-index:90;display:flex;gap:7px;overflow-x:auto;padding:9px 0 15px;scrollbar-width:none;background:linear-gradient(var(--cream) 68%,transparent);}
+.nav::-webkit-scrollbar{display:none;}
+.nav button{white-space:nowrap;border:1px solid var(--line);background:var(--white);color:var(--green);padding:10px 15px;border-radius:999px;font-size:11.5px;font-weight:700;transition:background .15s,color .15s,border-color .15s;}
+.nav button.active{background:var(--green);color:var(--cream);border-color:var(--green);}
+.nav button:active{transform:scale(.96);}
 
-  font-weight:700;
+/* SECTIONS */
+.section{display:none;padding-top:8px;}
+.section.active{display:block;animation:sectionIn .38s ease;}
+@keyframes sectionIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:15px;margin:20px 0;}
+.section-head h2{margin-top:7px;font-family:var(--font-display);font-weight:600;font-size:clamp(26px,5vw,40px);line-height:1.02;letter-spacing:-.02em;}
+.section-head p{max-width:620px;margin-top:9px;color:var(--muted);font-size:12.5px;line-height:1.65;}
 
-  white-space:nowrap;
+/* CARDS */
+.grid-2{display:grid;grid-template-columns:1.05fr .95fr;gap:14px;}
+.card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius-lg);padding:21px;box-shadow:var(--shadow);}
+.card.dark{background:linear-gradient(155deg,var(--green-2),var(--green-3));color:var(--cream);border:1px solid rgba(230,198,132,.18);position:relative;overflow:hidden;}
+.card.dark::after{content:"";position:absolute;inset:0;background:radial-gradient(320px 220px at 100% 0%,rgba(230,198,132,.14),transparent 60%);pointer-events:none;}
+.card h3{font-family:var(--font-display);font-weight:600;font-size:20px;line-height:1.18;letter-spacing:-.015em;}
+.card .sub{margin-top:8px;color:var(--muted);font-size:11.5px;line-height:1.65;}
+.card.dark .sub{color:rgba(247,241,227,.66);}
 
-  transition:.25s;
+/* FORMS */
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+.field{margin-top:15px;}
+.field:first-child{margin-top:0;}
+.field label{display:block;margin-bottom:7px;font-size:11.5px;font-weight:700;}
+.field small{display:block;margin-bottom:7px;color:var(--muted);font-size:10.5px;line-height:1.5;}
+.dark .field small{color:rgba(247,241,227,.58);}
+input,select,textarea{width:100%;padding:13px;border:1px solid var(--line);border-radius:var(--radius-sm);background:#fbf9f2;color:var(--ink);outline:none;font-size:13.5px;transition:border-color .15s,box-shadow .15s;}
+textarea{min-height:100px;resize:vertical;}
+input:focus,select:focus,textarea:focus{border-color:var(--lime);box-shadow:0 0 0 3px rgba(201,154,63,.14);}
 
+/* BUTTONS */
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;}
+.btn{border:0;border-radius:999px;padding:12.5px 17px;font-size:12px;font-weight:700;transition:transform .1s,filter .15s;}
+.btn:active{transform:scale(.96);}
+.btn.primary{background:var(--green);color:var(--cream);box-shadow:inset 0 1px 0 rgba(255,255,255,.08);}
+.btn.lime{background:linear-gradient(135deg,var(--lime-2),var(--lime));color:var(--green-3);}
+.btn.soft{background:var(--soft);color:var(--green);}
+.btn.danger{background:#f8e7e3;color:#8f3d31;}
+.btn.full{width:100%;}
+@media(hover:hover){
+  .btn.primary:hover{filter:brightness(1.15);}
+  .btn.lime:hover{filter:brightness(1.06);}
+  .btn.soft:hover{filter:brightness(.97);}
+  .nav button:not(.active):hover{border-color:var(--green);}
 }
 
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:17px;}
+.kpi{padding:14px;border-radius:var(--radius-md);background:var(--soft);border:1px solid var(--line);}
+.kpi small{color:var(--muted);font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
+.kpi strong{display:block;margin-top:7px;font-family:var(--font-display);font-size:23px;font-weight:600;}
+.kpi span{display:block;margin-top:5px;color:var(--muted);font-size:10px;}
+.dark .kpi{background:rgba(247,241,227,.08);border-color:rgba(247,241,227,.1);}
+.dark .kpi small,.dark .kpi span{color:rgba(247,241,227,.58);}
 
-.toast.show{
+/* BADGES */
+.badge{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border-radius:999px;font-size:9.5px;font-weight:700;letter-spacing:.03em;}
+.badge.good{background:#e6f1e6;color:#276b3a;}
+.badge.warn{background:#fbeecb;color:#8a6217;}
+.badge.danger{background:#fae2df;color:#8f3327;}
+.badge.neutral{background:var(--soft);color:#5c5644;}
 
-  opacity:1;
+/* NOTICE */
+.notice{margin-top:15px;padding:15px 16px;border-radius:var(--radius-md);border-left:3px solid var(--lime);background:var(--soft);color:#5c5644;font-size:10.5px;line-height:1.7;}
+.notice strong{color:var(--green);}
 
-  transform:
-    translate(-50%,0);
+/* TIMELINE */
+.timeline{margin-top:13px;}
+.timeline-item{display:grid;grid-template-columns:70px 1fr auto;gap:10px;align-items:start;padding:14px 0;border-top:1px solid var(--line);}
+.timeline-item:first-child{border-top:0;}
+.timeline-date{color:var(--muted);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;}
+.timeline-item strong{font-size:12.5px;}
+.timeline-item p{margin-top:3px;color:var(--muted);font-size:10.5px;line-height:1.5;}
 
-}
+/* TOOLS */
+.tool-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.tool{background:var(--white);border:1px solid var(--line);border-radius:var(--radius-md);padding:18px;}
+.tool .number{color:var(--lime);font-size:9px;font-weight:700;letter-spacing:.06em;}
+.tool h3{margin-top:8px;font-family:var(--font-display);font-size:17px;font-weight:600;}
+.tool p{margin-top:7px;color:var(--muted);font-size:10.5px;line-height:1.6;}
+.tool button{margin-top:14px;}
 
+/* TABLE */
+.table-wrap{overflow:auto;margin-top:15px;border:1px solid var(--line);border-radius:var(--radius-md);}
+table{width:100%;min-width:620px;border-collapse:collapse;}
+th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;font-size:10.5px;}
+th{color:var(--muted);font-size:9px;letter-spacing:.06em;text-transform:uppercase;background:var(--soft);}
+tr:last-child td{border-bottom:0;}
+@media(hover:hover){tbody tr:hover td{background:rgba(201,154,63,.06);}}
 
-/* =========================================================
-   RESPONSIVE
-========================================================= */
+/* EMPTY */
+.empty{margin-top:15px;padding:26px 15px;text-align:center;border:1px dashed var(--line);border-radius:var(--radius-md);color:var(--muted);font-size:11.5px;}
+.empty strong{display:block;margin-bottom:4px;color:var(--green);font-size:14.5px;font-family:var(--font-display);}
 
+/* MODAL */
+.modal{position:fixed;inset:0;z-index:500;display:none;align-items:flex-end;justify-content:center;padding:12px;background:rgba(8,22,15,.62);backdrop-filter:blur(8px);}
+.modal.open{display:flex;}
+.modal-box{width:min(100%,720px);max-height:92vh;overflow:auto;padding:22px;border-radius:30px;background:var(--cream);border-top:3px solid var(--lime);box-shadow:0 34px 100px rgba(0,0,0,.3);}
+.modal-head{display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.modal-head h2{font-family:var(--font-display);font-weight:600;font-size:25px;letter-spacing:-.02em;}
+.close{width:38px;height:38px;border:0;border-radius:50%;background:var(--soft);color:var(--green);font-size:20px;flex-shrink:0;}
+.modal-body{margin-top:16px;}
+
+/* RESULTS */
+.result{margin-top:17px;padding:22px;border-radius:24px;background:linear-gradient(155deg,var(--green-2),var(--green-3));color:var(--cream);}
+.result .label{color:var(--lime-2);font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
+.result h3{margin-top:8px;font-family:var(--font-display);font-weight:600;font-size:26px;}
+.result p{margin-top:9px;color:rgba(247,241,227,.7);font-size:11.5px;line-height:1.65;}
+.result-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:16px;}
+.result-box{padding:13px;border-radius:14px;background:rgba(247,241,227,.08);}
+.result-box small{color:rgba(247,241,227,.52);font-size:9px;letter-spacing:.03em;}
+.result-box strong{display:block;margin-top:5px;font-size:15px;}
+.result-highlight{margin-top:9px;color:var(--lime-2);font-family:var(--font-display);font-size:33px;font-weight:600;}
+
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:120;border-top:1px solid var(--line);background:rgba(255,252,245,.96);backdrop-filter:blur(18px);}
+.bottom-inner{width:min(100%,680px);margin:auto;display:grid;grid-template-columns:repeat(5,1fr);padding:8px 8px max(8px,env(safe-area-inset-bottom));}
+.bottom-inner button{border:0;background:transparent;color:var(--muted);padding:7px 3px;font-size:8.5px;font-weight:700;position:relative;}
+.bottom-inner button span{display:block;margin-bottom:3px;font-size:18px;}
+.bottom-inner button.active{color:var(--green);}
+.bottom-inner button.active::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:16px;height:2px;border-radius:2px;background:var(--lime);}
+
+/* TOAST */
+.toast{position:fixed;left:50%;bottom:86px;z-index:800;transform:translate(-50%,20px);opacity:0;pointer-events:none;padding:12px 16px;border-radius:999px;background:var(--green);color:var(--cream);font-size:10.5px;font-weight:600;white-space:nowrap;transition:.25s;box-shadow:0 14px 40px rgba(13,43,30,.28);}
+.toast.show{opacity:1;transform:translate(-50%,0);}
+
+/* RESPONSIVE */
 @media(max-width:850px){
-
-  .quick{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .grid-2{
-    grid-template-columns:1fr;
-  }
-
-  .tool-grid{
-    grid-template-columns:1fr;
-  }
-
+  .quick{grid-template-columns:repeat(2,1fr);}
+  .grid-2{grid-template-columns:1fr;}
+  .tool-grid{grid-template-columns:1fr;}
 }
-
-
 @media(max-width:560px){
-
-  .app{
-    padding-left:11px;
-    padding-right:11px;
-  }
-
-  .topbar-inner{
-    padding:10px 12px;
-  }
-
-  .brand img{
-    width:110px;
-  }
-
-  .hero{
-    padding-top:25px;
-  }
-
-  .hero h1{
-    font-size:46px;
-  }
-
-  .form-grid{
-    grid-template-columns:1fr;
-  }
-
-  .card{
-    padding:16px;
-    border-radius:20px;
-  }
-
-  .stat{
-    padding:14px;
-  }
-
-  .stat strong{
-    font-size:21px;
-  }
-
-  .section-head{
-    align-items:flex-start;
-    flex-direction:column;
-  }
-
-  .result-grid{
-    grid-template-columns:1fr 1fr;
-  }
-
+  .app{padding-left:12px;padding-right:12px;}
+  .topbar-inner{padding:10px 12px;}
+  .brand img{width:108px;}
+  .hero{padding-top:26px;}
+  .hero h1{font-size:44px;}
+  .form-grid{grid-template-columns:1fr;}
+  .card{padding:17px;border-radius:22px;}
+  .stat{padding:14px;}
+  .stat strong{font-size:21px;}
+  .section-head{align-items:flex-start;flex-direction:column;}
+  .result-grid{grid-template-columns:1fr 1fr;}
 }
-
-
-/* =========================================================
-   DESKTOP BOTTOM NAV HIDE
-========================================================= */
-
-@media(min-width:850px){
-
-  .bottom-nav{
-    display:none;
-  }
-
-}
-
+@media(min-width:850px){.bottom-nav{display:none;}}
 </style>
 </head>
-
-
 <body>
 
-
-<!-- =======================================================
-     TOP BAR
-======================================================== -->
-
 <header class="topbar">
-
   <div class="topbar-inner">
-
-    <a
-      href="index.html"
-      class="brand"
-    >
-
-      <img
-        src="oba-logo-header-transparent.png"
-        alt="OBA AgroTech"
-      >
-
-    </a>
-
-
-    <div class="status">
-
-      <i></i>
-
-      <span id="saveStatus">
-        Saved locally
-      </span>
-
-    </div>
-
+    <a href="index.html" class="brand"><img src="oba-logo-header-transparent.png" alt="OBA AgroTech"></a>
+    <div class="status"><i></i><span id="saveStatus">Saved locally</span></div>
   </div>
-
 </header>
-
-
 
 <div class="app">
 
-
-<!-- =======================================================
-     HERO
-======================================================== -->
-
 <section class="hero">
-
-  <div class="eyebrow">
-
-    <i></i>
-
-    OBA AGROTECH · FARM INTELLIGENCE
-
-  </div>
-
-
-  <h1>
-
-    Your farm.<br>
-
-    <em>One smart place.</em>
-
-  </h1>
-
-
-  <p>
-
-    OBA Farm OS helps you record your flock,
-    monitor performance, track health events,
-    organize vaccination tasks and understand
-    your farm numbers — all from one simple
-    phone-first workspace.
-
-  </p>
-
+  <div class="eyebrow"><i></i>OBA AGROTECH · FARM INTELLIGENCE</div>
+  <h1>Your farm.<br><em>One smart place.</em></h1>
+  <p>OBA Farm OS helps you record your flock, monitor performance, track health events, organize vaccination tasks and understand your farm numbers — all from one simple phone-first workspace.</p>
 </section>
-
-
-
-<!-- =======================================================
-     QUICK STATS
-======================================================== -->
 
 <section class="quick">
-
-  <div class="stat">
-
-    <small>
-      LIVE FLOCK
-    </small>
-
-    <strong id="statBirds">
-      —
-    </strong>
-
-    <span id="statBirdsSub">
-      Set up a flock
-    </span>
-
-  </div>
-
-
-  <div class="stat">
-
-    <small>
-      SURVIVAL
-    </small>
-
-    <strong id="statSurvival">
-      —
-    </strong>
-
-    <span id="statMortality">
-      No records yet
-    </span>
-
-  </div>
-
-
-  <div class="stat">
-
-    <small>
-      AVG WEIGHT
-    </small>
-
-    <strong id="statWeight">
-      —
-    </strong>
-
-    <span>
-      Latest recorded
-    </span>
-
-  </div>
-
-
-  <div class="stat">
-
-    <small>
-      NEXT TASK
-    </small>
-
-    <strong id="statNext">
-      —
-    </strong>
-
-    <span id="statNextSub">
-      Add your schedule
-    </span>
-
-  </div>
-
+  <div class="stat"><small>LIVE FLOCK</small><strong id="statBirds">—</strong><span id="statBirdsSub">Set up a flock</span></div>
+  <div class="stat"><small>SURVIVAL</small><strong id="statSurvival">—</strong><span id="statMortality">No records yet</span></div>
+  <div class="stat"><small>AVG WEIGHT</small><strong id="statWeight">—</strong><span>Latest recorded</span></div>
+  <div class="stat"><small>NEXT TASK</small><strong id="statNext">—</strong><span id="statNextSub">Add your schedule</span></div>
 </section>
-
-
-
-<!-- =======================================================
-     MAIN NAV
-======================================================== -->
 
 <nav class="nav">
-
-  <button
-    class="active"
-    data-section="home"
-  >
-    Overview
-  </button>
-
-
-  <button
-    data-section="flock"
-  >
-    Flock
-  </button>
-
-
-  <button
-    data-section="logs"
-  >
-    Daily Log
-  </button>
-
-
-  <button
-    data-section="health"
-  >
-    Health
-  </button>
-
-
-  <button
-    data-section="tools"
-  >
-    Tools
-  </button>
-
-
-  <button
-    data-section="history"
-  >
-    History
-  </button>
-
+  <button class="active" data-section="home">Overview</button>
+  <button data-section="flock">Flock</button>
+  <button data-section="logs">Daily Log</button>
+  <button data-section="health">Health</button>
+  <button data-section="tools">Tools</button>
+  <button data-section="history">History</button>
 </nav>
 
-
-
-<!-- =======================================================
-     OVERVIEW
-======================================================== -->
-
-<section
-  class="section active"
-  id="home"
->
-
-
+<!-- OVERVIEW -->
+<section class="section active" id="home">
   <div class="section-head">
-
     <div>
-
-      <div class="eyebrow">
-        01 · COMMAND CENTER
-      </div>
-
-      <h2>
-        Know what is happening.
-      </h2>
-
-      <p>
-        Your dashboard updates from the
-        records saved on this device.
-      </p>
-
+      <div class="eyebrow">01 · COMMAND CENTER</div>
+      <h2>Know what is happening.</h2>
+      <p>Your dashboard updates from the records saved on this device.</p>
     </div>
-
-
-    <button
-      class="btn lime"
-      onclick="openModal('quickLogModal')"
-    >
-      + Quick record
-    </button>
-
+    <button class="btn lime" onclick="openModal('quickLogModal')">+ Quick record</button>
   </div>
 
-
-
   <div class="grid-2">
-
-
-    <!-- FLOCK SNAPSHOT -->
-
     <div class="card dark">
-
-      <div
-        class="eyebrow"
-        style="color:var(--lime)"
-      >
-        FLOCK SNAPSHOT
-      </div>
-
-
-      <h3 style="margin-top:8px">
-        Your current position.
-      </h3>
-
-
-      <p class="sub">
-
-        Farm OS turns your saved records
-        into simple signals.
-
-        It does not invent missing data
-        or replace professional veterinary
-        assessment.
-
-      </p>
-
-
+      <div class="eyebrow" style="color:var(--lime-2)">FLOCK SNAPSHOT</div>
+      <h3 style="margin-top:8px">Your current position.</h3>
+      <p class="sub">Farm OS turns your saved records into simple signals. It does not invent missing data or replace professional veterinary assessment.</p>
       <div class="kpi-grid">
-
-
-        <div class="kpi">
-
-          <small>
-            BIRDS ALIVE
-          </small>
-
-          <strong id="homeAlive">
-            —
-          </strong>
-
-          <span>
-            Latest flock estimate
-          </span>
-
-        </div>
-
-
-        <div class="kpi">
-
-          <small>
-            MORTALITY
-          </small>
-
-          <strong id="homeMortality">
-            —
-          </strong>
-
-          <span>
-            From stocked birds
-          </span>
-
-        </div>
-
-
-        <div class="kpi">
-
-          <small>
-            FEED USED
-          </small>
-
-          <strong id="homeFeed">
-            —
-          </strong>
-
-          <span>
-            Recorded total
-          </span>
-
-        </div>
-
-
-        <div class="kpi">
-
-          <small>
-            WEIGHT
-          </small>
-
-          <strong id="homeWeight">
-            —
-          </strong>
-
-          <span>
-            Latest average
-          </span>
-
-        </div>
-
+        <div class="kpi"><small>BIRDS ALIVE</small><strong id="homeAlive">—</strong><span>Latest flock estimate</span></div>
+        <div class="kpi"><small>MORTALITY</small><strong id="homeMortality">—</strong><span>From stocked birds</span></div>
+        <div class="kpi"><small>FEED USED</small><strong id="homeFeed">—</strong><span>Recorded total</span></div>
+        <div class="kpi"><small>WEIGHT</small><strong id="homeWeight">—</strong><span>Latest average</span></div>
       </div>
-
     </div>
 
-
-
-    <!-- ATTENTION -->
-
     <div class="card">
-
-      <div class="eyebrow">
-        ATTENTION
-      </div>
-
-
-      <h3 style="margin-top:8px">
-        What needs your eyes?
-      </h3>
-
-
+      <div class="eyebrow">ATTENTION</div>
+      <h3 style="margin-top:8px">What needs your eyes?</h3>
       <div id="attentionList"></div>
-
     </div>
-
   </div>
 
-
-
-  <div
-    class="grid-2"
-    style="margin-top:14px"
-  >
-
-
-    <!-- NEXT TASKS -->
-
+  <div class="grid-2" style="margin-top:14px">
     <div class="card">
-
-      <div class="eyebrow">
-        NEXT UP
-      </div>
-
-
-      <h3 style="margin-top:8px">
-        Upcoming health tasks.
-      </h3>
-
-
+      <div class="eyebrow">NEXT UP</div>
+      <h3 style="margin-top:8px">Upcoming health tasks.</h3>
       <div id="nextVaccines"></div>
-
     </div>
-
-
-
-    <!-- TIMELINE -->
-
     <div class="card">
-
-      <div class="eyebrow">
-        RECENT ACTIVITY
-      </div>
-
-
-      <h3 style="margin-top:8px">
-        Your farm timeline.
-      </h3>
-
-
+      <div class="eyebrow">RECENT ACTIVITY</div>
+      <h3 style="margin-top:8px">Your farm timeline.</h3>
       <div id="recentTimeline"></div>
-
     </div>
-
   </div>
 
-
-
-  <div class="notice">
-
-    <strong>
-      Local-first:
-    </strong>
-
-    Your Farm OS records are stored in
-    this browser on this phone.
-
-    Clearing browser/site data can remove
-    them.
-
-    Online sync and multi-device accounts
-    can be added later.
-
-  </div>
-
-
+  <div class="notice"><strong>Local-first:</strong> Your Farm OS records are stored in this browser on this phone. Clearing browser/site data can remove them. Online sync and multi-device accounts can be added later.</div>
 </section>
 
-
-
-<!-- =======================================================
-     FLOCK
-======================================================== -->
-
-<section
-  class="section"
-  id="flock"
->
-
-
+<!-- FLOCK -->
+<section class="section" id="flock">
   <div class="section-head">
-
     <div>
-
-      <div class="eyebrow">
-        02 · FLOCK PROFILE
-      </div>
-
-      <h2>
-        Set up the flock once.
-      </h2>
-
-      <p>
-        Keep the basic identity of your
-        production batch in one place.
-      </p>
-
+      <div class="eyebrow">02 · FLOCK PROFILE</div>
+      <h2>Set up the flock once.</h2>
+      <p>Keep the basic identity of your production batch in one place.</p>
     </div>
-
   </div>
 
-
-
   <div class="grid-2">
-
-
     <div class="card">
-
-      <h3>
-        Flock profile
-      </h3>
-
-
-      <p class="sub">
-
-        You can update these details
-        whenever necessary.
-
-      </p>
-
-
-      <div class="form-grid"
-           style="margin-top:15px">
-
-
-        <div class="field">
-
-          <label>
-            Farm name
-          </label>
-
-          <input
-            id="farmName"
-            placeholder="e.g. OBA Poultry Farm"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Flock / batch name
-          </label>
-
-          <input
-            id="flockName"
-            placeholder="e.g. Broiler Batch 01"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Bird type
-          </label>
-
+      <h3>Flock profile</h3>
+      <p class="sub">You can update these details whenever necessary.</p>
+      <div class="form-grid" style="margin-top:15px">
+        <div class="field"><label>Farm name</label><input id="farmName" placeholder="e.g. OBA Poultry Farm"></div>
+        <div class="field"><label>Flock / batch name</label><input id="flockName" placeholder="e.g. Broiler Batch 01"></div>
+        <div class="field"><label>Bird type</label>
           <select id="flockType">
-
-            <option value="">
-              Select
-            </option>
-
-            <option>
-              Broilers
-            </option>
-
-            <option>
-              Layers
-            </option>
-
-            <option>
-              Pullets
-            </option>
-
-            <option>
-              Breeders
-            </option>
-
-            <option>
-              Chicks
-            </option>
-
-            <option>
-              Other poultry
-            </option>
-
+            <option value="">Select</option>
+            <option>Broilers</option>
+            <option>Layers</option>
+            <option>Pullets</option>
+            <option>Breeders</option>
+            <option>Chicks</option>
+            <option>Other poultry</option>
           </select>
-
         </div>
-
-
-        <div class="field">
-
-          <label>
-            Birds stocked
-          </label>
-
-          <input
-            id="stocked"
-            type="number"
-            min="1"
-            placeholder="e.g. 1000"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Stocking date
-          </label>
-
-          <input
-            id="stockDate"
-            type="date"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Starting age
-          </label>
-
-          <input
-            id="startAge"
-            type="number"
-            min="0"
-            placeholder="e.g. 0"
-          >
-
-        </div>
-
-
+        <div class="field"><label>Birds stocked</label><input id="stocked" type="number" min="1" placeholder="e.g. 1000"></div>
+        <div class="field"><label>Stocking date</label><input id="stockDate" type="date"></div>
+        <div class="field"><label>Starting age</label><input id="startAge" type="number" min="0" placeholder="e.g. 0"></div>
       </div>
-
-
       <div class="actions">
-
-        <button
-          class="btn primary"
-          onclick="saveFlock()"
-        >
-          Save flock profile
-        </button>
-
-
-        <button
-          class="btn soft"
-          onclick="clearFlock()"
-        >
-          Clear profile
-        </button>
-
+        <button class="btn primary" onclick="saveFlock()">Save flock profile</button>
+        <button class="btn soft" onclick="clearFlock()">Clear profile</button>
       </div>
-
     </div>
-
-
 
     <div class="card">
-
-      <div class="eyebrow">
-        CURRENT PROFILE
-      </div>
-
-
-      <h3
-        id="profileName"
-        style="margin-top:8px"
-      >
-        No flock set up yet.
-      </h3>
-
-
-      <p
-        class="sub"
-        id="profileMeta"
-      >
-        Create a flock profile to begin.
-      </p>
-
-
-      <div
-        id="profileDetails"
-        style="margin-top:16px"
-      ></div>
-
+      <div class="eyebrow">CURRENT PROFILE</div>
+      <h3 id="profileName" style="margin-top:8px">No flock set up yet.</h3>
+      <p class="sub" id="profileMeta">Create a flock profile to begin.</p>
+      <div id="profileDetails" style="margin-top:16px"></div>
     </div>
-
-
   </div>
-
 </section>
 
-
-
-<!-- =======================================================
-     DAILY LOG
-======================================================== -->
-
-<section
-  class="section"
-  id="logs"
->
-
-
+<!-- DAILY LOG -->
+<section class="section" id="logs">
   <div class="section-head">
-
     <div>
-
-      <div class="eyebrow">
-        03 · DAILY RECORDS
-      </div>
-
-      <h2>
-        Record what happened.
-      </h2>
-
-      <p>
-        Consistent records create better
-        farm visibility over time.
-      </p>
-
+      <div class="eyebrow">03 · DAILY RECORDS</div>
+      <h2>Record what happened.</h2>
+      <p>Consistent records create better farm visibility over time.</p>
     </div>
-
-
-    <button
-      class="btn lime"
-      onclick="openModal('quickLogModal')"
-    >
-      + Add record
-    </button>
-
+    <button class="btn lime" onclick="openModal('quickLogModal')">+ Add record</button>
   </div>
 
-
-
   <div class="grid-2">
-
-
     <div class="card">
-
-      <h3>
-        New daily record
-      </h3>
-
-
-      <p class="sub">
-
-        Use one entry per observation/day.
-
-        Fields can be left blank when
-        they do not apply.
-
-      </p>
-
-
-      <div
-        class="form-grid"
-        style="margin-top:15px"
-      >
-
-
-        <div class="field">
-
-          <label>
-            Date
-          </label>
-
-          <input
-            id="logDate"
-            type="date"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Birds alive
-          </label>
-
-          <input
-            id="logAlive"
-            type="number"
-            min="0"
-            placeholder="e.g. 950"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Deaths / culls today
-          </label>
-
-          <input
-            id="logDeaths"
-            type="number"
-            min="0"
-            placeholder="e.g. 3"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Feed used (kg)
-          </label>
-
-          <input
-            id="logFeed"
-            type="number"
-            min="0"
-            step="0.01"
-            placeholder="e.g. 85"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Average weight (kg)
-          </label>
-
-          <input
-            id="logWeight"
-            type="number"
-            min="0"
-            step="0.01"
-            placeholder="e.g. 2.1"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Water used (litres)
-          </label>
-
-          <input
-            id="logWater"
-            type="number"
-            min="0"
-            step="0.1"
-            placeholder="e.g. 160"
-          >
-
-        </div>
-
-
+      <h3>New daily record</h3>
+      <p class="sub">Use one entry per observation/day. Fields can be left blank when they do not apply.</p>
+      <div class="form-grid" style="margin-top:15px">
+        <div class="field"><label>Date</label><input id="logDate" type="date"></div>
+        <div class="field"><label>Birds alive</label><input id="logAlive" type="number" min="0" placeholder="e.g. 950"></div>
+        <div class="field"><label>Deaths / culls today</label><input id="logDeaths" type="number" min="0" placeholder="e.g. 3"></div>
+        <div class="field"><label>Feed used (kg)</label><input id="logFeed" type="number" min="0" step="0.01" placeholder="e.g. 85"></div>
+        <div class="field"><label>Average weight (kg)</label><input id="logWeight" type="number" min="0" step="0.01" placeholder="e.g. 2.1"></div>
+        <div class="field"><label>Water used (litres)</label><input id="logWater" type="number" min="0" step="0.1" placeholder="e.g. 160"></div>
       </div>
-
-
-      <div class="field">
-
-        <label>
-          Observation
-        </label>
-
-        <textarea
-          id="logNote"
-          placeholder="Feed intake, behavior, droppings, environment, egg quality, unusual signs, management changes..."
-        ></textarea>
-
-      </div>
-
-
+      <div class="field"><label>Observation</label><textarea id="logNote" placeholder="Feed intake, behavior, droppings, environment, egg quality, unusual signs, management changes..."></textarea></div>
       <div class="actions">
-
-        <button
-          class="btn primary"
-          onclick="saveDailyLog()"
-        >
-          Save daily record
-        </button>
-
-
-        <button
-          class="btn soft"
-          onclick="clearLogForm()"
-        >
-          Clear
-        </button>
-
+        <button class="btn primary" onclick="saveDailyLog()">Save daily record</button>
+        <button class="btn soft" onclick="clearLogForm()">Clear</button>
       </div>
-
     </div>
-
-
 
     <div class="card dark">
-
-      <div
-        class="eyebrow"
-        style="color:var(--lime)"
-      >
-        PERFORMANCE VIEW
-      </div>
-
-
-      <h3 style="margin-top:8px">
-        Simple signals, not noise.
-      </h3>
-
-
-      <p class="sub">
-
-        Farm OS uses the records you
-        actually provide.
-
-      </p>
-
-
+      <div class="eyebrow" style="color:var(--lime-2)">PERFORMANCE VIEW</div>
+      <h3 style="margin-top:8px">Simple signals, not noise.</h3>
+      <p class="sub">Farm OS uses the records you actually provide.</p>
       <div class="kpi-grid">
-
-
-        <div class="kpi">
-
-          <small>
-            FEED / BIRD
-          </small>
-
-          <strong id="todayFeedBird">
-            —
-          </strong>
-
-          <span>
-            Latest recorded day
-          </span>
-
-        </div>
-
-
-        <div class="kpi">
-
-          <small>
-            WATER / BIRD
-          </small>
-
-          <strong id="todayWaterBird">
-            —
-          </strong>
-
-          <span>
-            Latest recorded day
-          </span>
-
-        </div>
-
-
-        <div class="kpi">
-
-          <small>
-            RECORDED DAYS
-          </small>
-
-          <strong id="recordedDays">
-            0
-          </strong>
-
-          <span>
-            Saved records
-          </span>
-
-        </div>
-
-
-        <div class="kpi">
-
-          <small>
-            LAST ENTRY
-          </small>
-
-          <strong id="lastEntry">
-            —
-          </strong>
-
-          <span>
-            Most recent
-          </span>
-
-        </div>
-
-
+        <div class="kpi"><small>FEED / BIRD</small><strong id="todayFeedBird">—</strong><span>Latest recorded day</span></div>
+        <div class="kpi"><small>WATER / BIRD</small><strong id="todayWaterBird">—</strong><span>Latest recorded day</span></div>
+        <div class="kpi"><small>RECORDED DAYS</small><strong id="recordedDays">0</strong><span>Saved records</span></div>
+        <div class="kpi"><small>LAST ENTRY</small><strong id="lastEntry">—</strong><span>Most recent</span></div>
       </div>
-
-
-      <div
-        class="notice"
-        style="
-          background:rgba(255,255,255,.07);
-          color:rgba(255,255,255,.68);
-        "
-      >
-
-        <strong style="color:white">
-          Good habit:
-        </strong>
-
-        Record at roughly the same time
-        each day when possible.
-
-        Consistent records make changes
-        easier to notice.
-
+      <div class="notice" style="background:rgba(247,241,227,.08);color:rgba(247,241,227,.68);border-left-color:var(--lime-2)">
+        <strong style="color:var(--cream)">Good habit:</strong> Record at roughly the same time each day when possible. Consistent records make changes easier to notice.
       </div>
-
     </div>
-
-
   </div>
-
 </section>
 
-
-
-<!-- =======================================================
-     HEALTH
-======================================================== -->
-
-<section
-  class="section"
-  id="health"
->
-
-
+<!-- HEALTH -->
+<section class="section" id="health">
   <div class="section-head">
-
     <div>
-
-      <div class="eyebrow">
-        04 · HEALTH & PREVENTION
-      </div>
-
-      <h2>
-        Plan before you react.
-      </h2>
-
-      <p>
-
-        Record your professional-approved
-        health program, treatments and
-        observations.
-
-      </p>
-
+      <div class="eyebrow">04 · HEALTH &amp; PREVENTION</div>
+      <h2>Plan before you react.</h2>
+      <p>Record your professional-approved health program, treatments and observations.</p>
     </div>
-
-
-    <button
-      class="btn lime"
-      onclick="openModal('vaccineModal')"
-    >
-      + Add vaccine task
-    </button>
-
+    <button class="btn lime" onclick="openModal('vaccineModal')">+ Add vaccine task</button>
   </div>
-
-
 
   <div class="grid-2">
-
-
-    <!-- VACCINATION -->
-
     <div class="card">
-
-      <h3>
-        Vaccination program
-      </h3>
-
-
-      <p class="sub">
-
-        Enter the schedule recommended
-        for your flock by your veterinarian
-        or qualified poultry health professional.
-
-        Farm OS tracks what you enter.
-
-      </p>
-
-
-      <div
-        class="form-grid"
-        style="margin-top:15px"
-      >
-
-
-        <div class="field">
-
-          <label>
-            Vaccine / task
-          </label>
-
-          <input
-            id="vaxName"
-            placeholder="e.g. Newcastle"
-          >
-
+      <h3>Vaccination program</h3>
+      <p class="sub">Enter the schedule recommended for your flock by your veterinarian or qualified poultry health professional. Farm OS tracks what you enter.</p>
+      <div class="form-grid" style="margin-top:15px">
+        <div class="field"><label>Vaccine / task</label><input id="vaxName" placeholder="e.g. Newcastle"></div>
+        <div class="field"><label>Scheduled date</label><input id="vaxDate" type="date"></div>
+        <div class="field"><label>Route / method</label><input id="vaxRoute" placeholder="As directed"></div>
+        <div class="field"><label>Status</label>
+          <select id="vaxStatus"><option>Upcoming</option><option>Completed</option><option>Skipped</option></select>
         </div>
-
-
-        <div class="field">
-
-          <label>
-            Scheduled date
-          </label>
-
-          <input
-            id="vaxDate"
-            type="date"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Route / method
-          </label>
-
-          <input
-            id="vaxRoute"
-            placeholder="As directed"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Status
-          </label>
-
-          <select id="vaxStatus">
-
-            <option>
-              Upcoming
-            </option>
-
-            <option>
-              Completed
-            </option>
-
-            <option>
-              Skipped
-            </option>
-
-          </select>
-
-        </div>
-
       </div>
-
-
-      <div class="field">
-
-        <label>
-          Notes
-        </label>
-
-        <textarea
-          id="vaxNote"
-          placeholder="Professional/product instructions, flock response, observations..."
-        ></textarea>
-
-      </div>
-
-
+      <div class="field"><label>Notes</label><textarea id="vaxNote" placeholder="Professional/product instructions, flock response, observations..."></textarea></div>
       <div class="actions">
-
-        <button
-          class="btn primary"
-          onclick="saveVaccine()"
-        >
-          Save vaccine task
-        </button>
-
-
-        <button
-          class="btn soft"
-          onclick="clearVaccineForm()"
-        >
-          Clear
-        </button>
-
+        <button class="btn primary" onclick="saveVaccine()">Save vaccine task</button>
+        <button class="btn soft" onclick="clearVaccineForm()">Clear</button>
       </div>
-
     </div>
 
-
-
-    <!-- HEALTH EVENTS -->
-
     <div class="card">
-
-      <div class="eyebrow">
-        HEALTH LOG
-      </div>
-
-
-      <h3 style="margin-top:8px">
-        Keep the story together.
-      </h3>
-
-
-      <div class="field">
-
-        <label>
-          Health event / treatment
-        </label>
-
-        <input
-          id="healthName"
-          placeholder="e.g. Respiratory signs observed"
-        >
-
-      </div>
-
-
+      <div class="eyebrow">HEALTH LOG</div>
+      <h3 style="margin-top:8px">Keep the story together.</h3>
+      <div class="field"><label>Health event / treatment</label><input id="healthName" placeholder="e.g. Respiratory signs observed"></div>
       <div class="form-grid">
-
-
-        <div class="field">
-
-          <label>
-            Date
-          </label>
-
-          <input
-            id="healthDate"
-            type="date"
-          >
-
+        <div class="field"><label>Date</label><input id="healthDate" type="date"></div>
+        <div class="field"><label>Type</label>
+          <select id="healthType"><option>Observation</option><option>Treatment</option><option>Veterinary visit</option><option>Laboratory result</option><option>Other</option></select>
         </div>
-
-
-        <div class="field">
-
-          <label>
-            Type
-          </label>
-
-          <select id="healthType">
-
-            <option>
-              Observation
-            </option>
-
-            <option>
-              Treatment
-            </option>
-
-            <option>
-              Veterinary visit
-            </option>
-
-            <option>
-              Laboratory result
-            </option>
-
-            <option>
-              Other
-            </option>
-
-          </select>
-
-        </div>
-
       </div>
-
-
-      <div class="field">
-
-        <label>
-          Notes
-        </label>
-
-        <textarea
-          id="healthNote"
-          placeholder="What was observed, professional advice, what changed afterward..."
-        ></textarea>
-
-      </div>
-
-
-      <div class="actions">
-
-        <button
-          class="btn primary"
-          onclick="saveHealthEvent()"
-        >
-          Save health event
-        </button>
-
-      </div>
-
-
+      <div class="field"><label>Notes</label><textarea id="healthNote" placeholder="What was observed, professional advice, what changed afterward..."></textarea></div>
+      <div class="actions"><button class="btn primary" onclick="saveHealthEvent()">Save health event</button></div>
       <div id="healthRecent"></div>
-
     </div>
-
   </div>
 
-
-
-  <div class="notice">
-
-    <strong>
-      Important:
-    </strong>
-
-    Farm OS is a record-keeping and
-    decision-support tool.
-
-    A symptom pattern is not a confirmed
-    diagnosis.
-
-    For severe illness, unusual mortality,
-    rapidly worsening disease or suspected
-    notifiable disease, contact a qualified
-    poultry veterinarian and follow relevant
-    local biosecurity/reporting requirements.
-
-  </div>
-
+  <div class="notice"><strong>Important:</strong> Farm OS is a record-keeping and decision-support tool. A symptom pattern is not a confirmed diagnosis. For severe illness, unusual mortality, rapidly worsening disease or suspected notifiable disease, contact a qualified poultry veterinarian and follow relevant local biosecurity/reporting requirements.</div>
 </section>
 
-
-
-<!-- =======================================================
-     TOOLS
-======================================================== -->
-
-<section
-  class="section"
-  id="tools"
->
-
-
+<!-- TOOLS -->
+<section class="section" id="tools">
   <div class="section-head">
-
     <div>
-
-      <div class="eyebrow">
-        05 · FARM TOOLS
-      </div>
-
-      <h2>
-        Useful when you need it.
-      </h2>
-
-      <p>
-
-        The two tools already built for
-        OBA AgroTech now live inside
-        the Farm OS experience.
-
-      </p>
-
+      <div class="eyebrow">05 · FARM TOOLS</div>
+      <h2>Useful when you need it.</h2>
+      <p>The two tools already built for OBA AgroTech now live inside the Farm OS experience.</p>
     </div>
-
   </div>
-
-
 
   <div class="tool-grid">
-
-
-    <div class="tool">
-
-      <div class="number">
-        01 · HEALTH
-      </div>
-
-      <h3>
-        Poultry Disease Checker
-      </h3>
-
-      <p>
-        Organize observed signs and receive
-        controlled decision-support output.
-      </p>
-
-      <button
-        class="btn primary full"
-        onclick="openModal('diseaseModal')"
-      >
-        Open checker ↗
-      </button>
-
-    </div>
-
-
-
-    <div class="tool">
-
-      <div class="number">
-        02 · ECONOMICS
-      </div>
-
-      <h3>
-        Broiler Profit Calculator
-      </h3>
-
-      <p>
-        Estimate revenue, production cost,
-        profit/loss, margin, ROI and
-        break-even price.
-      </p>
-
-      <button
-        class="btn primary full"
-        onclick="openModal('profitModal')"
-      >
-        Open calculator ↗
-      </button>
-
-    </div>
-
-
-
-    <div class="tool">
-
-      <div class="number">
-        03 · PRODUCTION
-      </div>
-
-      <h3>
-        Egg Production %
-      </h3>
-
-      <p>
-        Calculate recorded egg production
-        percentage from eggs collected and
-        hens present.
-      </p>
-
-      <button
-        class="btn primary full"
-        onclick="openModal('eggModal')"
-      >
-        Calculate ↗
-      </button>
-
-    </div>
-
-
-
-    <div class="tool">
-
-      <div class="number">
-        04 · FEED
-      </div>
-
-      <h3>
-        Feed Intake
-      </h3>
-
-      <p>
-        Calculate actual recorded feed
-        intake per bird.
-      </p>
-
-      <button
-        class="btn primary full"
-        onclick="openModal('feedModal')"
-      >
-        Calculate ↗
-      </button>
-
-    </div>
-
-
-
-    <div class="tool">
-
-      <div class="number">
-        05 · WATER
-      </div>
-
-      <h3>
-        Water Intake
-      </h3>
-
-      <p>
-        Calculate actual recorded water
-        intake per bird.
-      </p>
-
-      <button
-        class="btn primary full"
-        onclick="openModal('waterModal')"
-      >
-        Calculate ↗
-      </button>
-
-    </div>
-
-
-
-    <div class="tool">
-
-      <div class="number">
-        06 · RECORDS
-      </div>
-
-      <h3>
-        Farm Timeline
-      </h3>
-
-      <p>
-        Review flock setup, daily records,
-        health events and vaccine tasks.
-      </p>
-
-      <button
-        class="btn primary full"
-        onclick="go('history')"
-      >
-        View history ↗
-      </button>
-
-    </div>
-
+    <div class="tool"><div class="number">01 · HEALTH</div><h3>Poultry Disease Checker</h3><p>Organize observed signs and receive controlled decision-support output.</p><button class="btn primary full" onclick="openModal('diseaseModal')">Open checker ↗</button></div>
+    <div class="tool"><div class="number">02 · ECONOMICS</div><h3>Broiler Profit Calculator</h3><p>Estimate revenue, production cost, profit/loss, margin, ROI and break-even price.</p><button class="btn primary full" onclick="openModal('profitModal')">Open calculator ↗</button></div>
+    <div class="tool"><div class="number">03 · PRODUCTION</div><h3>Egg Production %</h3><p>Calculate recorded egg production percentage from eggs collected and hens present.</p><button class="btn primary full" onclick="openModal('eggModal')">Calculate ↗</button></div>
+    <div class="tool"><div class="number">04 · FEED</div><h3>Feed Intake</h3><p>Calculate actual recorded feed intake per bird.</p><button class="btn primary full" onclick="openModal('feedModal')">Calculate ↗</button></div>
+    <div class="tool"><div class="number">05 · WATER</div><h3>Water Intake</h3><p>Calculate actual recorded water intake per bird.</p><button class="btn primary full" onclick="openModal('waterModal')">Calculate ↗</button></div>
+    <div class="tool"><div class="number">06 · RECORDS</div><h3>Farm Timeline</h3><p>Review flock setup, daily records, health events and vaccine tasks.</p><button class="btn primary full" onclick="go('history')">View history ↗</button></div>
   </div>
 
-
-
-  <div class="notice">
-
-    <strong>
-      Production guidance:
-    </strong>
-
-    Feed and water requirements vary
-    with age, strain, weather, feed
-    formulation, health, housing and
-    management.
-
-    Farm OS therefore focuses on
-    recording actual intake instead of
-    pretending one fixed number is
-    correct for every flock.
-
-  </div>
-
+  <div class="notice"><strong>Production guidance:</strong> Feed and water requirements vary with age, strain, weather, feed formulation, health, housing and management. Farm OS therefore focuses on recording actual intake instead of pretending one fixed number is correct for every flock.</div>
 </section>
 
-
-
-<!-- =======================================================
-     HISTORY
-======================================================== -->
-
-<section
-  class="section"
-  id="history"
->
-
-
+<!-- HISTORY -->
+<section class="section" id="history">
   <div class="section-head">
-
     <div>
-
-      <div class="eyebrow">
-        06 · FARM HISTORY
-      </div>
-
-      <h2>
-        Your farm memory.
-      </h2>
-
-      <p>
-
-        Everything saved on this device
-        is organized here.
-
-      </p>
-
+      <div class="eyebrow">06 · FARM HISTORY</div>
+      <h2>Your farm memory.</h2>
+      <p>Everything saved on this device is organized here.</p>
     </div>
-
-
-    <button
-      class="btn soft"
-      onclick="exportData()"
-    >
-      Export records
-    </button>
-
+    <button class="btn soft" onclick="exportData()">Export records</button>
   </div>
-
-
 
   <div class="card">
-
     <div class="table-wrap">
-
       <table>
-
-        <thead>
-
-          <tr>
-
-            <th>
-              Date
-            </th>
-
-            <th>
-              Type
-            </th>
-
-            <th>
-              Record
-            </th>
-
-            <th>
-              Details
-            </th>
-
-            <th>
-            </th>
-
-          </tr>
-
-        </thead>
-
-
-        <tbody
-          id="historyBody"
-        ></tbody>
-
+        <thead><tr><th>Date</th><th>Type</th><th>Record</th><th>Details</th><th></th></tr></thead>
+        <tbody id="historyBody"></tbody>
       </table>
-
     </div>
-
-
-    <div
-      id="historyEmpty"
-      class="empty"
-    >
-
-      <strong>
-        No records yet.
-      </strong>
-
-      Save a flock profile,
-      daily record, health event
-      or vaccination task.
-
-    </div>
-
+    <div id="historyEmpty" class="empty"><strong>No records yet.</strong>Save a flock profile, daily record, health event or vaccination task.</div>
   </div>
 
+  <div class="actions"><button class="btn danger" onclick="clearAllData()">Erase all Farm OS data</button></div>
 
-
-  <div class="actions">
-
-    <button
-      class="btn danger"
-      onclick="clearAllData()"
-    >
-      Erase all Farm OS data
-    </button>
-
-  </div>
-
-
-  <div class="notice">
-
-    <strong>
-      Backup:
-    </strong>
-
-    Export your records periodically.
-
-    The current version is local-first
-    and does not automatically sync
-    your data to OBA AgroTech servers.
-
-  </div>
-
+  <div class="notice"><strong>Backup:</strong> Export your records periodically. The current version is local-first and does not automatically sync your data to OBA AgroTech servers.</div>
 </section>
 
-
 </div>
-
-
-
-<!-- =======================================================
-     BOTTOM NAV
-======================================================== -->
 
 <nav class="bottom-nav">
-
   <div class="bottom-inner">
-
-    <button
-      class="active"
-      data-section="home"
-    >
-
-      <span>⌂</span>
-
-      Home
-
-    </button>
-
-
-    <button
-      data-section="flock"
-    >
-
-      <span>🐔</span>
-
-      Flock
-
-    </button>
-
-
-    <button
-      data-section="logs"
-    >
-
-      <span>＋</span>
-
-      Log
-
-    </button>
-
-
-    <button
-      data-section="health"
-    >
-
-      <span>♡</span>
-
-      Health
-
-    </button>
-
-
-    <button
-      data-section="tools"
-    >
-
-      <span>✦</span>
-
-      Tools
-
-    </button>
-
+    <button class="active" data-section="home"><span>⌂</span>Home</button>
+    <button data-section="flock"><span>🐔</span>Flock</button>
+    <button data-section="logs"><span>＋</span>Log</button>
+    <button data-section="health"><span>♡</span>Health</button>
+    <button data-section="tools"><span>✦</span>Tools</button>
   </div>
-
 </nav>
 
+<div class="toast" id="toast"></div>
 
-
-<!-- =======================================================
-     TOAST
-======================================================== -->
-
-<div
-  class="toast"
-  id="toast"
-></div>
-
-
-
-<!-- =======================================================
-     QUICK LOG MODAL
-======================================================== -->
-
-<div
-  class="modal"
-  id="quickLogModal"
->
-
+<!-- QUICK LOG MODAL -->
+<div class="modal" id="quickLogModal">
   <div class="modal-box">
-
-
-    <div class="modal-head">
-
-      <h2>
-        Quick farm record
-      </h2>
-
-      <button
-        class="close"
-        onclick="closeModal('quickLogModal')"
-      >
-        ×
-      </button>
-
-    </div>
-
-
+    <div class="modal-head"><h2>Quick farm record</h2><button class="close" onclick="closeModal('quickLogModal')">×</button></div>
     <div class="modal-body">
-
-
       <div class="form-grid">
-
-
-        <div class="field">
-
-          <label>
-            Date
-          </label>
-
-          <input
-            id="qDate"
-            type="date"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Birds alive
-          </label>
-
-          <input
-            id="qAlive"
-            type="number"
-            min="0"
-            placeholder="950"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Deaths / culls
-          </label>
-
-          <input
-            id="qDeaths"
-            type="number"
-            min="0"
-            placeholder="2"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Feed used (kg)
-          </label>
-
-          <input
-            id="qFeed"
-            type="number"
-            min="0"
-            step=".01"
-            placeholder="85"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Average weight
-          </label>
-
-          <input
-            id="qWeight"
-            type="number"
-            min="0"
-            step=".01"
-            placeholder="2.1"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Water used (L)
-          </label>
-
-          <input
-            id="qWater"
-            type="number"
-            min="0"
-            step=".1"
-            placeholder="160"
-          >
-
-        </div>
-
-
+        <div class="field"><label>Date</label><input id="qDate" type="date"></div>
+        <div class="field"><label>Birds alive</label><input id="qAlive" type="number" min="0" placeholder="950"></div>
+        <div class="field"><label>Deaths / culls</label><input id="qDeaths" type="number" min="0" placeholder="2"></div>
+        <div class="field"><label>Feed used (kg)</label><input id="qFeed" type="number" min="0" step=".01" placeholder="85"></div>
+        <div class="field"><label>Average weight</label><input id="qWeight" type="number" min="0" step=".01" placeholder="2.1"></div>
+        <div class="field"><label>Water used (L)</label><input id="qWater" type="number" min="0" step=".1" placeholder="160"></div>
       </div>
-
-
-      <div class="field">
-
-        <label>
-          Observation
-        </label>
-
-        <textarea
-          id="qNote"
-          placeholder="What did you notice today?"
-        ></textarea>
-
-      </div>
-
-
+      <div class="field"><label>Observation</label><textarea id="qNote" placeholder="What did you notice today?"></textarea></div>
       <div class="actions">
-
-        <button
-          class="btn primary"
-          onclick="saveQuickLog()"
-        >
-          Save record
-        </button>
-
-
-        <button
-          class="btn soft"
-          onclick="closeModal('quickLogModal')"
-        >
-          Cancel
-        </button>
-
+        <button class="btn primary" onclick="saveQuickLog()">Save record</button>
+        <button class="btn soft" onclick="closeModal('quickLogModal')">Cancel</button>
       </div>
-
     </div>
-
   </div>
-
 </div>
 
-
-
-<!-- =======================================================
-     VACCINE MODAL
-======================================================== -->
-
-<div
-  class="modal"
-  id="vaccineModal"
->
-
+<!-- VACCINE MODAL -->
+<div class="modal" id="vaccineModal">
   <div class="modal-box">
-
-
-    <div class="modal-head">
-
-      <h2>
-        Add vaccine task
-      </h2>
-
-      <button
-        class="close"
-        onclick="closeModal('vaccineModal')"
-      >
-        ×
-      </button>
-
-    </div>
-
-
+    <div class="modal-head"><h2>Add vaccine task</h2><button class="close" onclick="closeModal('vaccineModal')">×</button></div>
     <div class="modal-body">
-
-
       <div class="form-grid">
-
-
-        <div class="field">
-
-          <label>
-            Vaccine / task
-          </label>
-
-          <input
-            id="mvName"
-            placeholder="e.g. Newcastle"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Scheduled date
-          </label>
-
-          <input
-            id="mvDate"
-            type="date"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Route / method
-          </label>
-
-          <input
-            id="mvRoute"
-            placeholder="As directed"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Status
-          </label>
-
-          <select id="mvStatus">
-
-            <option>
-              Upcoming
-            </option>
-
-            <option>
-              Completed
-            </option>
-
-            <option>
-              Skipped
-            </option>
-
-          </select>
-
-        </div>
-
-
+        <div class="field"><label>Vaccine / task</label><input id="mvName" placeholder="e.g. Newcastle"></div>
+        <div class="field"><label>Scheduled date</label><input id="mvDate" type="date"></div>
+        <div class="field"><label>Route / method</label><input id="mvRoute" placeholder="As directed"></div>
+        <div class="field"><label>Status</label><select id="mvStatus"><option>Upcoming</option><option>Completed</option><option>Skipped</option></select></div>
       </div>
-
-
-      <div class="field">
-
-        <label>
-          Notes
-        </label>
-
-        <textarea
-          id="mvNote"
-          placeholder="Professional/product instructions or observations..."
-        ></textarea>
-
-      </div>
-
-
-      <div class="actions">
-
-        <button
-          class="btn primary"
-          onclick="saveModalVaccine()"
-        >
-          Save task
-        </button>
-
-      </div>
-
+      <div class="field"><label>Notes</label><textarea id="mvNote" placeholder="Professional/product instructions or observations..."></textarea></div>
+      <div class="actions"><button class="btn primary" onclick="saveModalVaccine()">Save task</button></div>
     </div>
-
   </div>
-
 </div>
 
-
-
-<!-- =======================================================
-     DISEASE CHECKER
-======================================================== -->
-
-<div
-  class="modal"
-  id="diseaseModal"
->
-
+<!-- DISEASE CHECKER -->
+<div class="modal" id="diseaseModal">
   <div class="modal-box">
-
-
-    <div class="modal-head">
-
-      <h2>
-        Poultry Disease Checker
-      </h2>
-
-      <button
-        class="close"
-        onclick="closeModal('diseaseModal')"
-      >
-        ×
-      </button>
-
-    </div>
-
-
+    <div class="modal-head"><h2>Poultry Disease Checker</h2><button class="close" onclick="closeModal('diseaseModal')">×</button></div>
     <div class="modal-body">
-
-
-      <div
-        class="notice"
-        style="margin-top:0"
-      >
-
-        <strong>
-          Decision support only:
-        </strong>
-
-        This tool organizes signs into
-        possible areas of concern.
-
-        It does not confirm a disease.
-
-      </div>
-
-
+      <div class="notice" style="margin-top:0"><strong>Decision support only:</strong> This tool organizes signs into possible areas of concern. It does not confirm a disease.</div>
       <div class="form-grid">
-
-
-        <div class="field">
-
-          <label>
-            Bird type
-          </label>
-
-          <select id="dBird">
-
-            <option value="">
-              Select
-            </option>
-
-            <option>
-              Broilers
-            </option>
-
-            <option>
-              Layers
-            </option>
-
-            <option>
-              Pullets
-            </option>
-
-            <option>
-              Breeders
-            </option>
-
-            <option>
-              Chicks
-            </option>
-
-            <option>
-              Other poultry
-            </option>
-
-          </select>
-
+        <div class="field"><label>Bird type</label>
+          <select id="dBird"><option value="">Select</option><option>Broilers</option><option>Layers</option><option>Pullets</option><option>Breeders</option><option>Chicks</option><option>Other poultry</option></select>
         </div>
-
-
-        <div class="field">
-
-          <label>
-            Age (weeks)
-          </label>
-
-          <input
-            id="dAge"
-            type="number"
-            min="0"
-            placeholder="e.g. 6"
-          >
-
+        <div class="field"><label>Age (weeks)</label><input id="dAge" type="number" min="0" placeholder="e.g. 6"></div>
+        <div class="field"><label>Mortality situation</label>
+          <select id="dMort"><option value="">Select</option><option>Normal</option><option>Slight increase</option><option>Noticeable increase</option><option>Rapid / severe increase</option></select>
         </div>
-
-
-        <div class="field">
-
-          <label>
-            Mortality situation
-          </label>
-
-          <select id="dMort">
-
-            <option value="">
-              Select
-            </option>
-
-            <option>
-              Normal
-            </option>
-
-            <option>
-              Slight increase
-            </option>
-
-            <option>
-              Noticeable increase
-            </option>
-
-            <option>
-              Rapid / severe increase
-            </option>
-
-          </select>
-
-        </div>
-
       </div>
-
-
       <div class="field">
-
-        <label>
-          Observed signs
-        </label>
-
-
-        <div
-          class="form-grid"
-          style="margin-top:8px"
-        >
-
-
-          <label class="badge neutral">
-
-            <input
-              type="checkbox"
-              class="dSym"
-              value="respiratory"
-            >
-
-            Respiratory signs
-
-          </label>
-
-
-          <label class="badge neutral">
-
-            <input
-              type="checkbox"
-              class="dSym"
-              value="diarrhea"
-            >
-
-            Diarrhea
-
-          </label>
-
-
-          <label class="badge neutral">
-
-            <input
-              type="checkbox"
-              class="dSym"
-              value="blood"
-            >
-
-            Blood in droppings
-
-          </label>
-
-
-          <label class="badge neutral">
-
-            <input
-              type="checkbox"
-              class="dSym"
-              value="weakness"
-            >
-
-            Weakness
-
-          </label>
-
-
-          <label class="badge neutral">
-
-            <input
-              type="checkbox"
-              class="dSym"
-              value="lameness"
-            >
-
-            Lameness / swollen joints
-
-          </label>
-
-
-          <label class="badge neutral">
-
-            <input
-              type="checkbox"
-              class="dSym"
-              value="nervous"
-            >
-
-            Nervous signs
-
-          </label>
-
-
-          <label class="badge neutral">
-
-            <input
-              type="checkbox"
-              class="dSym"
-              value="production"
-            >
-
-            Production drop
-
-          </label>
-
-
-          <label class="badge neutral">
-
-            <input
-              type="checkbox"
-              class="dSym"
-              value="mortality"
-            >
-
-            Increased mortality
-
-          </label>
-
-
+        <label>Observed signs</label>
+        <div class="form-grid" style="margin-top:8px">
+          <label class="badge neutral"><input type="checkbox" class="dSym" value="respiratory"> Respiratory signs</label>
+          <label class="badge neutral"><input type="checkbox" class="dSym" value="diarrhea"> Diarrhea</label>
+          <label class="badge neutral"><input type="checkbox" class="dSym" value="blood"> Blood in droppings</label>
+          <label class="badge neutral"><input type="checkbox" class="dSym" value="weakness"> Weakness</label>
+          <label class="badge neutral"><input type="checkbox" class="dSym" value="lameness"> Lameness / swollen joints</label>
+          <label class="badge neutral"><input type="checkbox" class="dSym" value="nervous"> Nervous signs</label>
+          <label class="badge neutral"><input type="checkbox" class="dSym" value="production"> Production drop</label>
+          <label class="badge neutral"><input type="checkbox" class="dSym" value="mortality"> Increased mortality</label>
         </div>
-
       </div>
-
-
       <div class="actions">
-
-        <button
-          class="btn primary"
-          onclick="runDisease()"
-        >
-          Analyze flock ↗
-        </button>
-
-
-        <button
-          class="btn soft"
-          onclick="resetDisease()"
-        >
-          Reset
-        </button>
-
+        <button class="btn primary" onclick="runDisease()">Analyze flock ↗</button>
+        <button class="btn soft" onclick="resetDisease()">Reset</button>
       </div>
-
-
-      <div
-        id="diseaseResult"
-      ></div>
-
-
+      <div id="diseaseResult"></div>
     </div>
-
   </div>
-
 </div>
 
-
-
-<!-- =======================================================
-     PROFIT CALCULATOR
-======================================================== -->
-
-<div
-  class="modal"
-  id="profitModal"
->
-
+<!-- PROFIT CALCULATOR -->
+<div class="modal" id="profitModal">
   <div class="modal-box">
-
-
-    <div class="modal-head">
-
-      <h2>
-        Broiler Profit Calculator
-      </h2>
-
-      <button
-        class="close"
-        onclick="closeModal('profitModal')"
-      >
-        ×
-      </button>
-
-    </div>
-
-
+    <div class="modal-head"><h2>Broiler Profit Calculator</h2><button class="close" onclick="closeModal('profitModal')">×</button></div>
     <div class="modal-body">
-
-
       <div class="form-grid">
-
-
-        <div class="field">
-
-          <label>
-            Birds stocked
-          </label>
-
-          <input
-            id="pBirds"
-            type="number"
-            min="1"
-            placeholder="1000"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Expected mortality %
-          </label>
-
-          <input
-            id="pMort"
-            type="number"
-            min="0"
-            max="100"
-            step=".1"
-            placeholder="5"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Selling price / bird
-          </label>
-
-          <input
-            id="pPrice"
-            type="number"
-            min="0"
-            placeholder="8500"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Chick cost
-          </label>
-
-          <input
-            id="pChick"
-            type="number"
-            min="0"
-            placeholder="750000"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Feed cost
-          </label>
-
-          <input
-            id="pFeed"
-            type="number"
-            min="0"
-            placeholder="1800000"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Health cost
-          </label>
-
-          <input
-            id="pHealth"
-            type="number"
-            min="0"
-            placeholder="150000"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Other expenses
-          </label>
-
-          <input
-            id="pOther"
-            type="number"
-            min="0"
-            placeholder="200000"
-          >
-
-        </div>
-
-
+        <div class="field"><label>Birds stocked</label><input id="pBirds" type="number" min="1" placeholder="1000"></div>
+        <div class="field"><label>Expected mortality %</label><input id="pMort" type="number" min="0" max="100" step=".1" placeholder="5"></div>
+        <div class="field"><label>Selling price / bird</label><input id="pPrice" type="number" min="0" placeholder="8500"></div>
+        <div class="field"><label>Chick cost</label><input id="pChick" type="number" min="0" placeholder="750000"></div>
+        <div class="field"><label>Feed cost</label><input id="pFeed" type="number" min="0" placeholder="1800000"></div>
+        <div class="field"><label>Health cost</label><input id="pHealth" type="number" min="0" placeholder="150000"></div>
+        <div class="field"><label>Other expenses</label><input id="pOther" type="number" min="0" placeholder="200000"></div>
       </div>
-
-
       <div class="actions">
-
-        <button
-          class="btn primary"
-          onclick="runProfit()"
-        >
-          Calculate profit ↗
-        </button>
-
-
-        <button
-          class="btn soft"
-          onclick="resetProfit()"
-        >
-          Reset
-        </button>
-
+        <button class="btn primary" onclick="runProfit()">Calculate profit ↗</button>
+        <button class="btn soft" onclick="resetProfit()">Reset</button>
       </div>
-
-
       <div id="profitResult"></div>
-
-
     </div>
-
   </div>
-
 </div>
 
-
-
-<!-- =======================================================
-     EGG CALCULATOR
-======================================================== -->
-
-<div
-  class="modal"
-  id="eggModal"
->
-
+<!-- EGG CALCULATOR -->
+<div class="modal" id="eggModal">
   <div class="modal-box">
-
-
-    <div class="modal-head">
-
-      <h2>
-        Egg Production %
-      </h2>
-
-      <button
-        class="close"
-        onclick="closeModal('eggModal')"
-      >
-        ×
-      </button>
-
-    </div>
-
-
+    <div class="modal-head"><h2>Egg Production %</h2><button class="close" onclick="closeModal('eggModal')">×</button></div>
     <div class="modal-body">
-
-
-      <div
-        class="notice"
-        style="margin-top:0"
-      >
-
-        <strong>
-          Formula:
-        </strong>
-
-        Egg production % =
-        eggs collected ÷ hens present × 100.
-
-      </div>
-
-
+      <div class="notice" style="margin-top:0"><strong>Formula:</strong> Egg production % = eggs collected ÷ hens present × 100.</div>
       <div class="form-grid">
-
-
-        <div class="field">
-
-          <label>
-            Eggs collected
-          </label>
-
-          <input
-            id="eEggs"
-            type="number"
-            min="0"
-            placeholder="820"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Hens present
-          </label>
-
-          <input
-            id="eHens"
-            type="number"
-            min="1"
-            placeholder="1000"
-          >
-
-        </div>
-
-
+        <div class="field"><label>Eggs collected</label><input id="eEggs" type="number" min="0" placeholder="820"></div>
+        <div class="field"><label>Hens present</label><input id="eHens" type="number" min="1" placeholder="1000"></div>
       </div>
-
-
-      <div class="actions">
-
-        <button
-          class="btn primary"
-          onclick="runEgg()"
-        >
-          Calculate ↗
-        </button>
-
-      </div>
-
-
+      <div class="actions"><button class="btn primary" onclick="runEgg()">Calculate ↗</button></div>
       <div id="eggResult"></div>
-
-
     </div>
-
   </div>
-
 </div>
 
-
-
-<!-- =======================================================
-     FEED CALCULATOR
-======================================================== -->
-
-<div
-  class="modal"
-  id="feedModal"
->
-
+<!-- FEED CALCULATOR -->
+<div class="modal" id="feedModal">
   <div class="modal-box">
-
-
-    <div class="modal-head">
-
-      <h2>
-        Feed Intake
-      </h2>
-
-      <button
-        class="close"
-        onclick="closeModal('feedModal')"
-      >
-        ×
-      </button>
-
-    </div>
-
-
+    <div class="modal-head"><h2>Feed Intake</h2><button class="close" onclick="closeModal('feedModal')">×</button></div>
     <div class="modal-body">
-
-
-      <div
-        class="notice"
-        style="margin-top:0"
-      >
-
-        <strong>
-          Actual intake:
-        </strong>
-
-        Feed intake per bird =
-        feed consumed ÷ average birds present.
-
-      </div>
-
-
+      <div class="notice" style="margin-top:0"><strong>Actual intake:</strong> Feed intake per bird = feed consumed ÷ average birds present.</div>
       <div class="form-grid">
-
-
-        <div class="field">
-
-          <label>
-            Feed consumed (kg)
-          </label>
-
-          <input
-            id="fFeed"
-            type="number"
-            min="0"
-            step=".01"
-            placeholder="85"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Average birds present
-          </label>
-
-          <input
-            id="fBirds"
-            type="number"
-            min="1"
-            placeholder="950"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Days represented
-          </label>
-
-          <input
-            id="fDays"
-            type="number"
-            min="1"
-            value="1"
-          >
-
-        </div>
-
-
+        <div class="field"><label>Feed consumed (kg)</label><input id="fFeed" type="number" min="0" step=".01" placeholder="85"></div>
+        <div class="field"><label>Average birds present</label><input id="fBirds" type="number" min="1" placeholder="950"></div>
+        <div class="field"><label>Days represented</label><input id="fDays" type="number" min="1" value="1"></div>
       </div>
-
-
-      <div class="actions">
-
-        <button
-          class="btn primary"
-          onclick="runFeed()"
-        >
-          Calculate ↗
-        </button>
-
-      </div>
-
-
+      <div class="actions"><button class="btn primary" onclick="runFeed()">Calculate ↗</button></div>
       <div id="feedResult"></div>
-
-
     </div>
-
   </div>
-
 </div>
 
-
-
-<!-- =======================================================
-     WATER CALCULATOR
-======================================================== -->
-
-<div
-  class="modal"
-  id="waterModal"
->
-
+<!-- WATER CALCULATOR -->
+<div class="modal" id="waterModal">
   <div class="modal-box">
-
-
-    <div class="modal-head">
-
-      <h2>
-        Water Intake
-      </h2>
-
-      <button
-        class="close"
-        onclick="closeModal('waterModal')"
-      >
-        ×
-      </button>
-
-    </div>
-
-
+    <div class="modal-head"><h2>Water Intake</h2><button class="close" onclick="closeModal('waterModal')">×</button></div>
     <div class="modal-body">
-
-
-      <div
-        class="notice"
-        style="margin-top:0"
-      >
-
-        <strong>
-          Actual intake:
-        </strong>
-
-        Water intake per bird =
-        water used ÷ average birds present.
-
-      </div>
-
-
+      <div class="notice" style="margin-top:0"><strong>Actual intake:</strong> Water intake per bird = water used ÷ average birds present.</div>
       <div class="form-grid">
-
-
-        <div class="field">
-
-          <label>
-            Water used (litres)
-          </label>
-
-          <input
-            id="wWater"
-            type="number"
-            min="0"
-            step=".1"
-            placeholder="160"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Average birds present
-          </label>
-
-          <input
-            id="wBirds"
-            type="number"
-            min="1"
-            placeholder="950"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label>
-            Days represented
-          </label>
-
-          <input
-            id="wDays"
-            type="number"
-            min="1"
-            value="1"
-          >
-
-        </div>
-
-
+        <div class="field"><label>Water used (litres)</label><input id="wWater" type="number" min="0" step=".1" placeholder="160"></div>
+        <div class="field"><label>Average birds present</label><input id="wBirds" type="number" min="1" placeholder="950"></div>
+        <div class="field"><label>Days represented</label><input id="wDays" type="number" min="1" value="1"></div>
       </div>
-
-
-      <div class="actions">
-
-        <button
-          class="btn primary"
-          onclick="runWater()"
-        >
-          Calculate ↗
-        </button>
-
-      </div>
-
-
+      <div class="actions"><button class="btn primary" onclick="runWater()">Calculate ↗</button></div>
       <div id="waterResult"></div>
-
-
     </div>
-
   </div>
-
 </div>
-
-
-
-<!-- =======================================================
-     JAVASCRIPT
-======================================================== -->
 
 <script>
-
-
-/* =========================================================
-   STORAGE
-========================================================= */
-
-const STORAGE_KEY =
-  "obaFarmOS_v1";
-
-
-const DEFAULT_STATE = {
-
-  flock:{},
-
-  logs:[],
-
-  vaccines:[],
-
-  health:[]
-
-};
-
-
-let state =
-  loadState();
-
-
+/* STORAGE */
+const STORAGE_KEY = "obaFarmOS_v1";
+const DEFAULT_STATE = { flock:{}, logs:[], vaccines:[], health:[] };
+let state = loadState();
 
 function loadState(){
-
   try{
-
-    const saved =
-      localStorage.getItem(STORAGE_KEY);
-
-    if(!saved){
-
-      return JSON.parse(
-        JSON.stringify(DEFAULT_STATE)
-      );
-
-    }
-
-    const parsed =
-      JSON.parse(saved);
-
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if(!saved){ return JSON.parse(JSON.stringify(DEFAULT_STATE)); }
+    const parsed = JSON.parse(saved);
     return {
-
-      flock:
-        parsed.flock || {},
-
-      logs:
-        parsed.logs || [],
-
-      vaccines:
-        parsed.vaccines || [],
-
-      health:
-        parsed.health || []
-
+      flock: parsed.flock || {},
+      logs: parsed.logs || [],
+      vaccines: parsed.vaccines || [],
+      health: parsed.health || []
     };
-
-  }
-
-  catch(error){
-
-    return JSON.parse(
-      JSON.stringify(DEFAULT_STATE)
-    );
-
-  }
-
+  }catch(error){ return JSON.parse(JSON.stringify(DEFAULT_STATE)); }
 }
-
-
 
 function saveState(){
-
-  localStorage.setItem(
-    STORAGE_KEY,
-    JSON.stringify(state)
-  );
-
-  document.getElementById(
-    "saveStatus"
-  ).textContent =
-    "Saved locally";
-
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  document.getElementById("saveStatus").textContent = "Saved locally";
   refreshAll();
-
 }
 
-
-
-/* =========================================================
-   HELPERS
-========================================================= */
-
-function $(id){
-
-  return document.getElementById(id);
-
-}
-
-
-function today(){
-
-  return new Date()
-    .toISOString()
-    .slice(0,10);
-
-}
-
-
-function fmt(number){
-
-  return Number(number || 0)
-    .toLocaleString(
-      "en-NG",
-      {
-        maximumFractionDigits:1
-      }
-    );
-
-}
-
-
-function money(number){
-
-  return "₦" +
-    Math.round(
-      Number(number || 0)
-    ).toLocaleString("en-NG");
-
-}
-
-
+/* HELPERS */
+function $(id){ return document.getElementById(id); }
+function today(){ return new Date().toISOString().slice(0,10); }
+function fmt(number){ return Number(number || 0).toLocaleString("en-NG",{maximumFractionDigits:1}); }
+function money(number){ return "₦" + Math.round(Number(number || 0)).toLocaleString("en-NG"); }
 function dateLabel(date){
-
-  if(!date){
-
-    return "—";
-
-  }
-
-  return new Date(
-    date + "T00:00:00"
-  ).toLocaleDateString(
-    "en-NG",
-    {
-      day:"numeric",
-      month:"short",
-      year:"numeric"
-    }
-  );
-
+  if(!date){ return "—"; }
+  return new Date(date + "T00:00:00").toLocaleDateString("en-NG",{day:"numeric",month:"short",year:"numeric"});
 }
-
-
 function daysUntil(date){
-
-  const now =
-    new Date();
-
-  now.setHours(
-    0,0,0,0
-  );
-
-  const target =
-    new Date(
-      date + "T00:00:00"
-    );
-
-  return Math.round(
-    (
-      target - now
-    ) / 86400000
-  );
-
+  const now = new Date(); now.setHours(0,0,0,0);
+  const target = new Date(date + "T00:00:00");
+  return Math.round((target - now) / 86400000);
 }
-
-
 function esc(value){
-
-  return String(
-    value ?? ""
-  )
-  .replace(
-    /[&<>"']/g,
-    function(match){
-
-      return {
-
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        '"':"&quot;",
-        "'":"&#039;"
-
-      }[match];
-
-    }
-  );
-
-}
-
-
-function toast(message){
-
-  const element =
-    $("toast");
-
-  element.textContent =
-    message;
-
-  element.classList.add(
-    "show"
-  );
-
-  clearTimeout(
-    window.toastTimer
-  );
-
-  window.toastTimer =
-    setTimeout(
-      function(){
-
-        element.classList.remove(
-          "show"
-        );
-
-      },
-      2400
-    );
-
-}
-
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-function go(sectionId){
-
-  document
-    .querySelectorAll(".section")
-    .forEach(
-      function(section){
-
-        section.classList.toggle(
-          "active",
-          section.id === sectionId
-        );
-
-      }
-    );
-
-
-  document
-    .querySelectorAll(
-      "[data-section]"
-    )
-    .forEach(
-      function(button){
-
-        button.classList.toggle(
-          "active",
-          button.dataset.section === sectionId
-        );
-
-      }
-    );
-
-
-  window.scrollTo({
-
-    top:0,
-
-    behavior:"smooth"
-
+  return String(value ?? "").replace(/[&<>"']/g, function(match){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[match];
   });
-
+}
+function toast(message){
+  const element = $("toast");
+  element.textContent = message;
+  element.classList.add("show");
+  clearTimeout(window.toastTimer);
+  window.toastTimer = setTimeout(function(){ element.classList.remove("show"); }, 2400);
 }
 
-
-document
-  .querySelectorAll(
-    "[data-section]"
-  )
-  .forEach(
-    function(button){
-
-      button.addEventListener(
-        "click",
-        function(){
-
-          go(
-            button.dataset.section
-          );
-
-        }
-      );
-
-    }
-  );
-
-
-
-/* =========================================================
-   MODALS
-========================================================= */
-
-function openModal(id){
-
-  $(id).classList.add(
-    "open"
-  );
-
+/* NAVIGATION */
+function go(sectionId){
+  document.querySelectorAll(".section").forEach(function(section){
+    section.classList.toggle("active", section.id === sectionId);
+  });
+  document.querySelectorAll("[data-section]").forEach(function(button){
+    button.classList.toggle("active", button.dataset.section === sectionId);
+  });
+  window.scrollTo({top:0, behavior:"smooth"});
 }
+document.querySelectorAll("[data-section]").forEach(function(button){
+  button.addEventListener("click", function(){ go(button.dataset.section); });
+});
 
+/* MODALS */
+function openModal(id){ $(id).classList.add("open"); }
+function closeModal(id){ $(id).classList.remove("open"); }
+document.querySelectorAll(".modal").forEach(function(modal){
+  modal.addEventListener("click", function(event){
+    if(event.target === modal){ modal.classList.remove("open"); }
+  });
+});
 
-function closeModal(id){
-
-  $(id).classList.remove(
-    "open"
-  );
-
-}
-
-
-document
-  .querySelectorAll(".modal")
-  .forEach(
-    function(modal){
-
-      modal.addEventListener(
-        "click",
-        function(event){
-
-          if(
-            event.target === modal
-          ){
-
-            modal.classList.remove(
-              "open"
-            );
-
-          }
-
-        }
-      );
-
-    }
-  );
-
-
-
-/* =========================================================
-   FLOCK PROFILE
-========================================================= */
-
+/* FLOCK PROFILE */
 function saveFlock(){
+  const farmName = $("farmName").value.trim();
+  const flockName = $("flockName").value.trim();
+  const type = $("flockType").value;
+  const stocked = Number($("stocked").value);
+  const stockDate = $("stockDate").value;
+  const startAge = Number($("startAge").value || 0);
 
-  const farmName =
-    $("farmName")
-      .value
-      .trim();
-
-  const flockName =
-    $("flockName")
-      .value
-      .trim();
-
-  const type =
-    $("flockType")
-      .value;
-
-  const stocked =
-    Number(
-      $("stocked")
-        .value
-    );
-
-  const stockDate =
-    $("stockDate")
-      .value;
-
-  const startAge =
-    Number(
-      $("startAge")
-        .value || 0
-    );
-
-
-  if(
-    !farmName ||
-    !flockName ||
-    !type ||
-    !stocked ||
-    stocked < 1 ||
-    !stockDate
-  ){
-
-    toast(
-      "Complete the key flock details."
-    );
-
+  if(!farmName || !flockName || !type || !stocked || stocked < 1 || !stockDate){
+    toast("Complete the key flock details.");
     return;
-
   }
 
-
-  state.flock = {
-
-    farmName,
-
-    flockName,
-
-    type,
-
-    stocked,
-
-    stockDate,
-
-    startAge
-
-  };
-
-
+  state.flock = { farmName, flockName, type, stocked, stockDate, startAge };
   saveState();
-
-  toast(
-    "Flock profile saved."
-  );
-
+  toast("Flock profile saved.");
 }
-
-
 
 function clearFlock(){
-
-  if(
-    !confirm(
-      "Clear the flock profile? Daily records will remain."
-    )
-  ){
-
-    return;
-
-  }
-
-
+  if(!confirm("Clear the flock profile? Daily records will remain.")){ return; }
   state.flock = {};
-
   saveState();
-
   loadFlockForm();
-
-  toast(
-    "Flock profile cleared."
-  );
-
+  toast("Flock profile cleared.");
 }
-
-
 
 function loadFlockForm(){
-
-  const flock =
-    state.flock || {};
-
-
-  $("farmName").value =
-    flock.farmName || "";
-
-  $("flockName").value =
-    flock.flockName || "";
-
-  $("flockType").value =
-    flock.type || "";
-
-  $("stocked").value =
-    flock.stocked ?? "";
-
-  $("stockDate").value =
-    flock.stockDate || "";
-
-  $("startAge").value =
-    flock.startAge ?? "";
-
+  const flock = state.flock || {};
+  $("farmName").value = flock.farmName || "";
+  $("flockName").value = flock.flockName || "";
+  $("flockType").value = flock.type || "";
+  $("stocked").value = flock.stocked ?? "";
+  $("stockDate").value = flock.stockDate || "";
+  $("startAge").value = flock.startAge ?? "";
 }
 
-
-
-/* =========================================================
-   DAILY LOG
-========================================================= */
-
+/* DAILY LOG */
 function saveDailyLog(){
+  const date = $("logDate").value || today();
+  const alive = $("logAlive").value;
+  const deaths = $("logDeaths").value;
+  const feed = $("logFeed").value;
+  const weight = $("logWeight").value;
+  const water = $("logWater").value;
+  const note = $("logNote").value.trim();
 
-  const date =
-    $("logDate").value ||
-    today();
-
-  const alive =
-    $("logAlive").value;
-
-  const deaths =
-    $("logDeaths").value;
-
-  const feed =
-    $("logFeed").value;
-
-  const weight =
-    $("logWeight").value;
-
-  const water =
-    $("logWater").value;
-
-  const note =
-    $("logNote")
-      .value
-      .trim();
-
-
-  if(
-
-    alive === "" &&
-    deaths === "" &&
-    feed === "" &&
-    weight === "" &&
-    water === "" &&
-    !note
-
-  ){
-
-    toast(
-      "Add at least one observation."
-    );
-
+  if(alive === "" && deaths === "" && feed === "" && weight === "" && water === "" && !note){
+    toast("Add at least one observation.");
     return;
-
   }
 
-
   state.logs.push({
-
-    id:Date.now(),
-
-    date,
-
-    alive:
-      alive === ""
-        ? null
-        : Number(alive),
-
-    deaths:
-      deaths === ""
-        ? null
-        : Number(deaths),
-
-    feed:
-      feed === ""
-        ? null
-        : Number(feed),
-
-    weight:
-      weight === ""
-        ? null
-        : Number(weight),
-
-    water:
-      water === ""
-        ? null
-        : Number(water),
-
+    id:Date.now(), date,
+    alive: alive === "" ? null : Number(alive),
+    deaths: deaths === "" ? null : Number(deaths),
+    feed: feed === "" ? null : Number(feed),
+    weight: weight === "" ? null : Number(weight),
+    water: water === "" ? null : Number(water),
     note
-
   });
 
-
   saveState();
-
   clearLogForm();
-
-  toast(
-    "Daily record saved."
-  );
-
+  toast("Daily record saved.");
 }
-
-
 
 function clearLogForm(){
-
-  [
-    "logDate",
-    "logAlive",
-    "logDeaths",
-    "logFeed",
-    "logWeight",
-    "logWater",
-    "logNote"
-  ]
-  .forEach(
-    function(id){
-
-      $(id).value = "";
-
-    }
-  );
-
-
-  $("logDate").value =
-    today();
-
+  ["logDate","logAlive","logDeaths","logFeed","logWeight","logWater","logNote"].forEach(function(id){ $(id).value = ""; });
+  $("logDate").value = today();
 }
-
-
 
 function saveQuickLog(){
+  const date = $("qDate").value || today();
+  const alive = $("qAlive").value;
+  const deaths = $("qDeaths").value;
+  const feed = $("qFeed").value;
+  const weight = $("qWeight").value;
+  const water = $("qWater").value;
+  const note = $("qNote").value.trim();
 
-  const date =
-    $("qDate").value ||
-    today();
-
-  const alive =
-    $("qAlive").value;
-
-  const deaths =
-    $("qDeaths").value;
-
-  const feed =
-    $("qFeed").value;
-
-  const weight =
-    $("qWeight").value;
-
-  const water =
-    $("qWater").value;
-
-  const note =
-    $("qNote")
-      .value
-      .trim();
-
-
-  if(
-
-    alive === "" &&
-    deaths === "" &&
-    feed === "" &&
-    weight === "" &&
-    water === "" &&
-    !note
-
-  ){
-
-    toast(
-      "Add at least one observation."
-    );
-
+  if(alive === "" && deaths === "" && feed === "" && weight === "" && water === "" && !note){
+    toast("Add at least one observation.");
     return;
-
   }
-
 
   state.logs.push({
-
-    id:Date.now(),
-
-    date,
-
-    alive:
-      alive === ""
-        ? null
-        : Number(alive),
-
-    deaths:
-      deaths === ""
-        ? null
-        : Number(deaths),
-
-    feed:
-      feed === ""
-        ? null
-        : Number(feed),
-
-    weight:
-      weight === ""
-        ? null
-        : Number(weight),
-
-    water:
-      water === ""
-        ? null
-        : Number(water),
-
+    id:Date.now(), date,
+    alive: alive === "" ? null : Number(alive),
+    deaths: deaths === "" ? null : Number(deaths),
+    feed: feed === "" ? null : Number(feed),
+    weight: weight === "" ? null : Number(weight),
+    water: water === "" ? null : Number(water),
     note
-
   });
 
-
   saveState();
-
-
-  [
-    "qDate",
-    "qAlive",
-    "qDeaths",
-    "qFeed",
-    "qWeight",
-    "qWater",
-    "qNote"
-  ]
-  .forEach(
-    function(id){
-
-      $(id).value = "";
-
-    }
-  );
-
-
-  $("qDate").value =
-    today();
-
-
-  closeModal(
-    "quickLogModal"
-  );
-
-
-  toast(
-    "Quick record saved."
-  );
-
+  ["qDate","qAlive","qDeaths","qFeed","qWeight","qWater","qNote"].forEach(function(id){ $(id).value = ""; });
+  $("qDate").value = today();
+  closeModal("quickLogModal");
+  toast("Quick record saved.");
 }
 
-
-
-/* =========================================================
-   VACCINATION
-========================================================= */
-
+/* VACCINATION */
 function saveVaccine(){
+  const name = $("vaxName").value.trim();
+  const date = $("vaxDate").value;
+  const route = $("vaxRoute").value.trim();
+  const status = $("vaxStatus").value;
+  const note = $("vaxNote").value.trim();
 
-  const name =
-    $("vaxName")
-      .value
-      .trim();
+  if(!name || !date){ toast("Enter the task and scheduled date."); return; }
 
-  const date =
-    $("vaxDate")
-      .value;
-
-  const route =
-    $("vaxRoute")
-      .value
-      .trim();
-
-  const status =
-    $("vaxStatus")
-      .value;
-
-  const note =
-    $("vaxNote")
-      .value
-      .trim();
-
-
-  if(
-    !name ||
-    !date
-  ){
-
-    toast(
-      "Enter the task and scheduled date."
-    );
-
-    return;
-
-  }
-
-
-  state.vaccines.push({
-
-    id:Date.now(),
-
-    name,
-
-    date,
-
-    route,
-
-    status,
-
-    note
-
-  });
-
-
+  state.vaccines.push({ id:Date.now(), name, date, route, status, note });
   saveState();
-
   clearVaccineForm();
-
-  toast(
-    "Vaccine task saved."
-  );
-
+  toast("Vaccine task saved.");
 }
-
-
 
 function clearVaccineForm(){
-
-  $("vaxName").value =
-    "";
-
-  $("vaxDate").value =
-    "";
-
-  $("vaxRoute").value =
-    "";
-
-  $("vaxStatus").value =
-    "Upcoming";
-
-  $("vaxNote").value =
-    "";
-
+  $("vaxName").value = "";
+  $("vaxDate").value = "";
+  $("vaxRoute").value = "";
+  $("vaxStatus").value = "Upcoming";
+  $("vaxNote").value = "";
 }
-
-
 
 function saveModalVaccine(){
+  const name = $("mvName").value.trim();
+  const date = $("mvDate").value;
+  const route = $("mvRoute").value.trim();
+  const status = $("mvStatus").value;
+  const note = $("mvNote").value.trim();
 
-  const name =
-    $("mvName")
-      .value
-      .trim();
+  if(!name || !date){ toast("Enter the task and date."); return; }
 
-  const date =
-    $("mvDate")
-      .value;
-
-  const route =
-    $("mvRoute")
-      .value
-      .trim();
-
-  const status =
-    $("mvStatus")
-      .value;
-
-  const note =
-    $("mvNote")
-      .value
-      .trim();
-
-
-  if(
-    !name ||
-    !date
-  ){
-
-    toast(
-      "Enter the task and date."
-    );
-
-    return;
-
-  }
-
-
-  state.vaccines.push({
-
-    id:Date.now(),
-
-    name,
-
-    date,
-
-    route,
-
-    status,
-
-    note
-
-  });
-
-
+  state.vaccines.push({ id:Date.now(), name, date, route, status, note });
   saveState();
-
-
-  [
-    "mvName",
-    "mvDate",
-    "mvRoute",
-    "mvNote"
-  ]
-  .forEach(
-    function(id){
-
-      $(id).value = "";
-
-    }
-  );
-
-
-  $("mvStatus").value =
-    "Upcoming";
-
-
-  closeModal(
-    "vaccineModal"
-  );
-
-
-  toast(
-    "Vaccine task saved."
-  );
-
+  ["mvName","mvDate","mvRoute","mvNote"].forEach(function(id){ $(id).value = ""; });
+  $("mvStatus").value = "Upcoming";
+  closeModal("vaccineModal");
+  toast("Vaccine task saved.");
 }
-
-
 
 function markVaccine(id){
-
-  const vaccine =
-    state.vaccines.find(
-      function(item){
-
-        return item.id === id;
-
-      }
-    );
-
-
-  if(!vaccine){
-    return;
-  }
-
-
-  vaccine.status =
-    "Completed";
-
-
+  const vaccine = state.vaccines.find(function(item){ return item.id === id; });
+  if(!vaccine){ return; }
+  vaccine.status = "Completed";
   saveState();
-
-  toast(
-    "Task marked completed."
-  );
-
+  toast("Task marked completed.");
 }
 
-
-
-/* =========================================================
-   HEALTH EVENTS
-========================================================= */
-
+/* HEALTH EVENTS */
 function saveHealthEvent(){
+  const name = $("healthName").value.trim();
+  const date = $("healthDate").value || today();
+  const type = $("healthType").value;
+  const note = $("healthNote").value.trim();
 
-  const name =
-    $("healthName")
-      .value
-      .trim();
+  if(!name){ toast("Enter the health event."); return; }
 
-  const date =
-    $("healthDate").value ||
-    today();
+  state.health.push({ id:Date.now(), name, date, type, note });
+  saveState();
+  $("healthName").value = "";
+  $("healthDate").value = "";
+  $("healthNote").value = "";
+  toast("Health event saved.");
+}
 
-  const type =
-    $("healthType").value;
+/* METRICS
+   NOTE: "alive" is now a running count — it starts at the
+   stocked number and subtracts recorded deaths in date order,
+   instead of only reading whatever was typed into the most
+   recent log. An explicit "Birds alive" entry on any day still
+   acts as a manual recount and resets the running count from
+   that point forward. */
+function getMetrics(){
+  const flock = state.flock || {};
 
-  const note =
-    $("healthNote")
-      .value
-      .trim();
+  const logs = [...state.logs].sort(function(a,b){
+    return String(b.date).localeCompare(String(a.date));
+  });
+  const latest = logs[0] || {};
 
-
-  if(!name){
-
-    toast(
-      "Enter the health event."
-    );
-
-    return;
-
-  }
-
-
-  state.health.push({
-
-    id:Date.now(),
-
-    name,
-
-    date,
-
-    type,
-
-    note
-
+  const ascending = [...state.logs].sort(function(a,b){
+    return String(a.date).localeCompare(String(b.date)) || (a.id - b.id);
   });
 
+  let runningAlive = (flock.stocked != null && flock.stocked !== "") ? Number(flock.stocked) : null;
+  const computedById = {};
+  ascending.forEach(function(item){
+    if(item.alive != null){
+      runningAlive = item.alive;
+    } else if(runningAlive != null && item.deaths != null){
+      runningAlive = Math.max(0, runningAlive - Number(item.deaths));
+    }
+    computedById[item.id] = runningAlive;
+  });
 
-  saveState();
+  const alive = runningAlive;
+  const latestComputedAlive = latest.id != null ? computedById[latest.id] : alive;
 
+  const totalDeaths = logs.reduce(function(total,item){
+    return total + (Number(item.deaths) || 0);
+  }, 0);
 
-  $("healthName").value =
-    "";
+  const mortality = flock.stocked ? (totalDeaths / flock.stocked) * 100 : null;
+  const survival = mortality != null ? Math.max(0, 100 - mortality) : null;
 
-  $("healthDate").value =
-    "";
+  const totalFeed = logs.reduce(function(total,item){
+    return total + (Number(item.feed) || 0);
+  }, 0);
 
-  $("healthNote").value =
-    "";
+  const weightLog = logs.find(function(item){ return item.weight != null; });
+  const weight = weightLog ? weightLog.weight : null;
 
+  const nextTask = [...state.vaccines]
+    .filter(function(item){ return item.status === "Upcoming" && item.date; })
+    .sort(function(a,b){ return a.date.localeCompare(b.date); })[0] || null;
 
-  toast(
-    "Health event saved."
-  );
-
+  return { flock, logs, latest, alive, latestComputedAlive, totalDeaths, mortality, survival, totalFeed, weight, nextTask };
 }
 
-
-
-/* =========================================================
-   METRICS
-========================================================= */
-
-function getMetrics(){
-
-  const flock =
-    state.flock || {};
-
-
-  const logs =
-    [...state.logs]
-      .sort(
-        function(a,b){
-
-          return String(b.date)
-            .localeCompare(
-              String(a.date)
-            );
-
-        }
-      );
-
-
-  const latest =
-    logs[0] || {};
-
-
-  const alive =
-    latest.alive != null
-      ? latest.alive
-      : (
-          flock.stocked ||
-          null
-        );
-
-
-  const totalDeaths =
-    logs.reduce(
-      function(total,item){
-
-        return total +
-          (
-            Number(item.deaths) ||
-            0
-          );
-
-      },
-      0
-    );
-
-
-  const mortality =
-    flock.stocked
-      ? (
-          totalDeaths /
-          flock.stocked
-        ) * 100
-      : null;
-
-
-  const survival =
-    mortality != null
-      ? Math.max(
-          0,
-          100 - mortality
-        )
-      : null;
-
-
-  const totalFeed =
-    logs.reduce(
-      function(total,item){
-
-        return total +
-          (
-            Number(item.feed) ||
-            0
-          );
-
-      },
-      0
-    );
-
-
-  const weightLog =
-    logs.find(
-      function(item){
-
-        return item.weight != null;
-
-      }
-    );
-
-
-  const weight =
-    weightLog
-      ? weightLog.weight
-      : null;
-
-
-  const nextTask =
-    [...state.vaccines]
-
-      .filter(
-        function(item){
-
-          return (
-            item.status === "Upcoming" &&
-            item.date
-          );
-
-        }
-      )
-
-      .sort(
-        function(a,b){
-
-          return a.date
-            .localeCompare(
-              b.date
-            );
-
-        }
-      )[0] || null;
-
-
-  return {
-
-    flock,
-
-    logs,
-
-    latest,
-
-    alive,
-
-    totalDeaths,
-
-    mortality,
-
-    survival,
-
-    totalFeed,
-
-    weight,
-
-    nextTask
-
-  };
-
-}
-
-
-
-/* =========================================================
-   DASHBOARD
-========================================================= */
-
+/* DASHBOARD */
 function refreshAll(){
+  const metrics = getMetrics();
 
-  const metrics =
-    getMetrics();
+  $("statBirds").textContent = metrics.alive != null ? fmt(metrics.alive) : "—";
+  $("statBirdsSub").textContent = metrics.flock.flockName || "Set up a flock";
+  $("statSurvival").textContent = metrics.survival != null ? metrics.survival.toFixed(1) + "%" : "—";
+  $("statMortality").textContent = metrics.mortality != null ? metrics.mortality.toFixed(1) + "% mortality" : "No records yet";
+  $("statWeight").textContent = metrics.weight != null ? fmt(metrics.weight) + " kg" : "—";
+  $("statNext").textContent = metrics.nextTask ? Math.max(0, daysUntil(metrics.nextTask.date)) + "d" : "—";
+  $("statNextSub").textContent = metrics.nextTask ? metrics.nextTask.name : "Add your schedule";
 
+  $("homeAlive").textContent = metrics.alive != null ? fmt(metrics.alive) : "—";
+  $("homeMortality").textContent = metrics.mortality != null ? metrics.mortality.toFixed(1) + "%" : "—";
+  $("homeFeed").textContent = metrics.totalFeed ? fmt(metrics.totalFeed) + " kg" : "—";
+  $("homeWeight").textContent = metrics.weight != null ? fmt(metrics.weight) + " kg" : "—";
 
-  $("statBirds")
-    .textContent =
-    metrics.alive != null
-      ? fmt(metrics.alive)
-      : "—";
-
-
-  $("statBirdsSub")
-    .textContent =
-    metrics.flock.flockName ||
-    "Set up a flock";
-
-
-  $("statSurvival")
-    .textContent =
-    metrics.survival != null
-      ? metrics.survival
-          .toFixed(1) + "%"
-      : "—";
-
-
-  $("statMortality")
-    .textContent =
-    metrics.mortality != null
-      ? metrics.mortality
-          .toFixed(1) +
-        "% mortality"
-      : "No records yet";
-
-
-  $("statWeight")
-    .textContent =
-    metrics.weight != null
-      ? fmt(metrics.weight) +
-        " kg"
-      : "—";
-
-
-  $("statNext")
-    .textContent =
-    metrics.nextTask
-      ? Math.max(
-          0,
-          daysUntil(
-            metrics.nextTask.date
-          )
-        ) + "d"
-      : "—";
-
-
-  $("statNextSub")
-    .textContent =
-    metrics.nextTask
-      ? metrics.nextTask.name
-      : "Add your schedule";
-
-
-  $("homeAlive")
-    .textContent =
-    metrics.alive != null
-      ? fmt(metrics.alive)
-      : "—";
-
-
-  $("homeMortality")
-    .textContent =
-    metrics.mortality != null
-      ? metrics.mortality
-          .toFixed(1) + "%"
-      : "—";
-
-
-  $("homeFeed")
-    .textContent =
-    metrics.totalFeed
-      ? fmt(metrics.totalFeed) +
-        " kg"
-      : "—";
-
-
-  $("homeWeight")
-    .textContent =
-    metrics.weight != null
-      ? fmt(metrics.weight) +
-        " kg"
-      : "—";
-
-
-  renderAttention(
-    metrics
-  );
-
+  renderAttention(metrics);
   renderNextVaccines();
-
   renderTimeline();
-
   renderProfile();
-
-  renderLogSummary(
-    metrics
-  );
-
+  renderLogSummary(metrics);
   renderHealthRecent();
-
   renderHistory();
-
 }
 
-
-
-/* =========================================================
-   ATTENTION
-========================================================= */
-
+/* ATTENTION */
 function renderAttention(metrics){
-
   const alerts = [];
 
-
-  if(
-    !metrics.flock.stocked
-  ){
-
-    alerts.push({
-
-      type:"neutral",
-
-      title:
-        "Set up your flock profile",
-
-      text:
-        "Add the batch details so Farm OS can calculate flock indicators."
-
-    });
-
+  if(!metrics.flock.stocked){
+    alerts.push({ type:"neutral", title:"Set up your flock profile", text:"Add the batch details so Farm OS can calculate flock indicators." });
   }
 
-
-  if(
-    metrics.mortality != null &&
-    metrics.mortality >= 10
-  ){
-
-    alerts.push({
-
-      type:"danger",
-
-      title:
-        "High recorded mortality",
-
-      text:
-        "Review the flock urgently and contact a qualified poultry professional."
-
-    });
-
+  if(metrics.mortality != null && metrics.mortality >= 10){
+    alerts.push({ type:"danger", title:"High recorded mortality", text:"Review the flock urgently and contact a qualified poultry professional." });
+  } else if(metrics.mortality != null && metrics.mortality >= 5){
+    alerts.push({ type:"warn", title:"Mortality deserves attention", text:"Compare with your normal pattern and investigate changes." });
   }
 
-  else if(
-    metrics.mortality != null &&
-    metrics.mortality >= 5
-  ){
-
-    alerts.push({
-
-      type:"warn",
-
-      title:
-        "Mortality deserves attention",
-
-      text:
-        "Compare with your normal pattern and investigate changes."
-
-    });
-
+  if(metrics.nextTask && daysUntil(metrics.nextTask.date) <= 3){
+    alerts.push({ type:"warn", title:"Health task is close", text:"Upcoming task: " + esc(metrics.nextTask.name) });
   }
-
-
-  if(
-    metrics.nextTask &&
-    daysUntil(
-      metrics.nextTask.date
-    ) <= 3
-  ){
-
-    alerts.push({
-
-      type:"warn",
-
-      title:
-        "Health task is close",
-
-      text:
-        "Upcoming task: " +
-        esc(
-          metrics.nextTask.name
-        )
-
-    });
-
-  }
-
 
   if(!alerts.length){
-
-    alerts.push({
-
-      type:"good",
-
-      title:
-        "No immediate flag",
-
-      text:
-        "Keep recording consistently so meaningful changes become visible."
-
-    });
-
+    alerts.push({ type:"good", title:"No immediate flag", text:"Keep recording consistently so meaningful changes become visible." });
   }
 
-
-  $("attentionList")
-    .innerHTML =
-
-    alerts.map(
-      function(item){
-
-        const label =
-          item.type === "good"
-            ? "STABLE"
-            : item.type === "warn"
-              ? "ATTENTION"
-              : item.type === "danger"
-                ? "PRIORITY"
-                : "SETUP";
-
-
-        return `
-
-          <div
-            style="
-              padding:13px 0;
-              border-bottom:1px solid var(--line);
-            "
-          >
-
-            <span class="badge ${item.type}">
-              ${label}
-            </span>
-
-            <strong
-              style="
-                display:block;
-                margin-top:7px;
-                font-size:12px;
-              "
-            >
-              ${item.title}
-            </strong>
-
-            <p
-              style="
-                margin-top:4px;
-                color:var(--muted);
-                font-size:10px;
-                line-height:1.6;
-              "
-            >
-              ${item.text}
-            </p>
-
-          </div>
-
-        `;
-
-      }
-    )
-    .join("");
-
+  $("attentionList").innerHTML = alerts.map(function(item){
+    const label = item.type === "good" ? "STABLE" : item.type === "warn" ? "ATTENTION" : item.type === "danger" ? "PRIORITY" : "SETUP";
+    return `<div style="padding:13px 0;border-bottom:1px solid var(--line);">
+      <span class="badge ${item.type}">${label}</span>
+      <strong style="display:block;margin-top:7px;font-size:12px;">${item.title}</strong>
+      <p style="margin-top:4px;color:var(--muted);font-size:10px;line-height:1.6;">${item.text}</p>
+    </div>`;
+  }).join("");
 }
 
-
-
-/* =========================================================
-   UPCOMING VACCINES
-========================================================= */
-
+/* UPCOMING VACCINES */
 function renderNextVaccines(){
-
-  const tasks =
-
-    [...state.vaccines]
-
-      .filter(
-        function(item){
-
-          return item.status === "Upcoming";
-
-        }
-      )
-
-      .sort(
-        function(a,b){
-
-          return a.date
-            .localeCompare(
-              b.date
-            );
-
-        }
-      )
-
-      .slice(0,4);
-
+  const tasks = [...state.vaccines]
+    .filter(function(item){ return item.status === "Upcoming"; })
+    .sort(function(a,b){ return a.date.localeCompare(b.date); })
+    .slice(0,4);
 
   if(!tasks.length){
-
-    $("nextVaccines")
-      .innerHTML = `
-
-        <div class="empty">
-
-          <strong>
-            No upcoming tasks.
-          </strong>
-
-          Add your professional-approved
-          vaccination program.
-
-        </div>
-
-      `;
-
+    $("nextVaccines").innerHTML = `<div class="empty"><strong>No upcoming tasks.</strong>Add your professional-approved vaccination program.</div>`;
     return;
-
   }
 
-
-  $("nextVaccines")
-    .innerHTML =
-
-    tasks.map(
-      function(item){
-
-        return `
-
-          <div class="timeline-item">
-
-            <div class="timeline-date">
-              ${dateLabel(item.date)}
-            </div>
-
-            <div>
-
-              <strong>
-                ${esc(item.name)}
-              </strong>
-
-              <p>
-                ${esc(
-                  item.route ||
-                  "Method recorded in task"
-                )}
-              </p>
-
-            </div>
-
-            <button
-              class="btn soft"
-              onclick="markVaccine(${item.id})"
-            >
-              Done
-            </button>
-
-          </div>
-
-        `;
-
-      }
-    )
-    .join("");
-
+  $("nextVaccines").innerHTML = tasks.map(function(item){
+    return `<div class="timeline-item">
+      <div class="timeline-date">${dateLabel(item.date)}</div>
+      <div><strong>${esc(item.name)}</strong><p>${esc(item.route || "Method recorded in task")}</p></div>
+      <button class="btn soft" onclick="markVaccine(${item.id})">Done</button>
+    </div>`;
+  }).join("");
 }
 
-
-
-/* =========================================================
-   TIMELINE
-========================================================= */
-
+/* TIMELINE */
 function renderTimeline(){
-
   const items = [
-
-    ...state.logs.map(
-      function(item){
-
-        return {
-
-          date:item.date,
-
-          type:"Daily log",
-
-          title:"Flock observation",
-
-          detail:
-            item.note ||
-            (
-              item.alive != null
-                ? fmt(item.alive) +
-                  " birds alive"
-                : "Farm observation"
-            )
-
-        };
-
-      }
-    ),
-
-
-    ...state.health.map(
-      function(item){
-
-        return {
-
-          date:item.date,
-
-          type:"Health",
-
-          title:item.name,
-
-          detail:item.type
-
-        };
-
-      }
-    ),
-
-
-    ...state.vaccines.map(
-      function(item){
-
-        return {
-
-          date:item.date,
-
-          type:"Vaccine",
-
-          title:item.name,
-
-          detail:item.status
-
-        };
-
-      }
-    )
-
-  ]
-
-  .sort(
-    function(a,b){
-
-      return String(b.date)
-        .localeCompare(
-          String(a.date)
-        );
-
-    }
-  )
-
-  .slice(0,5);
-
+    ...state.logs.map(function(item){
+      return { date:item.date, type:"Daily log", title:"Flock observation",
+        detail: item.note || (item.alive != null ? fmt(item.alive) + " birds alive" : "Farm observation") };
+    }),
+    ...state.health.map(function(item){
+      return { date:item.date, type:"Health", title:item.name, detail:item.type };
+    }),
+    ...state.vaccines.map(function(item){
+      return { date:item.date, type:"Vaccine", title:item.name, detail:item.status };
+    })
+  ].sort(function(a,b){ return String(b.date).localeCompare(String(a.date)); }).slice(0,5);
 
   if(!items.length){
-
-    $("recentTimeline")
-      .innerHTML = `
-
-        <div class="empty">
-
-          <strong>
-            Your timeline is empty.
-          </strong>
-
-          Start recording your flock.
-
-        </div>
-
-      `;
-
+    $("recentTimeline").innerHTML = `<div class="empty"><strong>Your timeline is empty.</strong>Start recording your flock.</div>`;
     return;
-
   }
 
-
-  $("recentTimeline")
-    .innerHTML =
-
-    items.map(
-      function(item){
-
-        return `
-
-          <div class="timeline-item">
-
-            <div class="timeline-date">
-
-              ${dateLabel(item.date)}
-
-            </div>
-
-
-            <div>
-
-              <strong>
-                ${esc(item.title)}
-              </strong>
-
-              <p>
-                ${esc(item.detail)}
-              </p>
-
-            </div>
-
-
-            <span class="badge neutral">
-
-              ${esc(item.type)}
-
-            </span>
-
-          </div>
-
-        `;
-
-      }
-    )
-    .join("");
-
+  $("recentTimeline").innerHTML = items.map(function(item){
+    return `<div class="timeline-item">
+      <div class="timeline-date">${dateLabel(item.date)}</div>
+      <div><strong>${esc(item.title)}</strong><p>${esc(item.detail)}</p></div>
+      <span class="badge neutral">${esc(item.type)}</span>
+    </div>`;
+  }).join("");
 }
 
-
-
-/* =========================================================
-   PROFILE
-========================================================= */
-
+/* PROFILE */
 function renderProfile(){
+  const flock = state.flock || {};
 
-  const flock =
-    state.flock || {};
+  $("profileName").textContent = flock.flockName || "No flock set up yet.";
+  $("profileMeta").textContent = flock.farmName ? flock.farmName + " · " + flock.type : "Create a flock profile to begin.";
 
+  if(!flock.stocked){ $("profileDetails").innerHTML = ""; return; }
 
-  $("profileName")
-    .textContent =
-    flock.flockName ||
-    "No flock set up yet.";
-
-
-  $("profileMeta")
-    .textContent =
-    flock.farmName
-      ? flock.farmName +
-        " · " +
-        flock.type
-      : "Create a flock profile to begin.";
-
-
-  if(!flock.stocked){
-
-    $("profileDetails")
-      .innerHTML = "";
-
-    return;
-
-  }
-
-
-  $("profileDetails")
-    .innerHTML = `
-
-      <div class="kpi-grid">
-
-
-        <div class="kpi">
-
-          <small>
-            STOCKED
-          </small>
-
-          <strong>
-            ${fmt(flock.stocked)}
-          </strong>
-
-          <span>
-            Birds
-          </span>
-
-        </div>
-
-
-        <div class="kpi">
-
-          <small>
-            STOCK DATE
-          </small>
-
-          <strong>
-            ${dateLabel(flock.stockDate)}
-          </strong>
-
-          <span>
-            Production start
-          </span>
-
-        </div>
-
-
-        <div class="kpi">
-
-          <small>
-            START AGE
-          </small>
-
-          <strong>
-            ${fmt(flock.startAge)} wk
-          </strong>
-
-          <span>
-            At setup
-          </span>
-
-        </div>
-
-
-        <div class="kpi">
-
-          <small>
-            TYPE
-          </small>
-
-          <strong>
-            ${esc(flock.type)}
-          </strong>
-
-          <span>
-            Flock category
-          </span>
-
-        </div>
-
-
-      </div>
-
-    `;
-
+  $("profileDetails").innerHTML = `<div class="kpi-grid">
+    <div class="kpi"><small>STOCKED</small><strong>${fmt(flock.stocked)}</strong><span>Birds</span></div>
+    <div class="kpi"><small>STOCK DATE</small><strong>${dateLabel(flock.stockDate)}</strong><span>Production start</span></div>
+    <div class="kpi"><small>START AGE</small><strong>${fmt(flock.startAge)} wk</strong><span>At setup</span></div>
+    <div class="kpi"><small>TYPE</small><strong>${esc(flock.type)}</strong><span>Flock category</span></div>
+  </div>`;
 }
 
-
-
-/* =========================================================
-   LOG SUMMARY
-========================================================= */
-
+/* LOG SUMMARY */
 function renderLogSummary(metrics){
+  $("recordedDays").textContent = state.logs.length;
+  $("lastEntry").textContent = metrics.logs[0] ? dateLabel(metrics.logs[0].date) : "—";
 
-  $("recordedDays")
-    .textContent =
-    state.logs.length;
+  const feedAliveBase = metrics.latest.alive != null ? metrics.latest.alive : metrics.latestComputedAlive;
 
-
-  $("lastEntry")
-    .textContent =
-    metrics.logs[0]
-      ? dateLabel(
-          metrics.logs[0].date
-        )
-      : "—";
-
-
-  if(
-    metrics.latest &&
-    metrics.latest.feed != null &&
-    metrics.latest.alive > 0
-  ){
-
-    $("todayFeedBird")
-      .textContent =
-
-      (
-        metrics.latest.feed /
-        metrics.latest.alive
-      ).toFixed(3) +
-      " kg";
-
+  if(metrics.latest && metrics.latest.feed != null && feedAliveBase > 0){
+    $("todayFeedBird").textContent = (metrics.latest.feed / feedAliveBase).toFixed(3) + " kg";
+  } else {
+    $("todayFeedBird").textContent = "—";
   }
 
-  else{
-
-    $("todayFeedBird")
-      .textContent =
-      "—";
-
+  if(metrics.latest && metrics.latest.water != null && feedAliveBase > 0){
+    $("todayWaterBird").textContent = (metrics.latest.water / feedAliveBase).toFixed(3) + " L";
+  } else {
+    $("todayWaterBird").textContent = "—";
   }
-
-
-  if(
-    metrics.latest &&
-    metrics.latest.water != null &&
-    metrics.latest.alive > 0
-  ){
-
-    $("todayWaterBird")
-      .textContent =
-
-      (
-        metrics.latest.water /
-        metrics.latest.alive
-      ).toFixed(3) +
-      " L";
-
-  }
-
-  else{
-
-    $("todayWaterBird")
-      .textContent =
-      "—";
-
-  }
-
 }
 
-
-
-/* =========================================================
-   HEALTH RECENT
-========================================================= */
-
+/* HEALTH RECENT */
 function renderHealthRecent(){
-
-  const items =
-
-    [...state.health]
-
-      .sort(
-        function(a,b){
-
-          return b.date
-            .localeCompare(
-              a.date
-            );
-
-        }
-      )
-
-      .slice(0,3);
-
+  const items = [...state.health].sort(function(a,b){ return b.date.localeCompare(a.date); }).slice(0,3);
 
   if(!items.length){
-
-    $("healthRecent")
-      .innerHTML = `
-
-        <div class="empty">
-
-          <strong>
-            No health events yet.
-          </strong>
-
-          Keep observations and
-          professional advice together.
-
-        </div>
-
-      `;
-
+    $("healthRecent").innerHTML = `<div class="empty"><strong>No health events yet.</strong>Keep observations and professional advice together.</div>`;
     return;
-
   }
 
-
-  $("healthRecent")
-    .innerHTML = `
-
-      <div class="timeline">
-
-        ${
-          items.map(
-            function(item){
-
-              return `
-
-                <div class="timeline-item">
-
-                  <div class="timeline-date">
-
-                    ${dateLabel(item.date)}
-
-                  </div>
-
-
-                  <div>
-
-                    <strong>
-                      ${esc(item.name)}
-                    </strong>
-
-                    <p>
-                      ${esc(
-                        item.note ||
-                        item.type
-                      )}
-                    </p>
-
-                  </div>
-
-
-                  <button
-                    class="btn soft"
-                    onclick="deleteRecord('health',${item.id})"
-                  >
-                    ×
-                  </button>
-
-                </div>
-
-              `;
-
-            }
-          ).join("")
-        }
-
-      </div>
-
-    `;
-
+  $("healthRecent").innerHTML = `<div class="timeline">${items.map(function(item){
+    return `<div class="timeline-item">
+      <div class="timeline-date">${dateLabel(item.date)}</div>
+      <div><strong>${esc(item.name)}</strong><p>${esc(item.note || item.type)}</p></div>
+      <button class="btn soft" onclick="deleteRecord('health',${item.id})">×</button>
+    </div>`;
+  }).join("")}</div>`;
 }
 
-
-
-/* =========================================================
-   DELETE
-========================================================= */
-
-function deleteRecord(
-  type,
-  id
-){
-
-  if(
-    !confirm(
-      "Delete this record?"
-    )
-  ){
-
-    return;
-
-  }
-
-
-  state[type] =
-    state[type].filter(
-      function(item){
-
-        return item.id !== id;
-
-      }
-    );
-
-
+/* DELETE */
+function deleteRecord(type, id){
+  if(!confirm("Delete this record?")){ return; }
+  state[type] = state[type].filter(function(item){ return item.id !== id; });
   saveState();
-
-  toast(
-    "Record deleted."
-  );
-
+  toast("Record deleted.");
 }
 
-
-
-/* =========================================================
-   HISTORY
-========================================================= */
-
+/* HISTORY */
 function renderHistory(){
-
   const items = [
+    ...state.logs.map(function(item){
+      return { id:item.id, kind:"logs", date:item.date, type:"Daily log", record:"Flock record",
+        details:[
+          item.alive != null ? fmt(item.alive) + " alive" : null,
+          item.feed != null ? fmt(item.feed) + " kg feed" : null,
+          item.weight != null ? fmt(item.weight) + " kg avg weight" : null,
+          item.note || null
+        ].filter(Boolean).join(" · ") };
+    }),
+    ...state.health.map(function(item){
+      return { id:item.id, kind:"health", date:item.date, type:"Health", record:item.name,
+        details:item.type + (item.note ? " · " + item.note : "") };
+    }),
+    ...state.vaccines.map(function(item){
+      return { id:item.id, kind:"vaccines", date:item.date, type:"Vaccine", record:item.name,
+        details:(item.status || "Upcoming") + (item.route ? " · " + item.route : "") };
+    })
+  ].sort(function(a,b){ return String(b.date).localeCompare(String(a.date)); });
 
-    ...state.logs.map(
-      function(item){
+  $("historyEmpty").style.display = items.length ? "none" : "block";
 
-        return {
-
-          id:item.id,
-
-          kind:"logs",
-
-          date:item.date,
-
-          type:"Daily log",
-
-          record:"Flock record",
-
-          details:
-
-            [
-              item.alive != null
-                ? fmt(item.alive) +
-                  " alive"
-                : null,
-
-              item.feed != null
-                ? fmt(item.feed) +
-                  " kg feed"
-                : null,
-
-              item.weight != null
-                ? fmt(item.weight) +
-                  " kg avg weight"
-                : null,
-
-              item.note || null
-
-            ]
-            .filter(Boolean)
-            .join(" · ")
-
-        };
-
-      }
-    ),
-
-
-    ...state.health.map(
-      function(item){
-
-        return {
-
-          id:item.id,
-
-          kind:"health",
-
-          date:item.date,
-
-          type:"Health",
-
-          record:item.name,
-
-          details:
-            item.type +
-            (
-              item.note
-                ? " · " +
-                  item.note
-                : ""
-            )
-
-        };
-
-      }
-    ),
-
-
-    ...state.vaccines.map(
-      function(item){
-
-        return {
-
-          id:item.id,
-
-          kind:"vaccines",
-
-          date:item.date,
-
-          type:"Vaccine",
-
-          record:item.name,
-
-          details:
-
-            (
-              item.status ||
-              "Upcoming"
-            ) +
-
-            (
-              item.route
-                ? " · " +
-                  item.route
-                : ""
-            )
-
-        };
-
-      }
-    )
-
-  ]
-
-  .sort(
-    function(a,b){
-
-      return String(b.date)
-        .localeCompare(
-          String(a.date)
-        );
-
-    }
-  );
-
-
-  $("historyEmpty")
-    .style.display =
-    items.length
-      ? "none"
-      : "block";
-
-
-  $("historyBody")
-    .innerHTML =
-
-    items.map(
-      function(item){
-
-        return `
-
-          <tr>
-
-            <td>
-              ${dateLabel(item.date)}
-            </td>
-
-            <td>
-              ${esc(item.type)}
-            </td>
-
-            <td>
-              <strong>
-                ${esc(item.record)}
-              </strong>
-            </td>
-
-            <td>
-              ${esc(item.details)}
-            </td>
-
-            <td>
-
-              <button
-                class="btn soft"
-                onclick="deleteRecord('${item.kind}',${item.id})"
-              >
-                Delete
-              </button>
-
-            </td>
-
-          </tr>
-
-        `;
-
-      }
-    )
-    .join("");
-
+  $("historyBody").innerHTML = items.map(function(item){
+    return `<tr>
+      <td>${dateLabel(item.date)}</td>
+      <td>${esc(item.type)}</td>
+      <td><strong>${esc(item.record)}</strong></td>
+      <td>${esc(item.details)}</td>
+      <td><button class="btn soft" onclick="deleteRecord('${item.kind}',${item.id})">Delete</button></td>
+    </tr>`;
+  }).join("");
 }
 
-
-
-/* =========================================================
-   EXPORT
-========================================================= */
-
+/* EXPORT */
 function exportData(){
-
-  const blob =
-    new Blob(
-      [
-        JSON.stringify(
-          state,
-          null,
-          2
-        )
-      ],
-      {
-        type:
-          "application/json"
-      }
-    );
-
-
-  const url =
-    URL.createObjectURL(
-      blob
-    );
-
-
-  const link =
-    document.createElement(
-      "a"
-    );
-
-
-  link.href =
-    url;
-
-
-  link.download =
-    "oba-farm-os-backup-" +
-    today() +
-    ".json";
-
-
+  const blob = new Blob([JSON.stringify(state, null, 2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "oba-farm-os-backup-" + today() + ".json";
   link.click();
-
-
-  URL.revokeObjectURL(
-    url
-  );
-
-
-  toast(
-    "Backup exported."
-  );
-
+  URL.revokeObjectURL(url);
+  toast("Backup exported.");
 }
 
-
-
-/* =========================================================
-   CLEAR EVERYTHING
-========================================================= */
-
+/* CLEAR EVERYTHING */
 function clearAllData(){
-
-  if(
-    !confirm(
-      "This will erase ALL OBA Farm OS data stored on this device. Continue?"
-    )
-  ){
-
-    return;
-
-  }
-
-
-  localStorage.removeItem(
-    STORAGE_KEY
-  );
-
-
-  state =
-    JSON.parse(
-      JSON.stringify(
-        DEFAULT_STATE
-      )
-    );
-
-
+  if(!confirm("This will erase ALL OBA Farm OS data stored on this device. Continue?")){ return; }
+  localStorage.removeItem(STORAGE_KEY);
+  state = JSON.parse(JSON.stringify(DEFAULT_STATE));
   refreshAll();
-
   loadFlockForm();
-
-  toast(
-    "All Farm OS data erased."
-  );
-
+  toast("All Farm OS data erased.");
 }
 
-
-
-/* =========================================================
-   DISEASE CHECKER
-========================================================= */
-
+/* DISEASE CHECKER */
 function runDisease(){
+  const bird = $("dBird").value;
+  const age = $("dAge").value;
+  const mortality = $("dMort").value;
 
-  const bird =
-    $("dBird").value;
+  const symptoms = [...document.querySelectorAll(".dSym:checked")].map(function(input){ return input.value; });
 
-  const age =
-    $("dAge").value;
-
-  const mortality =
-    $("dMort").value;
-
-
-  const symptoms =
-
-    [
-      ...document
-        .querySelectorAll(
-          ".dSym:checked"
-        )
-    ]
-    .map(
-      function(input){
-
-        return input.value;
-
-      }
-    );
-
-
-  if(
-    !bird ||
-    age === "" ||
-    !symptoms.length
-  ){
-
-    alert(
-      "Please select bird type, enter age and select at least one sign."
-    );
-
+  if(!bird || age === "" || !symptoms.length){
+    alert("Please select bird type, enter age and select at least one sign.");
     return;
-
   }
 
+  let concern = "General flock health concern";
+  let message = "The selected signs are not specific enough to identify one condition. A fuller farm assessment is needed.";
+  let urgency = "MONITOR & ASSESS";
+  let next = "Review environment, feed and water, flock history, vaccination history and recent management changes.";
 
-  let concern =
-    "General flock health concern";
-
-
-  let message =
-
-    "The selected signs are not specific enough to identify one condition. A fuller farm assessment is needed.";
-
-
-  let urgency =
-    "MONITOR & ASSESS";
-
-
-  let next =
-
-    "Review environment, feed and water, flock history, vaccination history and recent management changes.";
-
-
-  if(
-    symptoms.includes(
-      "blood"
-    )
-  ){
-
-    concern =
-      "Possible intestinal / coccidial concern";
-
-
-    message =
-
-      "Blood in droppings can occur with intestinal disease, including coccidial conditions, but other causes are possible.";
-
-
-    urgency =
-      "PROMPT ATTENTION";
-
-
-    next =
-
-      "Inspect affected birds and droppings, review litter and management conditions, and seek professional assessment promptly.";
-
+  if(symptoms.includes("blood")){
+    concern = "Possible intestinal / coccidial concern";
+    message = "Blood in droppings can occur with intestinal disease, including coccidial conditions, but other causes are possible.";
+    urgency = "PROMPT ATTENTION";
+    next = "Inspect affected birds and droppings, review litter and management conditions, and seek professional assessment promptly.";
+  } else if(symptoms.includes("respiratory") && symptoms.includes("weakness")){
+    concern = "Possible respiratory disease concern";
+    message = "Respiratory signs combined with weakness can occur with several infectious and environmental conditions.";
+    urgency = "PROMPT ATTENTION";
+    next = "Review ventilation, dust and ammonia exposure, vaccination history and recent disease events. Professional assessment is recommended.";
+  } else if(symptoms.includes("lameness")){
+    concern = "Possible locomotor / joint health concern";
+    message = "Lameness or swollen joints may be associated with trauma, nutritional issues or infectious joint conditions.";
+    urgency = "PROMPT ATTENTION";
+    next = "Inspect housing, flooring and affected birds. Professional assessment is recommended.";
+  } else if(symptoms.includes("production") && bird === "Layers"){
+    concern = "Possible layer performance concern";
+    message = "A production decline can have nutritional, environmental, management, reproductive or disease-related causes.";
+    urgency = "INVESTIGATE";
+    next = "Review feed quality, water intake, lighting, flock age, vaccination history, stressors and recent disease events.";
+  } else if(symptoms.includes("diarrhea")){
+    concern = "Possible gastrointestinal concern";
+    message = "Abnormal droppings can result from infectious disease, feed changes, water quality, parasites or management factors.";
+    urgency = "INVESTIGATE";
+    next = "Assess droppings, feed and water changes, litter condition and recent treatments. Seek professional assessment if persistent or worsening.";
   }
 
-
-  else if(
-
-    symptoms.includes(
-      "respiratory"
-    ) &&
-
-    symptoms.includes(
-      "weakness"
-    )
-
-  ){
-
-    concern =
-      "Possible respiratory disease concern";
-
-
-    message =
-
-      "Respiratory signs combined with weakness can occur with several infectious and environmental conditions.";
-
-
-    urgency =
-      "PROMPT ATTENTION";
-
-
-    next =
-
-      "Review ventilation, dust and ammonia exposure, vaccination history and recent disease events. Professional assessment is recommended.";
-
+  if(mortality === "Rapid / severe increase"){
+    urgency = "URGENT";
+    next = "Treat as urgent. Strengthen biosecurity and contact a poultry veterinarian for immediate assessment.";
   }
 
-
-  else if(
-
-    symptoms.includes(
-      "lameness"
-    )
-
-  ){
-
-    concern =
-      "Possible locomotor / joint health concern";
-
-
-    message =
-
-      "Lameness or swollen joints may be associated with trauma, nutritional issues or infectious joint conditions.";
-
-
-    urgency =
-      "PROMPT ATTENTION";
-
-
-    next =
-
-      "Inspect housing, flooring and affected birds. Professional assessment is recommended.";
-
-  }
-
-
-  else if(
-
-    symptoms.includes(
-      "production"
-    ) &&
-
-    bird === "Layers"
-
-  ){
-
-    concern =
-      "Possible layer performance concern";
-
-
-    message =
-
-      "A production decline can have nutritional, environmental, management, reproductive or disease-related causes.";
-
-
-    urgency =
-      "INVESTIGATE";
-
-
-    next =
-
-      "Review feed quality, water intake, lighting, flock age, vaccination history, stressors and recent disease events.";
-
-  }
-
-
-  else if(
-
-    symptoms.includes(
-      "diarrhea"
-    )
-
-  ){
-
-    concern =
-      "Possible gastrointestinal concern";
-
-
-    message =
-
-      "Abnormal droppings can result from infectious disease, feed changes, water quality, parasites or management factors.";
-
-
-    urgency =
-      "INVESTIGATE";
-
-
-    next =
-
-      "Assess droppings, feed and water changes, litter condition and recent treatments. Seek professional assessment if persistent or worsening.";
-
-  }
-
-
-  if(
-    mortality ===
-    "Rapid / severe increase"
-  ){
-
-    urgency =
-      "URGENT";
-
-
-    next =
-
-      "Treat as urgent. Strengthen biosecurity and contact a poultry veterinarian for immediate assessment.";
-
-  }
-
-
-  $("diseaseResult")
-    .innerHTML = `
-
-      <div class="result">
-
-        <div class="label">
-          OBA FLOCK ASSESSMENT
-        </div>
-
-
-        <h3>
-          ${esc(concern)}
-        </h3>
-
-
-        <p>
-          ${esc(message)}
-        </p>
-
-
-        <div class="result-grid">
-
-
-          <div class="result-box">
-
-            <small>
-              ASSESSMENT
-            </small>
-
-            <strong>
-              ${esc(urgency)}
-            </strong>
-
-          </div>
-
-
-          <div class="result-box">
-
-            <small>
-              PROFILE
-            </small>
-
-            <strong>
-              ${esc(bird)} ·
-              ${esc(age)} wk
-            </strong>
-
-          </div>
-
-
-        </div>
-
-
-        <div
-          class="result-box"
-          style="margin-top:9px"
-        >
-
-          <small>
-            RECOMMENDED NEXT STEP
-          </small>
-
-          <strong
-            style="
-              font-size:12px;
-              line-height:1.5;
-            "
-          >
-
-            ${esc(next)}
-
-          </strong>
-
-        </div>
-
-
-      </div>
-
-    `;
-
+  $("diseaseResult").innerHTML = `<div class="result">
+    <div class="label">OBA FLOCK ASSESSMENT</div>
+    <h3>${esc(concern)}</h3>
+    <p>${esc(message)}</p>
+    <div class="result-grid">
+      <div class="result-box"><small>ASSESSMENT</small><strong>${esc(urgency)}</strong></div>
+      <div class="result-box"><small>PROFILE</small><strong>${esc(bird)} · ${esc(age)} wk</strong></div>
+    </div>
+    <div class="result-box" style="margin-top:9px">
+      <small>RECOMMENDED NEXT STEP</small>
+      <strong style="font-size:12px;line-height:1.5;">${esc(next)}</strong>
+    </div>
+  </div>`;
 }
-
-
 
 function resetDisease(){
-
-  document
-    .querySelectorAll(
-      ".dSym"
-    )
-    .forEach(
-      function(item){
-
-        item.checked =
-          false;
-
-      }
-    );
-
-
-  $("dBird").value =
-    "";
-
-  $("dAge").value =
-    "";
-
-  $("dMort").value =
-    "";
-
-  $("diseaseResult")
-    .innerHTML =
-    "";
-
+  document.querySelectorAll(".dSym").forEach(function(item){ item.checked = false; });
+  $("dBird").value = "";
+  $("dAge").value = "";
+  $("dMort").value = "";
+  $("diseaseResult").innerHTML = "";
 }
 
-
-
-/* =========================================================
-   PROFIT CALCULATOR
-========================================================= */
-
+/* PROFIT CALCULATOR */
 function runProfit(){
-
-  const birds =
-    Number(
-      $("pBirds").value
-    );
-
-
-  const mortality =
-    Number(
-      $("pMort").value
-    );
-
-
-  const sellingPrice =
-    Number(
-      $("pPrice").value
-    );
-
-
-  const chickCost =
-    Number(
-      $("pChick").value
-    ) || 0;
-
-
-  const feedCost =
-    Number(
-      $("pFeed").value
-    ) || 0;
-
-
-  const healthCost =
-    Number(
-      $("pHealth").value
-    ) || 0;
-
-
-  const otherCost =
-    Number(
-      $("pOther").value
-    ) || 0;
-
-
-  if(
-    !birds ||
-    birds < 1
-  ){
-
-    alert(
-      "Enter birds stocked."
-    );
-
-    return;
-
-  }
-
-
-  if(
-    mortality < 0 ||
-    mortality > 100
-  ){
-
-    alert(
-      "Mortality must be between 0% and 100%."
-    );
-
-    return;
-
-  }
-
-
-  if(
-    !sellingPrice ||
-    sellingPrice <= 0
-  ){
-
-    alert(
-      "Enter selling price per bird."
-    );
-
-    return;
-
-  }
-
-
-  const surviving =
-    birds *
-    (
-      1 -
-      mortality / 100
-    );
-
-
-  const totalCost =
-    chickCost +
-    feedCost +
-    healthCost +
-    otherCost;
-
-
-  const revenue =
-    surviving *
-    sellingPrice;
-
-
-  const profit =
-    revenue -
-    totalCost;
-
-
-  const margin =
-    revenue
-      ? (
-          profit /
-          revenue
-        ) * 100
-      : 0;
-
-
-  const roi =
-    totalCost
-      ? (
-          profit /
-          totalCost
-        ) * 100
-      : 0;
-
-
-  const breakEven =
-    surviving
-      ? totalCost /
-        surviving
-      : 0;
-
-
-  $("profitResult")
-    .innerHTML = `
-
-      <div class="result">
-
-        <div class="label">
-          OBA FARM PROFIT ASSESSMENT
-        </div>
-
-
-        <h3>
-          ${
-            profit >= 0
-              ? "Estimated Profit"
-              : "Estimated Loss"
-          }
-        </h3>
-
-
-        <div class="result-highlight">
-
-          ${money(profit)}
-
-        </div>
-
-
-        <p>
-
-          ${
-            profit > 0
-              ? "The entered figures project a positive return."
-              : profit < 0
-                ? "The entered figures project a loss at the stated selling price."
-                : "The entered figures project a break-even position."
-          }
-
-        </p>
-
-
-        <div class="result-grid">
-
-
-          <div class="result-box">
-
-            <small>
-              SURVIVING BIRDS
-            </small>
-
-            <strong>
-              ${fmt(surviving)}
-            </strong>
-
-          </div>
-
-
-          <div class="result-box">
-
-            <small>
-              REVENUE
-            </small>
-
-            <strong>
-              ${money(revenue)}
-            </strong>
-
-          </div>
-
-
-          <div class="result-box">
-
-            <small>
-              TOTAL COST
-            </small>
-
-            <strong>
-              ${money(totalCost)}
-            </strong>
-
-          </div>
-
-
-          <div class="result-box">
-
-            <small>
-              BREAK-EVEN / BIRD
-            </small>
-
-            <strong>
-              ${money(breakEven)}
-            </strong>
-
-          </div>
-
-
-          <div class="result-box">
-
-            <small>
-              ESTIMATED ROI
-            </small>
-
-            <strong>
-              ${roi.toFixed(1)}%
-            </strong>
-
-          </div>
-
-
-          <div class="result-box">
-
-            <small>
-              ESTIMATED PROFIT MARGIN
-            </small>
-
-            <strong>
-              ${margin.toFixed(1)}%
-            </strong>
-
-          </div>
-
-
-        </div>
-
-
-        <p>
-
-          Estimate only.
-
-          Actual performance can change
-          with feed consumption, mortality,
-          growth, market price and other
-          farm factors.
-
-        </p>
-
-
-      </div>
-
-    `;
-
+  const birds = Number($("pBirds").value);
+  const mortality = Number($("pMort").value);
+  const sellingPrice = Number($("pPrice").value);
+  const chickCost = Number($("pChick").value) || 0;
+  const feedCost = Number($("pFeed").value) || 0;
+  const healthCost = Number($("pHealth").value) || 0;
+  const otherCost = Number($("pOther").value) || 0;
+
+  if(!birds || birds < 1){ alert("Enter birds stocked."); return; }
+  if(mortality < 0 || mortality > 100){ alert("Mortality must be between 0% and 100%."); return; }
+  if(!sellingPrice || sellingPrice <= 0){ alert("Enter selling price per bird."); return; }
+
+  const surviving = birds * (1 - mortality / 100);
+  const totalCost = chickCost + feedCost + healthCost + otherCost;
+  const revenue = surviving * sellingPrice;
+  const profit = revenue - totalCost;
+  const margin = revenue ? (profit / revenue) * 100 : 0;
+  const roi = totalCost ? (profit / totalCost) * 100 : 0;
+  const breakEven = surviving ? totalCost / surviving : 0;
+
+  $("profitResult").innerHTML = `<div class="result">
+    <div class="label">OBA FARM PROFIT ASSESSMENT</div>
+    <h3>${profit >= 0 ? "Estimated Profit" : "Estimated Loss"}</h3>
+    <div class="result-highlight">${money(profit)}</div>
+    <p>${profit > 0 ? "The entered figures project a positive return." : profit < 0 ? "The entered figures project a loss at the stated selling price." : "The entered figures project a break-even position."}</p>
+    <div class="result-grid">
+      <div class="result-box"><small>SURVIVING BIRDS</small><strong>${fmt(surviving)}</strong></div>
+      <div class="result-box"><small>REVENUE</small><strong>${money(revenue)}</strong></div>
+      <div class="result-box"><small>TOTAL COST</small><strong>${money(totalCost)}</strong></div>
+      <div class="result-box"><small>BREAK-EVEN / BIRD</small><strong>${money(breakEven)}</strong></div>
+      <div class="result-box"><small>ESTIMATED ROI</small><strong>${roi.toFixed(1)}%</strong></div>
+      <div class="result-box"><small>ESTIMATED PROFIT MARGIN</small><strong>${margin.toFixed(1)}%</strong></div>
+    </div>
+    <p>Estimate only. Actual performance can change with feed consumption, mortality, growth, market price and other farm factors.</p>
+  </div>`;
 }
-
-
 
 function resetProfit(){
-
-  [
-    "pBirds",
-    "pMort",
-    "pPrice",
-    "pChick",
-    "pFeed",
-    "pHealth",
-    "pOther"
-  ]
-  .forEach(
-    function(id){
-
-      $(id).value =
-        "";
-
-    }
-  );
-
-
-  $("profitResult")
-    .innerHTML =
-    "";
-
+  ["pBirds","pMort","pPrice","pChick","pFeed","pHealth","pOther"].forEach(function(id){ $(id).value = ""; });
+  $("profitResult").innerHTML = "";
 }
 
-
-
-/* =========================================================
-   EGG PRODUCTION
-========================================================= */
-
+/* EGG PRODUCTION */
 function runEgg(){
+  const eggs = Number($("eEggs").value);
+  const hens = Number($("eHens").value);
 
-  const eggs =
-    Number(
-      $("eEggs").value
-    );
+  if(eggs < 0 || !hens || hens < 1){ alert("Enter valid eggs collected and hens present."); return; }
 
+  const percentage = (eggs / hens) * 100;
 
-  const hens =
-    Number(
-      $("eHens").value
-    );
-
-
-  if(
-    eggs < 0 ||
-    !hens ||
-    hens < 1
-  ){
-
-    alert(
-      "Enter valid eggs collected and hens present."
-    );
-
-    return;
-
-  }
-
-
-  const percentage =
-    (
-      eggs /
-      hens
-    ) * 100;
-
-
-  $("eggResult")
-    .innerHTML = `
-
-      <div class="result">
-
-        <div class="label">
-          PRODUCTION INDICATOR
-        </div>
-
-
-        <h3>
-          Egg production
-        </h3>
-
-
-        <div class="result-highlight">
-          ${percentage.toFixed(1)}%
-        </div>
-
-
-        <p>
-
-          ${fmt(eggs)}
-          eggs from
-          ${fmt(hens)}
-          hens in the recorded period.
-
-        </p>
-
-      </div>
-
-    `;
-
+  $("eggResult").innerHTML = `<div class="result">
+    <div class="label">PRODUCTION INDICATOR</div>
+    <h3>Egg production</h3>
+    <div class="result-highlight">${percentage.toFixed(1)}%</div>
+    <p>${fmt(eggs)} eggs from ${fmt(hens)} hens in the recorded period.</p>
+  </div>`;
 }
 
-
-
-/* =========================================================
-   FEED
-========================================================= */
-
+/* FEED */
 function runFeed(){
+  const feed = Number($("fFeed").value);
+  const birds = Number($("fBirds").value);
+  const days = Number($("fDays").value) || 1;
 
-  const feed =
-    Number(
-      $("fFeed").value
-    );
+  if(feed < 0 || !birds || birds < 1 || days < 1){ alert("Enter valid feed, bird count and days."); return; }
 
+  const totalPerBird = feed / birds;
+  const perBirdDay = totalPerBird / days;
 
-  const birds =
-    Number(
-      $("fBirds").value
-    );
-
-
-  const days =
-    Number(
-      $("fDays").value
-    ) || 1;
-
-
-  if(
-    feed < 0 ||
-    !birds ||
-    birds < 1 ||
-    days < 1
-  ){
-
-    alert(
-      "Enter valid feed, bird count and days."
-    );
-
-    return;
-
-  }
-
-
-  const totalPerBird =
-    feed /
-    birds;
-
-
-  const perBirdDay =
-    totalPerBird /
-    days;
-
-
-  $("feedResult")
-    .innerHTML = `
-
-      <div class="result">
-
-        <div class="label">
-          RECORDED INTAKE
-        </div>
-
-
-        <h3>
-          Feed intake
-        </h3>
-
-
-        <div class="result-highlight">
-
-          ${perBirdDay.toFixed(3)}
-          kg/bird/day
-
-        </div>
-
-
-        <p>
-
-          ${fmt(feed)}
-          kg over
-          ${days}
-          day(s) and an average of
-          ${fmt(birds)}
-          birds.
-
-        </p>
-
-
-        <div
-          class="result-box"
-          style="margin-top:12px"
-        >
-
-          <small>
-            TOTAL / BIRD FOR PERIOD
-          </small>
-
-          <strong>
-            ${totalPerBird.toFixed(3)}
-            kg
-          </strong>
-
-        </div>
-
-
-      </div>
-
-    `;
-
+  $("feedResult").innerHTML = `<div class="result">
+    <div class="label">RECORDED INTAKE</div>
+    <h3>Feed intake</h3>
+    <div class="result-highlight">${perBirdDay.toFixed(3)} kg/bird/day</div>
+    <p>${fmt(feed)} kg over ${days} day(s) and an average of ${fmt(birds)} birds.</p>
+    <div class="result-box" style="margin-top:12px"><small>TOTAL / BIRD FOR PERIOD</small><strong>${totalPerBird.toFixed(3)} kg</strong></div>
+  </div>`;
 }
 
-
-
-/* =========================================================
-   WATER
-========================================================= */
-
+/* WATER */
 function runWater(){
+  const water = Number($("wWater").value);
+  const birds = Number($("wBirds").value);
+  const days = Number($("wDays").value) || 1;
 
-  const water =
-    Number(
-      $("wWater").value
-    );
+  if(water < 0 || !birds || birds < 1 || days < 1){ alert("Enter valid water, bird count and days."); return; }
 
+  const totalPerBird = water / birds;
+  const perBirdDay = totalPerBird / days;
 
-  const birds =
-    Number(
-      $("wBirds").value
-    );
-
-
-  const days =
-    Number(
-      $("wDays").value
-    ) || 1;
-
-
-  if(
-    water < 0 ||
-    !birds ||
-    birds < 1 ||
-    days < 1
-  ){
-
-    alert(
-      "Enter valid water, bird count and days."
-    );
-
-    return;
-
-  }
-
-
-  const totalPerBird =
-    water /
-    birds;
-
-
-  const perBirdDay =
-    totalPerBird /
-    days;
-
-
-  $("waterResult")
-    .innerHTML = `
-
-      <div class="result">
-
-        <div class="label">
-          RECORDED INTAKE
-        </div>
-
-
-        <h3>
-          Water intake
-        </h3>
-
-
-        <div class="result-highlight">
-
-          ${perBirdDay.toFixed(3)}
-          L/bird/day
-
-        </div>
-
-
-        <p>
-
-          ${fmt(water)}
-          L over
-          ${days}
-          day(s) and an average of
-          ${fmt(birds)}
-          birds.
-
-        </p>
-
-      </div>
-
-    `;
-
+  $("waterResult").innerHTML = `<div class="result">
+    <div class="label">RECORDED INTAKE</div>
+    <h3>Water intake</h3>
+    <div class="result-highlight">${perBirdDay.toFixed(3)} L/bird/day</div>
+    <p>${fmt(water)} L over ${days} day(s) and an average of ${fmt(birds)} birds.</p>
+  </div>`;
 }
 
-
-
-/* =========================================================
-   OPTIONAL BROWSER REMINDER
-========================================================= */
-
+/* OPTIONAL BROWSER REMINDER */
 function checkReminders(){
+  const dueTasks = state.vaccines.filter(function(item){
+    const days = daysUntil(item.date);
+    return item.status === "Upcoming" && days >= 0 && days <= 3;
+  });
 
-  const dueTasks =
-
-    state.vaccines.filter(
-      function(item){
-
-        const days =
-          daysUntil(
-            item.date
-          );
-
-        return (
-
-          item.status === "Upcoming" &&
-
-          days >= 0 &&
-
-          days <= 3
-
-        );
-
+  if(dueTasks.length && "Notification" in window && Notification.permission === "granted"){
+    dueTasks.forEach(function(item){
+      const key = "notified_" + item.id;
+      if(!sessionStorage.getItem(key)){
+        new Notification("OBA Farm OS", { body: "Upcoming farm task: " + item.name + " on " + dateLabel(item.date) });
+        sessionStorage.setItem(key, "1");
       }
-    );
-
-
-  if(
-
-    dueTasks.length &&
-
-    "Notification" in window &&
-
-    Notification.permission === "granted"
-
-  ){
-
-    dueTasks.forEach(
-      function(item){
-
-        const key =
-          "notified_" +
-          item.id;
-
-
-        if(
-          !sessionStorage.getItem(
-            key
-          )
-        ){
-
-          new Notification(
-            "OBA Farm OS",
-            {
-
-              body:
-                "Upcoming farm task: " +
-                item.name +
-                " on " +
-                dateLabel(
-                  item.date
-                )
-
-            }
-          );
-
-
-          sessionStorage.setItem(
-            key,
-            "1"
-          );
-
-        }
-
-      }
-    );
-
+    });
   }
-
 }
-
-
 
 async function requestNotifications(){
-
-  if(
-    !("Notification" in window)
-  ){
-
-    toast(
-      "This browser does not support notifications."
-    );
-
-    return;
-
-  }
-
-
-  const permission =
-    await Notification.requestPermission();
-
-
-  if(
-    permission ===
-    "granted"
-  ){
-
-    toast(
-      "Reminders enabled while Farm OS is open."
-    );
-
-    checkReminders();
-
-  }
-
-  else{
-
-    toast(
-      "Notification permission was not granted."
-    );
-
-  }
-
+  if(!("Notification" in window)){ toast("This browser does not support notifications."); return; }
+  const permission = await Notification.requestPermission();
+  if(permission === "granted"){ toast("Reminders enabled while Farm OS is open."); checkReminders(); }
+  else{ toast("Notification permission was not granted."); }
 }
 
-
-
-/* =========================================================
-   INITIALIZE
-========================================================= */
-
+/* INITIALIZE */
 function initialize(){
-
-  $("logDate").value =
-    today();
-
-  $("qDate").value =
-    today();
-
-  $("healthDate").value =
-    today();
-
-
+  $("logDate").value = today();
+  $("qDate").value = today();
+  $("healthDate").value = today();
   loadFlockForm();
-
-
   refreshAll();
-
-
   checkReminders();
-
-
-  setInterval(
-    checkReminders,
-    60000
-  );
-
+  setInterval(checkReminders, 60000);
 }
-
 
 initialize();
-
-
 </script>
-
 
 </body>
 </html>
