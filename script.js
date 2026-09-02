@@ -71,3 +71,59 @@ if (reduceMotion || !("IntersectionObserver" in window)) {
     }, 2500);
   });
 }
+
+/* Horizontal swipe carousel for card grids that switch from a desktop
+   side-by-side layout to a mobile horizontal scroller (see .solution-grid
+   in style.css). Adds a "swipe" hint and position dots without touching
+   the HTML — built and torn down automatically as the viewport crosses
+   the 900px breakpoint. */
+function setupSwipeCarousel(trackSelector, cardSelector) {
+  const track = document.querySelector(trackSelector);
+  if (!track) return;
+  const cards = track.querySelectorAll(cardSelector);
+  if (cards.length < 2) return;
+
+  const mq = window.matchMedia("(max-width: 900px)");
+  let dotsEl = null, hintEl = null, onScroll = null;
+
+  function build() {
+    if (!mq.matches || dotsEl) return;
+
+    hintEl = document.createElement("div");
+    hintEl.className = "carousel-hint";
+    hintEl.innerHTML = `Swipe to explore <span class="sweep">→</span>`;
+    track.insertAdjacentElement("beforebegin", hintEl);
+
+    dotsEl = document.createElement("div");
+    dotsEl.className = "carousel-dots";
+    cards.forEach((_, i) => {
+      const dot = document.createElement("span");
+      dot.className = "carousel-dot" + (i === 0 ? " is-active" : "");
+      dotsEl.appendChild(dot);
+    });
+    track.insertAdjacentElement("afterend", dotsEl);
+
+    let dismissed = false;
+    onScroll = () => {
+      if (!dismissed) { dismissed = true; hintEl.classList.add("is-hidden"); }
+      const cardWidth = cards[0].getBoundingClientRect().width + 16; // + gap
+      const idx = Math.round(track.scrollLeft / cardWidth);
+      dotsEl.querySelectorAll(".carousel-dot").forEach((d, i) =>
+        d.classList.toggle("is-active", i === Math.min(idx, cards.length - 1))
+      );
+    };
+    track.addEventListener("scroll", onScroll, { passive: true });
+    setTimeout(() => hintEl?.classList.add("is-hidden"), 4500);
+  }
+
+  function teardown() {
+    if (onScroll) track.removeEventListener("scroll", onScroll);
+    hintEl?.remove(); hintEl = null;
+    dotsEl?.remove(); dotsEl = null;
+  }
+
+  build();
+  mq.addEventListener("change", () => (mq.matches ? build() : teardown()));
+}
+
+setupSwipeCarousel(".solution-grid", ".solution-card");
