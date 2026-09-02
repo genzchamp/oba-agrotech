@@ -921,3 +921,258 @@ img{display:block;width:100%;height:100%;object-fit:cover}
     }
   }
 }
+
+
+
+
+/* =========================================================
+   OBA AGROTECH — PREMIUM MOBILE HERO COMPOSITION
+   ========================================================= */
+
+@media (max-width:900px){
+
+  /* Give the hero a stronger cinematic bottom anchor */
+  .hero-copy{
+    padding-top:130px;
+    padding-bottom:42px;
+  }
+
+  /* Small brand/status line */
+  .hero-copy .eyebrow{
+    display:flex;
+    align-items:center;
+    gap:3px;
+    font-size:9px;
+    letter-spacing:2.8px;
+    margin-bottom:3px;
+  }
+
+  .hero-copy .eyebrow i{
+    flex:0 0 auto;
+    width:6px;
+    height:6px;
+    margin-right:5px;
+  }
+
+  /* Main headline */
+  .hero h1{
+    max-width:650px;
+    margin:15px 0 20px;
+
+    font-size:clamp(45px,12.5vw,68px);
+    line-height:.88;
+    letter-spacing:-3.4px;
+
+    text-wrap:balance;
+  }
+
+  /* Make highlighted word feel intentional */
+  .hero h1 em{
+    display:inline-block;
+    position:relative;
+  }
+
+  .hero h1 em:after{
+    content:"";
+    position:absolute;
+    left:0;
+    right:4%;
+    bottom:-5px;
+    height:2px;
+
+    background:var(--lime);
+    opacity:.55;
+
+    transform:scaleX(0);
+    transform-origin:left;
+
+    animation:heroUnderline .8s var(--ease) .9s forwards;
+  }
+
+  @keyframes heroUnderline{
+    to{
+      transform:scaleX(1);
+    }
+  }
+
+
+  /* Supporting copy */
+  .hero-copy>p{
+    max-width:470px;
+    margin:0;
+
+    font-size:13.5px;
+    line-height:1.65;
+    letter-spacing:.05px;
+
+    color:rgba(255,255,255,.82);
+  }
+
+
+  /* CTA group */
+  .hero-actions{
+    width:100%;
+    margin:26px 0 30px;
+    display:flex;
+    gap:9px;
+  }
+
+  .hero-actions .btn{
+    min-height:50px;
+    padding:13px 17px;
+    font-size:11px;
+  }
+
+  .hero-actions .btn-primary{
+    flex:1;
+  }
+
+  .hero-actions .btn-ghost{
+    flex:1;
+  }
+
+
+  /* Proof row */
+  .hero-proof{
+    width:100%;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+
+    padding-top:18px;
+    border-top:1px solid rgba(255,255,255,.18);
+  }
+
+  .hero-proof div{
+    align-items:center;
+  }
+
+  .hero-proof strong{
+    font-size:9px;
+    letter-spacing:.3px;
+  }
+
+  .hero-proof span{
+    font-size:7px;
+    line-height:1.3;
+    letter-spacing:1.2px;
+  }
+
+
+  /* Make the floating cards more integrated */
+  .floating-card{
+    border-radius:15px;
+  }
+
+  .card-top{
+    padding:11px 13px;
+    font-size:9px;
+
+    box-shadow:
+      0 12px 35px rgba(0,0,0,.22);
+  }
+
+  .card-bottom{
+    padding:11px 13px;
+  }
+
+  .card-bottom small{
+    font-size:6px;
+  }
+
+  .card-bottom b{
+    font-size:10px;
+  }
+
+
+  /* More refined circle badge */
+  .circle-label{
+    width:62px;
+    height:62px;
+
+    font-size:7px;
+    letter-spacing:.8px;
+
+    border:1px solid rgba(7,18,13,.35);
+  }
+
+
+  /* Darker lower gradient for readability */
+  .hero-image-wrap:before{
+    background:
+      linear-gradient(
+        180deg,
+        rgba(3,12,8,.12) 0%,
+        rgba(3,12,8,.05) 22%,
+        rgba(3,12,8,.24) 43%,
+        rgba(3,12,8,.68) 70%,
+        rgba(3,12,8,.94) 100%
+      );
+  }
+
+
+  /* Don't let the fixed header visually disappear */
+  .site-header{
+    background:rgba(251,250,246,.78);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL DEVICES
+   ========================================================= */
+
+@media(max-width:360px){
+
+  .hero-copy{
+    padding-left:6vw;
+    padding-right:6vw;
+    padding-bottom:30px;
+  }
+
+  .hero h1{
+    font-size:41px;
+    letter-spacing:-2.7px;
+  }
+
+  .hero-copy>p{
+    font-size:12.5px;
+  }
+
+  .hero-actions{
+    gap:7px;
+  }
+
+  .hero-actions .btn{
+    padding:12px 13px;
+    font-size:10px;
+  }
+
+  .hero-proof{
+    gap:10px;
+  }
+
+  .card-top,
+  .card-bottom{
+    top:82px;
+  }
+
+  .circle-label{
+    width:56px;
+    height:56px;
+    right:5vw;
+    bottom:18px;
+  }
+}
+
+
+/* Reduced motion */
+@media(max-width:900px) and (prefers-reduced-motion:reduce){
+
+  .hero h1 em:after{
+    animation:none;
+    transform:scaleX(1);
+  }
+}
