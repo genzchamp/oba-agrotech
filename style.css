@@ -1233,3 +1233,242 @@ img{display:block;width:100%;height:100%;object-fit:cover}
     z-index:5;
   }
 }
+
+
+/* =========================================================
+   OBA AGROTECH — PREMIUM SOLUTION CARDS
+   ========================================================= */
+
+.solution-card{
+  isolation:isolate;
+  overflow:hidden;
+}
+
+.solution-card:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+
+  background:
+    radial-gradient(
+      circle at 85% 15%,
+      rgba(216,255,101,.14),
+      transparent 30%
+    );
+
+  opacity:0;
+  transition:opacity .5s var(--ease);
+}
+
+.solution-card:hover:before{
+  opacity:1;
+}
+
+/* Card number */
+.card-no{
+  z-index:3;
+  font-family:Manrope,sans-serif;
+  letter-spacing:2px;
+}
+
+/* Icon treatment */
+.solution-card .icon{
+  position:relative;
+  z-index:3;
+
+  width:58px;
+  height:58px;
+
+  display:grid;
+  place-items:center;
+
+  border:1px solid currentColor;
+  border-radius:18px;
+
+  font-size:25px;
+
+  background:rgba(255,255,255,.04);
+
+  transition:
+    transform .45s var(--ease),
+    background .45s var(--ease);
+}
+
+.solution-card:hover .icon{
+  transform:translateY(-5px) rotate(-4deg);
+  background:rgba(216,255,101,.10);
+}
+
+/* Text sits above effects */
+.solution-card h3,
+.solution-card p,
+.solution-card a{
+  position:relative;
+  z-index:3;
+}
+
+/* Card heading refinement */
+.solution-card h3{
+  letter-spacing:-1.8px;
+}
+
+/* CTA arrow */
+.solution-card a span{
+  display:inline-block;
+  margin-left:8px;
+
+  transition:transform .35s var(--ease);
+}
+
+.solution-card a:hover span{
+  transform:translate(4px,-3px);
+}
+
+
+/* =========================================================
+   IMAGE SOLUTION CARD
+   ========================================================= */
+
+.image-card{
+  background:#07120d;
+}
+
+.image-card:before{
+  z-index:2;
+  opacity:1;
+
+  background:
+    radial-gradient(
+      circle at 75% 20%,
+      rgba(216,255,101,.12),
+      transparent 30%
+    );
+}
+
+.image-card img{
+  filter:saturate(.92);
+}
+
+.image-card-content{
+  z-index:4;
+}
+
+.image-card-content h3{
+  text-shadow:0 4px 20px rgba(0,0,0,.3);
+}
+
+.image-card-content p{
+  color:rgba(255,255,255,.78);
+}
+
+
+/* =========================================================
+   MOBILE SOLUTION CAROUSEL
+   ========================================================= */
+
+@media(max-width:900px){
+
+  .solutions{
+    overflow:hidden;
+  }
+
+  .section-head{
+    margin-bottom:32px;
+  }
+
+  .section-head h2{
+    max-width:340px;
+  }
+
+  .section-head>p{
+    max-width:300px;
+  }
+
+  .solution-grid{
+    gap:14px;
+    padding-top:6px;
+  }
+
+  .solution-card{
+    min-width:84%;
+    min-height:450px;
+
+    border-radius:24px;
+    padding:26px;
+
+    box-shadow:
+      0 10px 30px rgba(7,18,13,.07);
+  }
+
+  .solution-card .icon{
+    margin-top:58px;
+    margin-bottom:58px;
+  }
+
+  .solution-card h3{
+    font-size:30px;
+  }
+
+  .solution-card p{
+    font-size:12px;
+    max-width:290px;
+  }
+
+  /* Image card */
+  .image-card img{
+    transition:transform .8s var(--ease);
+  }
+
+  .solution-card:active{
+    transform:scale(.985);
+  }
+
+  /* Cleaner swipe hint */
+  .carousel-hint{
+    margin-bottom:12px;
+    font-size:9px;
+    letter-spacing:1.8px;
+  }
+
+  .carousel-dots{
+    margin-top:18px;
+  }
+}
+
+
+/* =========================================================
+   DESKTOP CARD POLISH
+   ========================================================= */
+
+@media(min-width:901px){
+
+  .solution-card{
+    min-height:550px;
+  }
+
+  .solution-card .icon{
+    margin-top:88px;
+    margin-bottom:72px;
+  }
+
+  .solution-card h3{
+    font-size:34px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+  .solution-card,
+  .solution-card .icon,
+  .solution-card img,
+  .solution-card a span{
+    transition:none;
+  }
+}
