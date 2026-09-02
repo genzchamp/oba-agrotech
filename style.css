@@ -1472,3 +1472,437 @@ img{display:block;width:100%;height:100%;object-fit:cover}
     transition:none;
   }
 }
+
+
+
+/* =========================================================
+   OBA AGROTECH — PREMIUM FHOF / FRAMEWORK SECTION
+   ========================================================= */
+
+.framework{
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+}
+
+/* Large atmospheric background glow */
+.framework:before{
+  content:"";
+  position:absolute;
+  width:520px;
+  height:520px;
+  border-radius:50%;
+
+  top:-220px;
+  right:-160px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(216,255,101,.12),
+      transparent 68%
+    );
+
+  pointer-events:none;
+  z-index:-1;
+}
+
+/* Subtle lower glow */
+.framework:after{
+  content:"";
+  position:absolute;
+  width:420px;
+  height:420px;
+  border-radius:50%;
+
+  bottom:-250px;
+  left:-180px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(216,255,101,.07),
+      transparent 68%
+    );
+
+  pointer-events:none;
+  z-index:-1;
+}
+
+
+/* =========================================================
+   FRAMEWORK VISUAL
+   ========================================================= */
+
+.framework-visual{
+  position:relative;
+  isolation:isolate;
+}
+
+.framework-visual:before{
+  content:"";
+  position:absolute;
+
+  width:72%;
+  height:72%;
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(216,255,101,.08),
+      transparent 70%
+    );
+
+  filter:blur(5px);
+
+  z-index:-1;
+
+  animation:frameworkGlow 6s ease-in-out infinite alternate;
+}
+
+.framework-visual img{
+  position:relative;
+  z-index:2;
+
+  transform:rotate(-1deg);
+
+  transition:
+    transform .7s var(--ease),
+    box-shadow .7s var(--ease);
+}
+
+.framework-visual:hover img{
+  transform:rotate(0deg) translateY(-5px);
+
+  box-shadow:
+    0 38px 85px rgba(0,0,0,.40);
+}
+
+@keyframes frameworkGlow{
+  from{
+    transform:scale(.92);
+    opacity:.45;
+  }
+
+  to{
+    transform:scale(1.08);
+    opacity:.9;
+  }
+}
+
+
+/* =========================================================
+   FHOF BADGE
+   ========================================================= */
+
+.framework-badge{
+  z-index:5;
+
+  border:1px solid rgba(216,255,101,.35);
+
+  box-shadow:
+    0 18px 40px rgba(0,0,0,.28),
+    0 0 0 8px rgba(216,255,101,.035);
+
+  transition:
+    transform .5s var(--ease),
+    box-shadow .5s var(--ease);
+}
+
+.framework-badge:hover{
+  transform:rotate(0deg) scale(1.08);
+
+  box-shadow:
+    0 22px 50px rgba(0,0,0,.34),
+    0 0 0 12px rgba(216,255,101,.05);
+}
+
+
+/* =========================================================
+   FRAMEWORK COPY
+   ========================================================= */
+
+.framework-copy{
+  position:relative;
+  z-index:3;
+}
+
+.framework-copy .section-kicker{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.framework-copy .section-kicker:before{
+  content:"";
+  width:28px;
+  height:1px;
+  background:var(--lime);
+  opacity:.7;
+}
+
+.framework h2{
+  max-width:650px;
+
+  font-size:clamp(44px,5vw,72px);
+
+  letter-spacing:-3.5px;
+}
+
+.framework h2 em{
+  position:relative;
+}
+
+.framework h2 em:after{
+  content:"";
+
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-5px;
+
+  height:2px;
+
+  background:var(--lime);
+  opacity:.45;
+}
+
+
+/* Supporting paragraph */
+.framework-copy>p{
+  max-width:520px;
+  color:#aeb8b0;
+}
+
+
+/* =========================================================
+   FRAMEWORK STEPS
+   ========================================================= */
+
+.steps{
+  position:relative;
+  margin-top:42px;
+}
+
+.steps div{
+  position:relative;
+
+  display:grid;
+  grid-template-columns:35px 1fr;
+
+  gap:14px;
+
+  padding:19px 10px;
+
+  transition:
+    padding-left .35s var(--ease),
+    background .35s var(--ease);
+}
+
+.steps div:before{
+  content:"";
+
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+
+  height:1px;
+
+  background:rgba(255,255,255,.08);
+}
+
+.steps div:last-child{
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.steps div:hover{
+  padding-left:17px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(216,255,101,.045),
+      transparent
+    );
+}
+
+.steps b{
+  font-family:Manrope;
+  letter-spacing:1px;
+}
+
+.steps strong{
+  font-family:Manrope;
+  font-size:12px;
+}
+
+.steps span{
+  color:#89958d;
+  line-height:1.5;
+}
+
+
+/* =========================================================
+   MOBILE FHOF
+   ========================================================= */
+
+@media(max-width:900px){
+
+  .framework{
+    padding-top:82px;
+    padding-bottom:82px;
+  }
+
+  .framework:before{
+    width:360px;
+    height:360px;
+    top:-160px;
+    right:-180px;
+  }
+
+  .framework:after{
+    width:300px;
+    height:300px;
+    bottom:-180px;
+    left:-160px;
+  }
+
+
+  /* Image comes first */
+  .framework-visual{
+    width:100%;
+    padding:28px 12px 58px;
+  }
+
+  .framework-visual img{
+    width:100%;
+    height:auto;
+    max-height:none;
+
+    border-radius:24px 24px 7px 24px;
+
+    transform:rotate(-1deg);
+  }
+
+  .framework-visual:hover img{
+    transform:rotate(0deg);
+  }
+
+
+  /* Badge */
+  .framework-badge{
+    right:2px;
+    bottom:20px;
+
+    width:82px;
+    height:82px;
+
+    font-size:14px;
+  }
+
+
+  /* Text */
+  .framework-copy .section-kicker{
+    font-size:9px;
+    letter-spacing:2.3px;
+  }
+
+  .framework h2{
+    margin:17px 0 20px;
+
+    font-size:clamp(39px,11vw,54px);
+
+    line-height:.94;
+    letter-spacing:-2.8px;
+  }
+
+  .framework-copy>p{
+    font-size:13.5px;
+    line-height:1.7;
+  }
+
+
+  /* Steps become premium stacked rows */
+  .steps{
+    margin-top:32px;
+  }
+
+  .steps div{
+    grid-template-columns:30px 1fr;
+    gap:12px;
+
+    padding:18px 5px;
+  }
+
+  .steps div:hover{
+    padding-left:10px;
+  }
+
+  .steps b{
+    font-size:8px;
+  }
+
+  .steps strong{
+    font-size:11px;
+  }
+
+  .steps span{
+    display:block;
+    margin-top:4px;
+    font-size:10px;
+  }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media(max-width:420px){
+
+  .framework{
+    padding-top:72px;
+    padding-bottom:72px;
+  }
+
+  .framework-visual{
+    padding-left:4px;
+    padding-right:4px;
+  }
+
+  .framework-badge{
+    width:72px;
+    height:72px;
+    font-size:12px;
+  }
+
+  .framework h2{
+    font-size:40px;
+    letter-spacing:-2.4px;
+  }
+
+  .framework-copy>p{
+    font-size:12.5px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+  .framework-visual:before{
+    animation:none;
+  }
+
+  .framework-visual img,
+  .framework-badge,
+  .steps div{
+    transition:none;
+  }
+}
