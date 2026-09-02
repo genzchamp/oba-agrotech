@@ -324,3 +324,417 @@ img{display:block;width:100%;height:100%;object-fit:cover}
   .carousel-dot.is-active{background:var(--green);transform:scale(1.35)}
   @media(prefers-reduced-motion:reduce){.carousel-hint .sweep{animation:none}}
 }
+
+
+
+
+/* =========================================================
+   PREMIUM MOBILE HERO
+   Desktop remains completely unchanged.
+   Mobile turns the hero image into a full-screen backdrop.
+   ========================================================= */
+
+@media (max-width: 900px){
+
+  .hero{
+    position:relative;
+    min-height:100svh;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    overflow:hidden;
+    isolation:isolate;
+    background:var(--forest);
+  }
+
+  /* -----------------------------------------
+     Full-screen hero image
+     ----------------------------------------- */
+
+  .hero-visual{
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    min-height:0;
+    width:100%;
+    height:100%;
+    padding:0;
+    margin:0;
+
+    opacity:0;
+    transform:scale(1.02);
+
+    animation:mobileHeroVisualIn 1s var(--ease) forwards;
+    animation-delay:.1s;
+  }
+
+  .hero-image-wrap{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+
+    border-radius:0;
+    overflow:hidden;
+    box-shadow:none;
+  }
+
+  .hero-image-wrap img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+    
+    animation:mobileHeroImageZoom 14s ease-out infinite alternate;
+  }
+
+  /* Cinematic image treatment */
+  .hero-image-wrap:before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:1;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(3,12,8,.20) 0%,
+        rgba(3,12,8,.08) 25%,
+        rgba(3,12,8,.35) 52%,
+        rgba(3,12,8,.86) 100%
+      );
+  }
+
+  /* Subtle green cinematic tint */
+  .hero-image-wrap:after{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:2;
+    background:
+      radial-gradient(
+        circle at 70% 30%,
+        rgba(216,255,101,.10),
+        transparent 35%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(7,18,13,.40),
+        transparent 65%
+      );
+  }
+
+
+  /* -----------------------------------------
+     Hero text sits above the image
+     ----------------------------------------- */
+
+  .hero-copy{
+    position:relative;
+    z-index:5;
+    width:100%;
+    padding:110px 7vw 48px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+
+    min-height:100svh;
+  }
+
+  .hero-copy .eyebrow{
+    color:var(--lime);
+    text-shadow:0 2px 15px rgba(0,0,0,.25);
+  }
+
+  .hero-copy .eyebrow i{
+    background:var(--lime);
+  }
+
+  .hero h1{
+    color:#fff;
+    font-size:clamp(45px,12vw,70px);
+    line-height:.92;
+    letter-spacing:-3px;
+    margin:18px 0 22px;
+
+    max-width:680px;
+
+    text-shadow:
+      0 4px 25px rgba(0,0,0,.25);
+  }
+
+  .hero h1 em{
+    color:var(--lime);
+  }
+
+  .hero-copy>p{
+    color:rgba(255,255,255,.84);
+    font-size:14px;
+    line-height:1.7;
+    max-width:500px;
+
+    text-shadow:0 2px 12px rgba(0,0,0,.25);
+  }
+
+
+  /* -----------------------------------------
+     Buttons
+     ----------------------------------------- */
+
+  .hero-actions{
+    margin:28px 0 32px;
+    gap:10px;
+  }
+
+  .hero-actions .btn{
+    padding:15px 18px;
+  }
+
+  .hero-actions .btn-primary{
+    background:var(--lime);
+    color:var(--forest);
+
+    box-shadow:
+      0 12px 35px rgba(0,0,0,.20),
+      0 0 0 1px rgba(216,255,101,.15);
+  }
+
+  .hero-actions .btn-primary:hover{
+    background:#e4ff8a;
+  }
+
+  .hero-actions .btn-ghost{
+    color:#fff;
+    border-color:rgba(255,255,255,.35);
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(12px);
+  }
+
+
+  /* -----------------------------------------
+     Trust / proof row
+     ----------------------------------------- */
+
+  .hero-proof{
+    gap:18px;
+    padding-top:4px;
+  }
+
+  .hero-proof strong{
+    color:var(--lime);
+  }
+
+  .hero-proof span{
+    color:rgba(255,255,255,.70);
+  }
+
+
+  /* -----------------------------------------
+     Floating status card
+     ----------------------------------------- */
+
+  .card-top{
+    z-index:8;
+    top:92px;
+    left:6vw;
+
+    background:rgba(251,250,246,.90);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+
+    box-shadow:
+      0 15px 40px rgba(0,0,0,.20);
+
+    border:1px solid rgba(255,255,255,.25);
+  }
+
+  .card-bottom{
+    z-index:8;
+    right:6vw;
+    bottom:auto;
+    top:92px;
+
+    background:rgba(7,18,13,.72);
+    color:#fff;
+
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    box-shadow:
+      0 15px 40px rgba(0,0,0,.25);
+  }
+
+  .card-bottom small{
+    color:rgba(255,255,255,.55);
+  }
+
+
+  /* -----------------------------------------
+     Circle badge
+     ----------------------------------------- */
+
+  .circle-label{
+    z-index:8;
+    left:auto;
+    right:7vw;
+    bottom:30px;
+
+    width:68px;
+    height:68px;
+
+    background:var(--lime);
+    color:var(--forest);
+
+    border-color:var(--lime);
+
+    box-shadow:
+      0 12px 30px rgba(0,0,0,.25);
+  }
+
+
+  /* -----------------------------------------
+     Premium entrance animation
+     ----------------------------------------- */
+
+  .hero-copy .eyebrow,
+  .hero-copy h1,
+  .hero-copy>p,
+  .hero-actions,
+  .hero-proof{
+    opacity:0;
+    transform:translateY(22px);
+
+    animation:mobileHeroTextIn .8s var(--ease) forwards;
+  }
+
+  .hero-copy .eyebrow{
+    animation-delay:.25s;
+  }
+
+  .hero-copy h1{
+    animation-delay:.38s;
+  }
+
+  .hero-copy>p{
+    animation-delay:.52s;
+  }
+
+  .hero-actions{
+    animation-delay:.65s;
+  }
+
+  .hero-proof{
+    animation-delay:.78s;
+  }
+
+
+  /* -----------------------------------------
+     Animations
+     ----------------------------------------- */
+
+  @keyframes mobileHeroVisualIn{
+    to{
+      opacity:1;
+      transform:scale(1);
+    }
+  }
+
+  @keyframes mobileHeroImageZoom{
+    from{
+      transform:scale(1);
+    }
+
+    to{
+      transform:scale(1.07);
+    }
+  }
+
+  @keyframes mobileHeroTextIn{
+    to{
+      opacity:1;
+      transform:translateY(0);
+    }
+  }
+
+
+  /* -----------------------------------------
+     Reduced motion
+     ----------------------------------------- */
+
+  @media(prefers-reduced-motion:reduce){
+
+    .hero-visual{
+      animation:none;
+      opacity:1;
+      transform:none;
+    }
+
+    .hero-image-wrap img{
+      animation:none;
+      transform:none;
+    }
+
+    .hero-copy .eyebrow,
+    .hero-copy h1,
+    .hero-copy>p,
+    .hero-actions,
+    .hero-proof{
+      animation:none;
+      opacity:1;
+      transform:none;
+    }
+  }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media(max-width:420px){
+
+  .hero-copy{
+    padding:105px 6vw 36px;
+  }
+
+  .hero h1{
+    font-size:44px;
+    letter-spacing:-2.5px;
+  }
+
+  .hero-copy>p{
+    font-size:13.5px;
+  }
+
+  .hero-actions{
+    margin:24px 0 27px;
+  }
+
+  .hero-actions .btn{
+    padding:14px 16px;
+  }
+
+  .card-top,
+  .card-bottom{
+    top:84px;
+  }
+
+  .card-top{
+    left:5vw;
+  }
+
+  .card-bottom{
+    right:5vw;
+  }
+
+  .circle-label{
+    right:6vw;
+    bottom:22px;
+    width:60px;
+    height:60px;
+    font-size:7px;
+  }
+}
