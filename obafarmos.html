@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a2418">
+<meta name="description" content="OBA Farm OS — the everyday digital farm assistant from OBA AgroTech. Track flocks, health, vaccines, finance and production in one place.">
+<title>OBA Farm OS | OBA AgroTech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#07120d;--forest:#0a2418;--green:#123d28;--lime:#d8ff65;--lime2:#eaffb0;
+  --cream:#f4f0e7;--paper:#fbfaf6;
+  --bg:var(--ink);--surface:#0d1a14;--surface2:#112a1e;--line:#1d2b23;
+  --text:var(--cream);--muted:#8b998f;
+  --danger:#ff8080;--warn:#f4c76a;
+  --shadow:0 20px 60px rgba(0,0,0,.4);--shadow-sm:0 10px 30px rgba(0,0,0,.25);
+  --radius:16px;--radius-lg:26px;--ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:inherit}
+h1,h2,h3,h4{font-family:Manrope,sans-serif}
+h1{font-size:clamp(1.9rem,5vw,3.6rem);line-height:1.03;letter-spacing:-.04em}
+h2{font-size:1.3rem}h3{font-size:1.02rem}
+.muted{color:var(--muted);line-height:1.65}
+.hidden{display:none!important}
+.eyebrow{font-size:.66rem;letter-spacing:.15em;color:#7f8f83;font-weight:800;text-transform:uppercase}
+:focus-visible{outline:2px solid var(--lime);outline-offset:2px;border-radius:6px}
+
+/* ---------- buttons ---------- */
+.primary-btn{border:0;background:var(--lime);color:var(--forest);padding:14px 18px;border-radius:13px;font-weight:800;font-size:.85rem;transition:transform .25s var(--ease),box-shadow .25s var(--ease),background .25s var(--ease);display:inline-flex;align-items:center;gap:10px;justify-content:center}
+.primary-btn:hover{transform:translateY(-2px);background:var(--lime2);box-shadow:0 12px 28px rgba(216,255,101,.18)}
+.primary-btn:active{transform:scale(.97)}
+.primary-btn.small{padding:10px 14px;font-size:.78rem}
+.primary-btn.wide{width:100%;display:flex;justify-content:center}
+.primary-btn:disabled{opacity:.4;pointer-events:none}
+.ghost-btn{background:transparent;color:var(--muted);border:1px solid var(--line);padding:10px 14px;border-radius:11px;font-size:.8rem;font-weight:700;transition:.2s}
+.ghost-btn:hover{border-color:#3a4a3e;color:var(--text)}
+.danger-btn{background:rgba(255,128,128,.1);color:var(--danger);border:1px solid rgba(255,128,128,.25);padding:9px 13px;border-radius:10px;font-size:.75rem;font-weight:800}
+.icon-btn{border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:11px;width:42px;height:42px;display:grid;place-items:center;font-size:1.1rem;position:relative;flex:0 0 auto}
+.icon-btn:hover{border-color:#3a4a3e}
+.chip{font-size:.65rem;padding:6px 10px;border-radius:99px;font-weight:800;letter-spacing:.03em}
+.chip.owner{background:rgba(216,255,101,.12);color:var(--lime)}
+.chip.manager{background:rgba(244,199,106,.12);color:var(--warn)}
+.chip.pending{background:rgba(244,199,106,.14);color:var(--warn)}
+.chip.approved{background:rgba(216,255,101,.1);color:var(--lime)}
+.chip.declined{background:rgba(255,128,128,.12);color:var(--danger)}
+.chip.overdue{background:rgba(255,128,128,.14);color:var(--danger)}
+.chip.due{background:rgba(244,199,106,.16);color:var(--warn)}
+.chip.upcoming{background:var(--surface2);color:var(--muted)}
+.chip.done{background:rgba(216,255,101,.1);color:var(--lime)}
+.badge-dot{position:absolute;top:-4px;right:-4px;background:var(--danger);color:#2a0a0a;font-size:.6rem;font-weight:900;min-width:17px;height:17px;border-radius:99px;display:grid;place-items:center;padding:0 3px;border:2px solid var(--ink)}
+
+/* ---------- setup ---------- */
+.setup-shell{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;background:radial-gradient(circle at 50% 0%,rgba(216,255,101,.08),transparent 40%),var(--bg)}
+.setup-brand{display:flex;align-items:center;gap:10px;position:absolute;top:28px;left:30px}
+.brand,.setup-brand{display:flex;align-items:center;gap:10px}
+.brand img,.setup-brand img{height:34px;width:auto;object-fit:contain}
+.brand small,.setup-brand small{display:none}
+.setup-card{width:min(680px,100%);padding:38px;border:1px solid var(--line);background:rgba(13,26,20,.92);backdrop-filter:blur(10px);border-radius:28px;box-shadow:var(--shadow);margin-top:30px}
+.setup-card h1{margin:12px 0 14px}
+.setup-card h1 span{color:var(--lime)}
+.setup-note{color:#5d6b61;font-size:.74rem;margin-top:20px;text-align:center}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:24px 0}
+.form-grid.cols-1{grid-template-columns:1fr}
+label{display:grid;gap:8px;color:#b6c2ba;font-size:.77rem;font-weight:700}
+input,select,textarea{width:100%;padding:13px 14px;border:1px solid var(--line);background:#0a130e;color:var(--text);border-radius:12px;outline:none;transition:border-color .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--lime)}
+textarea{resize:vertical;min-height:70px}
+.field-note{font-size:.68rem;color:#5d6b61;margin-top:-4px}
+.step-divider{border-top:1px solid var(--line);margin:26px 0 18px;padding-top:18px}
+.step-divider .eyebrow{margin-bottom:4px;display:block}
+
+/* ---------- app shell ---------- */
+.app{display:flex;min-height:100vh}
+.sidebar{width:250px;position:fixed;inset:0 auto 0 0;background:#080f0b;border-right:1px solid var(--line);padding:22px 16px;display:flex;flex-direction:column;z-index:60;transition:transform .35s var(--ease)}
+.sidebar-scroll{overflow-y:auto;flex:1;display:flex;flex-direction:column}
+.profile-card{margin:22px 0 18px;padding:13px;border:1px solid var(--line);border-radius:14px;display:flex;gap:10px;align-items:center;background:var(--surface);cursor:pointer;transition:.2s}
+.profile-card:hover{border-color:#3a4a3e}
+.status-dot{width:8px;height:8px;background:var(--lime);border-radius:50%;box-shadow:0 0 10px var(--lime);flex:0 0 auto}
+.profile-card small{display:block;color:#657267;font-size:.55rem;letter-spacing:.1em}
+.profile-card strong{display:block;font-size:.78rem;margin-top:3px;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.profile-card .chip{margin-left:auto}
+.nav-label{font-size:.62rem;letter-spacing:.14em;color:#4c5951;font-weight:800;margin:16px 6px 6px;text-transform:uppercase}
+.sidebar nav{display:grid;gap:4px}
+.nav-item{border:0;background:transparent;color:#7f8b83;padding:12px 13px;border-radius:11px;text-align:left;display:flex;gap:12px;align-items:center;font-size:.86rem;font-weight:600;width:100%;position:relative}
+.nav-item:hover{background:#12190f;color:var(--text)}
+.nav-item.active{background:#12190f;color:var(--lime)}
+.nav-item.active:before{content:"";position:absolute;left:-16px;top:8px;bottom:8px;width:3px;background:var(--lime);border-radius:0 3px 3px 0}
+.nav-item i{font-style:normal;width:18px;text-align:center}
+.sidebar-bottom{margin-top:auto;padding-top:14px}
+.brand-footer-link{display:flex;align-items:center;gap:8px;font-size:.65rem;color:#5d6b61;padding:10px 6px;text-decoration:none}
+.brand-footer-link:hover{color:var(--lime)}
+
+.backdrop{position:fixed;inset:0;background:rgba(4,8,6,.6);backdrop-filter:blur(2px);z-index:55;opacity:0;pointer-events:none;transition:opacity .3s var(--ease)}
+.backdrop.show{opacity:1;pointer-events:auto}
+
+.main{margin-left:250px;width:calc(100% - 250px);padding:26px 40px 100px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:24px;flex-wrap:wrap}
+.topbar-left{display:flex;align-items:center;gap:14px}
+.topbar h2{margin-top:3px}
+.top-actions{display:flex;gap:10px;align-items:center}
+.batch-filter{background:var(--surface);border:1px solid var(--line);padding:11px 13px;border-radius:11px;font-size:.78rem;font-weight:700;max-width:170px}
+
+.bell-wrap{position:relative}
+.bell-panel{position:absolute;right:0;top:52px;width:300px;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:8px;z-index:70;opacity:0;transform:translateY(-6px);pointer-events:none;transition:.2s var(--ease)}
+.bell-panel.show{opacity:1;transform:none;pointer-events:auto}
+.bell-item{display:flex;gap:10px;align-items:flex-start;padding:11px;border-radius:11px}
+.bell-item:hover{background:var(--surface2)}
+.bell-item strong{font-size:.78rem;display:block}
+.bell-item small{color:var(--muted);font-size:.68rem}
+.bell-empty{padding:22px 12px;text-align:center;color:var(--muted);font-size:.78rem}
+.bell-enable{margin:6px;padding:10px;text-align:center;border:1px dashed var(--line);border-radius:11px;font-size:.72rem;color:var(--lime);cursor:pointer}
+
+.section{display:none;animation:fadeUp .35s var(--ease)}
+.section.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---------- alert banner ---------- */
+.alert-banner{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:18px;background:linear-gradient(135deg,rgba(244,199,106,.14),rgba(244,199,106,.04));border:1px solid rgba(244,199,106,.3);margin-bottom:18px;animation:fadeUp .4s var(--ease)}
+.alert-banner.danger{background:linear-gradient(135deg,rgba(255,128,128,.14),rgba(255,128,128,.04));border-color:rgba(255,128,128,.3)}
+.alert-banner .dot{width:10px;height:10px;border-radius:50%;background:var(--warn);flex:0 0 auto;animation:pulse 1.8s ease-in-out infinite}
+.alert-banner.danger .dot{background:var(--danger)}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(244,199,106,.4)}50%{box-shadow:0 0 0 8px rgba(244,199,106,0)}}
+.alert-banner strong{display:block;font-size:.85rem}
+.alert-banner p{font-size:.75rem;color:var(--muted);margin-top:2px}
+.alert-banner .ghost-btn{margin-left:auto;flex:0 0 auto}
+
+/* ---------- hero / cards ---------- */
+.hero{min-height:170px;border:1px solid var(--line);border-radius:24px;padding:28px;display:flex;justify-content:space-between;align-items:center;gap:20px;background:radial-gradient(circle at 85% 15%,rgba(216,255,101,.07),transparent 40%),linear-gradient(135deg,var(--surface2),var(--surface));margin-bottom:18px}
+.hero h1{font-size:clamp(1.6rem,3vw,2.6rem);margin:6px 0 8px}
+.health-orb{width:108px;height:108px;border:1px solid #2a382e;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(216,255,101,.04);flex:0 0 auto}
+.health-orb span{font-size:.55rem;letter-spacing:.12em;color:#7d887f}
+.health-orb strong{font:800 2.1rem Manrope;color:var(--lime)}
+.health-orb small{color:#69736b}
+.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+.metric-card,.panel{border:1px solid var(--line);background:var(--surface);border-radius:18px}
+.metric-card{padding:18px}
+.metric-card span{display:block;color:#8a988e;font-size:.72rem}
+.metric-card strong{display:block;font:800 1.55rem Manrope;margin:12px 0 4px;letter-spacing:-.03em}
+.metric-card small{color:#626b64;font-size:.66rem}
+.content-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;margin-bottom:18px}
+.panel{padding:22px}
+.panel-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;gap:10px}
+.panel-head h3{margin-top:5px}
+.score-row{display:flex;gap:26px;align-items:center;flex-wrap:wrap}
+.score-ring{width:128px;height:128px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;background:radial-gradient(circle,var(--surface) 58%,transparent 59%),conic-gradient(var(--lime) 0deg,#273025 0deg);flex:0 0 auto}
+.score-ring:before{content:"";position:absolute;inset:7px;border:1px solid #263127;border-radius:50%}
+.score-ring strong{font:800 2.3rem Manrope;color:var(--lime);z-index:1}
+.score-ring span{color:#6f786f;margin-left:2px;margin-top:14px;font-size:.68rem;z-index:1}
+.score-copy{flex:1;min-width:180px}
+.score-copy h4{font-size:1.05rem;margin-bottom:6px}
+.factor-list{display:grid;gap:8px;margin-top:14px}
+.factor{display:flex;justify-content:space-between;gap:12px;padding:9px 11px;background:#0a0f0b;border:1px solid #1a231c;border-radius:9px;font-size:.72rem}
+.good{color:var(--lime)}.warn{color:var(--warn)}.bad{color:var(--danger)}
+.action-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.action-grid button{min-height:70px;border:1px solid var(--line);background:#0a0f0b;color:#a9b0aa;border-radius:12px;display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:center;font-size:1.05rem;transition:.2s}
+.action-grid button span{font-size:.6rem;font-weight:700}
+.action-grid button:hover{border-color:#3a4a3e;color:var(--lime);transform:translateY(-2px)}
+.activity-list{display:grid}
+.activity{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #1a231c;align-items:flex-start}
+.activity:last-child{border-bottom:0}
+.activity-icon{width:34px;height:34px;border-radius:10px;background:#12190f;display:grid;place-items:center;flex:0 0 auto}
+.activity strong{font-size:.78rem;display:block}
+.activity small{color:#667067;font-size:.66rem}
+.vaccine-card{padding:18px;border-radius:15px;background:var(--surface2);border:1px solid #2a382e}
+.vaccine-card strong{font:800 1.2rem Manrope;color:var(--lime);display:block;margin:6px 0}
+.vaccine-card p{font-size:.72rem;color:#879087}
+.batch-mini-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:14px}
+.batch-mini{padding:16px;border:1px solid var(--line);border-radius:15px;background:var(--surface);cursor:pointer;transition:.2s}
+.batch-mini:hover{border-color:#3a4a3e;transform:translateY(-2px)}
+.batch-mini strong{display:block;font-family:Manrope;font-size:.95rem;margin-bottom:6px}
+.batch-mini .bm-row{display:flex;justify-content:space-between;font-size:.7rem;color:var(--muted);margin-top:4px}
+
+.page-heading{margin:14px 0 22px}
+.page-heading h1{font-size:clamp(1.8rem,4vw,2.9rem);margin:8px 0}
+
+/* ---------- records ---------- */
+.record-tabs{display:flex;gap:8px;overflow:auto;padding-bottom:12px;margin-bottom:4px}
+.record-tab{white-space:nowrap;border:1px solid var(--line);background:var(--surface);color:#89918a;padding:11px 14px;border-radius:11px;font-size:.8rem;font-weight:700;display:flex;gap:7px;align-items:center}
+.record-tab.active{color:var(--lime);border-color:#3a4a3e;background:#12190f}
+.record-panel{max-width:640px}
+.record-panel form{display:grid;gap:20px}
+.record-fields{display:grid;gap:16px}
+.form-end{grid-column:1/-1}
+
+/* ---------- approvals / vaccines / batches / team ---------- */
+.list-card{border:1px solid var(--line);background:var(--surface);border-radius:16px;padding:16px 18px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.list-card .lc-main{flex:1;min-width:200px}
+.list-card strong{display:block;font-size:.88rem}
+.list-card small{color:var(--muted);font-size:.72rem;display:block;margin-top:3px}
+.list-card .lc-actions{display:flex;gap:8px}
+.empty-state{padding:36px 20px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:16px}
+.table-wrap{overflow:auto}
+.data-table{width:100%;border-collapse:collapse;font-size:.74rem}
+.data-table th,.data-table td{text-align:left;padding:12px;border-bottom:1px solid #1a231c;white-space:nowrap}
+.data-table th{color:#687169;font-size:.62rem;letter-spacing:.08em}
+
+/* ---------- modal ---------- */
+.modal-wrap{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:22px;opacity:0;pointer-events:none;transition:opacity .25s var(--ease)}
+.modal-wrap.show{opacity:1;pointer-events:auto}
+.modal-backdrop{position:fixed;inset:0;background:rgba(4,8,6,.72);backdrop-filter:blur(3px)}
+.modal-box{position:relative;width:min(380px,100%);background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:26px;box-shadow:var(--shadow);transform:scale(.96);transition:transform .25s var(--ease)}
+.modal-wrap.show .modal-box{transform:none}
+.modal-box h3{margin-bottom:6px}
+.pin-dots{display:flex;gap:12px;justify-content:center;margin:20px 0}
+.pin-dots span{width:14px;height:14px;border-radius:50%;border:1px solid var(--line);background:transparent;transition:.15s}
+.pin-dots span.filled{background:var(--lime);border-color:var(--lime)}
+.pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pin-pad button{padding:16px 0;border-radius:13px;border:1px solid var(--line);background:#0a130e;font-size:1.1rem;font-weight:700}
+.pin-pad button:hover{border-color:var(--lime)}
+.user-pick{display:flex;align-items:center;gap:12px;padding:13px;border:1px solid var(--line);border-radius:14px;margin-bottom:8px;cursor:pointer;transition:.2s}
+.user-pick:hover{border-color:var(--lime)}
+.user-pick .ic{width:36px;height:36px;border-radius:10px;background:var(--surface2);display:grid;place-items:center;font-weight:800;color:var(--lime)}
+
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--lime);color:var(--forest);padding:13px 18px;border-radius:13px;font-size:.78rem;font-weight:800;opacity:0;pointer-events:none;transition:.3s var(--ease);z-index:100;box-shadow:var(--shadow-sm)}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+footer.appfoot{padding:26px 0 100px;color:#4f5851;font-size:.65rem;display:flex;align-items:center;gap:8px}
+footer.appfoot img{height:16px;opacity:.6}
+
+/* ---------- bottom nav (mobile) ---------- */
+.bottom-nav{display:none}
+.fab{display:none}
+.more-sheet{display:none}
+
+@media(max-width:1000px){
+  .metrics-grid{grid-template-columns:repeat(2,1fr)}
+  .content-grid{grid-template-columns:1fr}
+  .sidebar{transform:translateX(-100%);width:260px}
+  .sidebar.open{transform:none;box-shadow:20px 0 60px rgba(0,0,0,.5)}
+  .main{margin-left:0;width:100%;padding:18px 16px 110px}
+  .topbar{position:sticky;top:0;background:var(--bg);z-index:40;padding:6px 0 12px;margin-bottom:14px}
+  .action-grid{grid-template-columns:repeat(4,1fr)}
+  .setup-brand{position:static;margin-bottom:8px}
+  .setup-shell{padding:20px}
+
+  .bottom-nav{
+    display:flex;position:fixed;left:0;right:0;bottom:0;z-index:50;
+    background:rgba(8,15,11,.92);backdrop-filter:blur(14px);border-top:1px solid var(--line);
+    padding:8px 6px calc(8px + env(safe-area-inset-bottom));justify-content:space-around;
+  }
+  .bn-item{background:none;border:0;color:#75827a;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.6rem;font-weight:700;padding:6px 8px;border-radius:12px;position:relative}
+  .bn-item.active{color:var(--lime)}
+  .bn-item i{font-style:normal;font-size:1.15rem}
+  .fab{
+    display:grid;place-items:center;position:fixed;right:16px;bottom:76px;z-index:51;
+    width:56px;height:56px;border-radius:50%;background:var(--lime);color:var(--forest);
+    box-shadow:0 14px 34px rgba(216,255,101,.28);font-size:1.5rem;font-weight:800;border:0;
+  }
+  .more-sheet{position:fixed;left:0;right:0;bottom:0;z-index:65;background:var(--surface);border-radius:22px 22px 0 0;
+    display:block;padding:10px 16px calc(20px + env(safe-area-inset-bottom));transform:translateY(100%);transition:transform .3s var(--ease);
+    box-shadow:0 -20px 50px rgba(0,0,0,.4);max-height:75vh;overflow-y:auto}
+  .more-sheet.open{transform:none}
+  .sheet-handle{width:40px;height:4px;background:var(--line);border-radius:99px;margin:8px auto 14px}
+}
+@media(max-width:430px){
+  .metrics-grid{grid-template-columns:1fr 1fr}
+  .action-grid{grid-template-columns:repeat(2,1fr)}
+  .hero{flex-direction:column;align-items:flex-start;gap:14px}
+  .form-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div id="toast" class="toast"></div>
+<div id="backdrop" class="backdrop"></div>
+
+<!-- ============ SETUP ============ -->
+<div id="setupView" class="setup-shell">
+  <div class="setup-brand">
+    <img src="oba-logo-header-transparent.png" alt="OBA AgroTech">
+  </div>
+  <div class="setup-card">
+    <div class="eyebrow">FARM INTELLIGENCE PLATFORM</div>
+    <h1>Build your farm's<br><span>command center.</span></h1>
+    <p class="muted">Set up your farm once — OBA Farm OS turns daily records into a clear picture of health, money and production.</p>
+    <form id="setupForm">
+      <div class="form-grid">
+        <label>Farm name<input id="setupFarmName" required placeholder="e.g. OBA Poultry Farm"></label>
+        <label>Your name (Owner)<input id="setupOwnerName" required placeholder="Your full name"></label>
+        <label>Set a 4-digit PIN <span style="font-weight:400;color:#5d6b61">(optional)</span><input id="setupOwnerPin" inputmode="numeric" maxlength="4" placeholder="Leave blank for none"></label>
+        <label>Bird type
+          <select id="setupBirdType">
+            <option>Layers</option><option>Broilers</option><option>Cockerels</option><option>Turkey</option><option>Guinea Fowl</option><option>Geese</option><option>Quail</option><option>Other</option>
+          </select>
+        </label>
+        <label id="setupOtherWrap" class="hidden">Specify bird type<input id="setupBirdTypeOther" placeholder="e.g. Brahma"></label>
+      </div>
+      <div class="step-divider">
+        <span class="eyebrow">FIRST BATCH / FLOCK</span>
+        <p class="field-note" style="margin-top:6px">You can add more batches later — e.g. a separate turkey flock or a new layer batch.</p>
+      </div>
+      <div class="form-grid">
+        <label>Starting birds<input id="setupBirdCount" type="number" min="1" required placeholder="5000"></label>
+        <label>Arrival date<input id="setupArrivalDate" type="date" required></label>
+        <label>Current age<input id="setupAge" type="number" min="0" required placeholder="16"></label>
+        <label>Age unit
+          <select id="setupAgeUnit"><option>Weeks</option><option>Days</option><option>Months</option></select>
+        </label>
+      </div>
+      <button class="primary-btn wide" type="submit">Create my farm <span>→</span></button>
+    </form>
+  </div>
+  <p class="setup-note">Local-first MVP • Your records stay in this browser • Built by OBA AgroTech</p>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="appView" class="app hidden">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-scroll">
+      <div class="brand">
+        <img src="oba-logo-header-transparent.png" alt="OBA AgroTech">
+      </div>
+      <div class="profile-card" id="profileCard">
+        <span class="status-dot"></span>
+        <div><small>LOGGED IN AS</small><strong id="currentUserName">—</strong></div>
+        <span class="chip owner" id="currentUserRoleChip">Owner</span>
+      </div>
+
+      <span class="nav-label">Dashboard</span>
+      <nav>
+        <button class="nav-item active" data-section="overview"><i>⌂</i><span>Overview</span></button>
+        <button class="nav-item" data-section="records"><i>＋</i><span>Daily records</span></button>
+        <button class="nav-item" data-section="health"><i>♡</i><span>Health</span></button>
+        <button class="nav-item" data-section="finance"><i>₦</i><span>Finance</span></button>
+        <button class="nav-item" data-section="production"><i>◫</i><span>Production</span></button>
+        <button class="nav-item" data-section="vaccines"><i>💉</i><span>Vaccines</span></button>
+      </nav>
+
+      <span class="nav-label">Farm management</span>
+      <nav>
+        <button class="nav-item" data-section="batches"><i>⌘</i><span>Batches</span></button>
+        <button class="nav-item" data-section="approvals"><i>✓</i><span>Approvals</span></button>
+        <button class="nav-item owner-only" data-section="team"><i>◎</i><span>Team</span></button>
+        <button class="nav-item owner-only" data-section="settings"><i>⚙</i><span>Farm settings</span></button>
+      </nav>
+    </div>
+    <div class="sidebar-bottom">
+      <a class="brand-footer-link" href="index.html">← Back to OBA AgroTech</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button id="menuBtn" class="icon-btn" style="display:none">☰</button>
+        <div><span class="eyebrow" id="sectionEyebrow">FARM COMMAND CENTER</span><h2 id="sectionTitle">Overview</h2></div>
+      </div>
+      <div class="top-actions">
+        <select id="batchFilter" class="batch-filter"></select>
+        <div class="bell-wrap">
+          <button id="bellBtn" class="icon-btn">🔔</button>
+          <div id="bellPanel" class="bell-panel"></div>
+        </div>
+        <button id="quickRecordBtn" class="primary-btn small">+ Record</button>
+      </div>
+    </header>
+
+    <!-- OVERVIEW -->
+    <section id="overview" class="section active">
+      <div id="alertZone"></div>
+      <div class="hero">
+        <div><span class="eyebrow">GOOD TO SEE YOU</span><h1 id="welcomeTitle">Your farm, at a glance.</h1><p id="heroSub" class="muted"></p></div>
+        <div class="health-orb"><span>HEALTH</span><strong id="heroHealth">--</strong><small>/100</small></div>
+      </div>
+
+      <div class="metrics-grid">
+        <article class="metric-card"><span>🐔 Birds alive</span><strong id="birdsAlive">0</strong><small id="birdTypeLabel">—</small></article>
+        <article class="metric-card"><span>☠ Mortality today</span><strong id="todayMortality">0</strong><small id="mortalityRate">0.00% of flock</small></article>
+        <article class="metric-card"><span>🥚 Today's eggs</span><strong id="todayEggs">0</strong><small>crates + pcs</small></article>
+        <article class="metric-card"><span>💰 Net profit</span><strong id="netProfit">₦0</strong><small>recorded to date</small></article>
+      </div>
+
+      <div class="content-grid">
+        <article class="panel large">
+          <div class="panel-head"><div><span class="eyebrow">HEALTH INTELLIGENCE</span><h3>Farm health score</h3></div><span id="healthBadge" class="chip approved">—</span></div>
+          <div class="score-row">
+            <div class="score-ring"><strong id="healthScore">0</strong><span>/100</span></div>
+            <div class="score-copy"><h4 id="healthHeadline">Calculating...</h4><p id="healthSummary" class="muted"></p><div id="healthFactors" class="factor-list"></div></div>
+          </div>
+        </article>
+        <article class="panel">
+          <div class="panel-head"><div><span class="eyebrow">OPERATIONS</span><h3>Quick actions</h3></div></div>
+          <div class="action-grid">
+            <button data-open-record="mortality">☠<span>Mortality</span></button>
+            <button data-open-record="feed">🌾<span>Feed</span></button>
+            <button data-open-record="vaccine">💉<span>Vaccine</span></button>
+            <button data-open-record="treatment">💊<span>Treatment</span></button>
+            <button data-open-record="expense">₦<span>Expense</span></button>
+            <button data-open-record="sale">↗<span>Sale</span></button>
+            <button data-open-record="eggs">🥚<span>Eggs</span></button>
+            <button data-open-record="weight">⚖<span>Weight</span></button>
+          </div>
+        </article>
+      </div>
+
+      <div class="content-grid">
+        <article class="panel large"><div class="panel-head"><div><span class="eyebrow">RECENT ACTIVITY</span><h3>What happened on the farm</h3></div></div><div id="activityList" class="activity-list"></div></article>
+        <article class="panel"><div class="panel-head"><div><span class="eyebrow">VACCINATION</span><h3>Next vaccine</h3></div></div><div id="nextVaccineCard" class="vaccine-card"></div></article>
+      </div>
+
+      <div id="batchQuickWrap"></div>
+    </section>
+
+    <!-- RECORDS -->
+    <section id="records" class="section">
+      <div class="page-heading"><span class="eyebrow">DAILY OPERATIONS</span><h1>Record what happened.</h1><p class="muted">Simple inputs now. Better farm intelligence later.</p></div>
+      <div class="record-tabs">
+        <button class="record-tab active" data-record="mortality">☠ Mortality</button><button class="record-tab" data-record="feed">🌾 Feed</button><button class="record-tab" data-record="vaccine">💉 Vaccine</button><button class="record-tab" data-record="treatment">💊 Treatment</button><button class="record-tab" data-record="expense">₦ Expense</button><button class="record-tab" data-record="sale">↗ Sale</button><button class="record-tab" data-record="eggs">🥚 Eggs</button><button class="record-tab" data-record="weight">⚖ Weight</button>
+      </div>
+      <div class="panel record-panel">
+        <form id="recordForm">
+          <input type="hidden" id="recordType" value="mortality">
+          <label>Which batch is this for?
+            <select id="recordBatch"></select>
+          </label>
+          <div id="approvalNotice" class="field-note hidden"></div>
+          <div id="recordFields" class="record-fields"></div>
+          <button class="primary-btn wide" type="submit">Save record <span>→</span></button>
+        </form>
+      </div>
+    </section>
+
+    <!-- HEALTH -->
+    <section id="health" class="section">
+      <div class="page-heading"><span class="eyebrow">FLOCK HEALTH</span><h1>Health intelligence.</h1><p class="muted">A transparent score based on the records you enter.</p></div>
+      <div class="content-grid">
+        <article class="panel"><div class="score-row"><div class="score-ring" style="width:110px;height:110px"><strong id="healthPageScore" style="font-size:1.9rem">0</strong><span>/100</span></div><div><h3 id="healthPageHeadline"></h3><p id="healthPageSummary" class="muted"></p></div></div></article>
+        <article class="panel"><span class="eyebrow">HEALTH FACTORS</span><div id="healthPageFactors" class="factor-list" style="margin-top:16px"></div></article>
+      </div>
+      <article class="panel"><div class="panel-head"><div><span class="eyebrow">HEALTH EVENTS</span><h3>Recent health records</h3></div></div><div id="healthEvents" class="table-wrap"></div></article>
+    </section>
+
+    <!-- FINANCE -->
+    <section id="finance" class="section">
+      <div class="page-heading"><span class="eyebrow">FARM FINANCE</span><h1>Know your numbers.</h1><p class="muted">Profit is calculated from approved sales and expenses.</p></div>
+      <div class="metrics-grid"><article class="metric-card"><span>Revenue</span><strong id="financeRevenue">₦0</strong></article><article class="metric-card"><span>Expenses</span><strong id="financeExpenses">₦0</strong></article><article class="metric-card"><span>Net profit</span><strong id="financeProfit">₦0</strong></article><article class="metric-card"><span>Transactions</span><strong id="financeTransactions">0</strong></article></div>
+      <article class="panel"><div class="panel-head"><div><span class="eyebrow">LEDGER</span><h3>Financial records</h3></div></div><div id="financeTable" class="table-wrap"></div></article>
+    </section>
+
+    <!-- PRODUCTION -->
+    <section id="production" class="section">
+      <div class="page-heading"><span class="eyebrow">PRODUCTION</span><h1>Production performance.</h1><p class="muted">Track eggs and weight trends as your dataset grows.</p></div>
+      <div class="metrics-grid"><article class="metric-card"><span>Eggs recorded</span><strong id="productionEggs">0</strong><small>crates + pcs</small></article><article class="metric-card"><span>Latest average weight</span><strong id="productionWeight">—</strong><small>kg / bird</small></article><article class="metric-card"><span>Feed remaining</span><strong id="productionFeed">0</strong><small>bags</small></article><article class="metric-card"><span>Feed consumed</span><strong id="productionConsumed">0</strong><small>kg</small></article></div>
+      <article class="panel"><div class="panel-head"><div><span class="eyebrow">PRODUCTION LOG</span><h3>Recent production records</h3></div></div><div id="productionTable" class="table-wrap"></div></article>
+    </section>
+
+    <!-- VACCINES -->
+    <section id="vaccines" class="section">
+      <div class="page-heading"><span class="eyebrow">VACCINATION SCHEDULE</span><h1>Never miss a vaccine.</h1><p class="muted">Plan ahead — OBA Farm OS will alert you when a vaccine is due or overdue.</p></div>
+      <article class="panel" style="margin-bottom:18px">
+        <div class="panel-head"><div><span class="eyebrow">PLAN AHEAD</span><h3>Schedule a vaccine</h3></div></div>
+        <form id="vaccineForm" class="form-grid">
+          <label>Vaccine name<input id="vName" required placeholder="e.g. Gumboro booster"></label>
+          <label>Batch<select id="vBatch"></select></label>
+          <label>Due date<input id="vDate" type="date" required></label>
+          <label>Note<input id="vNote" placeholder="Dose / route / supplier"></label>
+          <div class="form-end"><button class="primary-btn" type="submit">Add to schedule</button></div>
+        </form>
+      </article>
+      <div id="vaccineList"></div>
+    </section>
+
+    <!-- BATCHES -->
+    <section id="batches" class="section">
+      <div class="page-heading"><span class="eyebrow">FLOCKS & BATCHES</span><h1>Manage your batches.</h1><p class="muted">Running more than one flock? Add each batch — layers, broilers, turkey and more — and switch between them anytime.</p></div>
+      <article class="panel" style="margin-bottom:18px">
+        <div class="panel-head"><div><span class="eyebrow">NEW BATCH</span><h3>Add a batch</h3></div></div>
+        <form id="batchForm" class="form-grid">
+          <label>Batch name<input id="bName" required placeholder="e.g. Turkey Batch B"></label>
+          <label>Bird type
+            <select id="bBirdType"><option>Layers</option><option>Broilers</option><option>Cockerels</option><option>Turkey</option><option>Guinea Fowl</option><option>Geese</option><option>Quail</option><option>Other</option></select>
+          </label>
+          <label id="bOtherWrap" class="hidden">Specify bird type<input id="bBirdTypeOther" placeholder="e.g. Brahma"></label>
+          <label>Starting birds<input id="bCount" type="number" min="1" required></label>
+          <label>Arrival date<input id="bArrival" type="date" required></label>
+          <label>Current age<input id="bAge" type="number" min="0" required></label>
+          <label>Age unit<select id="bAgeUnit"><option>Weeks</option><option>Days</option><option>Months</option></select></label>
+          <div class="form-end"><button class="primary-btn" type="submit">Add batch</button></div>
+        </form>
+      </article>
+      <div id="batchList"></div>
+    </section>
+
+    <!-- APPROVALS -->
+    <section id="approvals" class="section">
+      <div class="page-heading"><span class="eyebrow">SECURITY & OVERSIGHT</span><h1>Approvals.</h1><p id="approvalsSub" class="muted">Mortality, expense and treatment records need the owner's confirmation before they count.</p></div>
+      <div id="approvalsList"></div>
+    </section>
+
+    <!-- TEAM -->
+    <section id="team" class="section">
+      <div class="page-heading"><span class="eyebrow">FARM TEAM</span><h1>Owner & managers.</h1><p class="muted">Add a farm manager so they can help record daily activity — sensitive entries still need your approval.</p></div>
+      <article class="panel" style="margin-bottom:18px">
+        <div class="panel-head"><div><span class="eyebrow">ADD MANAGER</span><h3>Give someone limited access</h3></div></div>
+        <form id="teamForm" class="form-grid">
+          <label>Manager's name<input id="tName" required placeholder="e.g. Musa Abdullahi"></label>
+          <label>4-digit PIN<input id="tPin" required inputmode="numeric" maxlength="4" placeholder="e.g. 4821"></label>
+          <div class="form-end"><button class="primary-btn" type="submit">Add manager</button></div>
+        </form>
+      </article>
+      <div id="teamList"></div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section id="settings" class="section">
+      <div class="page-heading"><span class="eyebrow">FARM CONFIGURATION</span><h1>Farm settings.</h1><p class="muted">Update the profile that powers your dashboard.</p></div>
+      <article class="panel"><form id="settingsForm" class="form-grid"><label>Farm name<input id="setFarmName" required></label><div class="form-end"><button class="primary-btn" type="submit">Save changes</button></div></form></article>
+      <article class="panel" style="margin-top:14px"><div class="panel-head"><div><span class="eyebrow">DANGER ZONE</span><h3>Reset farm</h3></div></div><p class="muted" style="margin-bottom:14px">This permanently deletes all batches, records and team members from this browser.</p><button id="resetBtn" class="danger-btn">Reset this farm</button></article>
+    </section>
+
+    <footer class="appfoot"><img src="oba-logo-header-transparent.png" alt=""> OBA FARM OS · Local-first farm management · v2.0.0</footer>
+  </main>
+</div>
+
+<!-- bottom nav (mobile) -->
+<div class="bottom-nav" id="bottomNav">
+  <button class="bn-item active" data-section="overview"><i>⌂</i>Home</button>
+  <button class="bn-item" data-section="records"><i>＋</i>Records</button>
+  <button class="bn-item" data-section="health"><i>♡</i>Health</button>
+  <button class="bn-item" data-section="finance"><i>₦</i>Finance</button>
+  <button class="bn-item" id="moreBtn"><i>⋯</i>More</button>
+</div>
+<button class="fab" id="fabBtn">＋</button>
+<div class="backdrop" id="sheetBackdrop"></div>
+<div class="more-sheet" id="moreSheet">
+  <div class="sheet-handle"></div>
+  <nav style="display:grid;gap:4px">
+    <button class="nav-item" data-section="production"><i>◫</i><span>Production</span></button>
+    <button class="nav-item" data-section="vaccines"><i>💉</i><span>Vaccines</span></button>
+    <button class="nav-item" data-section="batches"><i>⌘</i><span>Batches</span></button>
+    <button class="nav-item" data-section="approvals"><i>✓</i><span>Approvals</span></button>
+    <button class="nav-item owner-only" data-section="team"><i>◎</i><span>Team</span></button>
+    <button class="nav-item owner-only" data-section="settings"><i>⚙</i><span>Farm settings</span></button>
+    <button class="nav-item" id="sheetSwitchProfile"><i>⇄</i><span>Switch profile</span></button>
+  </nav>
+</div>
+
+<!-- profile switch modal -->
+<div class="modal-wrap" id="profileModal">
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-box">
+    <h3>Switch profile</h3>
+    <p class="muted" style="font-size:.78rem;margin-bottom:14px">Choose who's using OBA Farm OS right now.</p>
+    <div id="userPickList"></div>
+  </div>
+</div>
+
+<!-- pin modal -->
+<div class="modal-wrap" id="pinModal">
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-box">
+    <h3 id="pinModalTitle">Enter PIN</h3>
+    <p class="muted" style="font-size:.78rem">Confirm it's you.</p>
+    <div class="pin-dots" id="pinDots"><span></span><span></span><span></span><span></span></div>
+    <div class="pin-pad" id="pinPad"></div>
+  </div>
+</div>
+
+<script>
+/* ===================== DATA / STATE ===================== */
+const KEY="obaFarmOS_v2", LEGACY_KEY="obaFarmOS_v1";
+const $=id=>document.getElementById(id);
+const money=n=>new Intl.NumberFormat("en-NG",{style:"currency",currency:"NGN",maximumFractionDigits:0}).format(Number(n)||0);
+const dateLabel=iso=>iso?new Date(iso+"T12:00:00").toLocaleDateString("en-NG",{day:"numeric",month:"short",year:"numeric"}):"—";
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const todayISO=()=>new Date().toISOString().slice(0,10);
+const APPROVAL_TYPES=["mortality","expense","treatment"];
+
+let state=loadState();
+
+function blankState(){return{version:2,farm:null,users:[],currentUserId:null,batches:[],activeBatchId:"all",records:[],vaccines:[],createdAt:null}}
+
+function loadState(){
+  try{
+    const raw=localStorage.getItem(KEY);
+    if(raw) return JSON.parse(raw);
+    const legacy=localStorage.getItem(LEGACY_KEY);
+    if(legacy) return migrateLegacy(JSON.parse(legacy));
+  }catch(e){}
+  return blankState();
+}
+function migrateLegacy(old){
+  const s=blankState();
+  if(!old.farm) return s;
+  const ownerId=uid(), batchId=uid();
+  s.farm={name:old.farm.name,createdAt:old.createdAt||new Date().toISOString()};
+  s.users=[{id:ownerId,name:old.farm.farmer||"Farm Owner",role:"owner",pin:null}];
+  s.currentUserId=ownerId;
+  s.batches=[{id:batchId,name:"Batch 1",birdType:old.farm.birdType||"Layers",startingBirds:old.farm.startingBirds||0,birdsAlive:old.birdsAlive??old.farm.startingBirds??0,arrivalDate:old.farm.arrivalDate||todayISO(),age:old.farm.age||0,ageUnit:old.farm.ageUnit||"Weeks",archived:false}];
+  s.activeBatchId="all";
+  s.records=(old.records||[]).map(r=>({...r,batchId,status:"approved",createdBy:ownerId,pcs:r.type==="eggs"?0:undefined}));
+  s.vaccines=[];
+  return s;
+}
+function persist(){localStorage.setItem(KEY,JSON.stringify(state))}
+function currentUser(){return state.users.find(u=>u.id===state.currentUserId)}
+function isOwner(){return currentUser()?.role==="owner"}
+function activeBatches(){return state.batches.filter(b=>!b.archived)}
+function batchById(id){return state.batches.find(b=>b.id===id)}
+
+/* ===================== TOAST ===================== */
+function showToast(msg){
+  const t=$("toast");t.textContent=msg;t.classList.add("show");
+  clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove("show"),2800);
+}
+
+/* ===================== SETUP ===================== */
+$("setupBirdType").addEventListener("change",e=>$("setupOtherWrap").classList.toggle("hidden",e.target.value!=="Other"));
+$("bBirdType").addEventListener("change",e=>$("bOtherWrap").classList.toggle("hidden",e.target.value!=="Other"));
+
+$("setupForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  state=blankState();
+  const ownerId=uid(), batchId=uid();
+  const birdType=$("setupBirdType").value==="Other"?($("setupBirdTypeOther").value.trim()||"Other"):$("setupBirdType").value;
+  const pin=$("setupOwnerPin").value.trim();
+  state.farm={name:$("setupFarmName").value.trim(),createdAt:new Date().toISOString()};
+  state.users=[{id:ownerId,name:$("setupOwnerName").value.trim(),role:"owner",pin:/^\d{4}$/.test(pin)?pin:null}];
+  state.currentUserId=ownerId;
+  state.batches=[{id:batchId,name:"Batch 1",birdType,startingBirds:Number($("setupBirdCount").value),birdsAlive:Number($("setupBirdCount").value),arrivalDate:$("setupArrivalDate").value,age:Number($("setupAge").value),ageUnit:$("setupAgeUnit").value,archived:false}];
+  state.activeBatchId=batchId;
+  persist();showApp();showToast("Farm created. Welcome to OBA Farm OS.");
+});
+
+function showApp(){$("setupView").classList.add("hidden");$("appView").classList.remove("hidden");renderAll()}
+function showSetup(){$("setupView").classList.remove("hidden");$("appView").classList.add("hidden")}
+
+/* ===================== NAV ===================== */
+function nav(section){
+  document.querySelectorAll(".section").forEach(s=>s.classList.toggle("active",s.id===section));
+  document.querySelectorAll(".nav-item[data-section]").forEach(b=>b.classList.toggle("active",b.dataset.section===section));
+  document.querySelectorAll(".bn-item[data-section]").forEach(b=>b.classList.toggle("active",b.dataset.section===section));
+  const names={overview:"Overview",records:"Daily records",health:"Health",finance:"Finance",production:"Production",vaccines:"Vaccines",batches:"Batches",approvals:"Approvals",team:"Team",settings:"Farm settings"};
+  $("sectionTitle").textContent=names[section]||"Overview";
+  $("sectionEyebrow").textContent=section==="overview"?"FARM COMMAND CENTER":names[section].toUpperCase();
+  closeSidebar();closeSheet();
+}
+document.querySelectorAll(".nav-item[data-section]").forEach(b=>b.addEventListener("click",()=>nav(b.dataset.section)));
+document.querySelectorAll(".bn-item[data-section]").forEach(b=>b.addEventListener("click",()=>nav(b.dataset.section)));
+
+/* mobile sidebar (kept for larger phones/tablets landscape use) */
+function openSidebar(){$("sidebar").classList.add("open");$("backdrop").classList.add("show")}
+function closeSidebar(){$("sidebar").classList.remove("open");$("backdrop").classList.remove("show")}
+$("menuBtn").addEventListener("click",()=>$("sidebar").classList.contains("open")?closeSidebar():openSidebar());
+$("backdrop").addEventListener("click",closeSidebar);
+document.addEventListener("click",e=>{
+  const sb=$("sidebar");
+  if(sb.classList.contains("open")&&!sb.contains(e.target)&&e.target!==$("menuBtn")&&!$("menuBtn").contains(e.target)) closeSidebar();
+});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeSidebar();closeSheet();closeBell();closeModal($("profileModal"));closeModal($("pinModal"))}});
+
+/* bottom sheet (More) */
+function openSheet(){$("moreSheet").classList.add("open");$("sheetBackdrop").classList.add("show")}
+function closeSheet(){$("moreSheet").classList.remove("open");$("sheetBackdrop").classList.remove("show")}
+$("moreBtn").addEventListener("click",openSheet);
+$("sheetBackdrop").addEventListener("click",closeSheet);
+$("fabBtn").addEventListener("click",()=>{nav("records");window.scrollTo({top:0,behavior:"smooth"})});
+$("sheetSwitchProfile").addEventListener("click",()=>{closeSheet();openProfileModal()});
+
+$("quickRecordBtn").addEventListener("click",()=>{nav("records");window.scrollTo({top:0,behavior:"smooth"})});
+document.querySelectorAll("[data-open-record]").forEach(b=>b.addEventListener("click",()=>{
+  nav("records");
+  document.querySelectorAll(".record-tab").forEach(x=>x.classList.toggle("active",x.dataset.record===b.dataset.openRecord));
+  $("recordType").value=b.dataset.openRecord;renderRecordFields();window.scrollTo({top:0,behavior:"smooth"});
+}));
+
+/* ===================== BELL ===================== */
+function closeBell(){$("bellPanel").classList.remove("show")}
+$("bellBtn").addEventListener("click",e=>{e.stopPropagation();$("bellPanel").classList.toggle("show")});
+document.addEventListener("click",e=>{if(!$("bellPanel").contains(e.target)&&e.target!==$("bellBtn")) closeBell()});
+
+/* ===================== PROFILE SWITCH + PIN ===================== */
+function openModal(el){el.classList.add("show")}
+function closeModal(el){el.classList.remove("show")}
+document.querySelectorAll("[data-close-modal]").forEach(el=>el.addEventListener("click",()=>{closeModal($("profileModal"));closeModal($("pinModal"))}));
+
+function openProfileModal(){
+  $("userPickList").innerHTML=state.users.map(u=>`
+    <div class="user-pick" data-uid="${u.id}">
+      <div class="ic">${u.name.charAt(0).toUpperCase()}</div>
+      <div style="flex:1"><strong style="display:block;font-size:.85rem">${u.name}</strong><small class="muted" style="font-size:.68rem">${u.role==="owner"?"Owner":"Farm manager"}</small></div>
+      ${u.id===state.currentUserId?'<span class="chip approved">Active</span>':''}
+    </div>`).join("");
+  document.querySelectorAll("#userPickList .user-pick").forEach(el=>el.addEventListener("click",()=>{
+    const u=state.users.find(x=>x.id===el.dataset.uid);
+    closeModal($("profileModal"));
+    if(u.pin){askPin(u,()=>{switchUser(u.id)})} else {switchUser(u.id)}
+  }));
+  openModal($("profileModal"));
+}
+$("profileCard").addEventListener("click",openProfileModal);
+
+function switchUser(id){state.currentUserId=id;persist();renderAll();showToast(`Switched to ${currentUser().name}`)}
+
+let pinBuffer="",pinCallback=null;
+function askPin(user,cb){
+  pinBuffer="";pinCallback=cb;
+  $("pinModalTitle").textContent=`Enter PIN — ${user.name}`;
+  window.__pinCheckUser=user;
+  renderPinDots();buildPinPad();
+  openModal($("pinModal"));
+}
+function renderPinDots(){document.querySelectorAll("#pinDots span").forEach((d,i)=>d.classList.toggle("filled",i<pinBuffer.length))}
+function buildPinPad(){
+  const keys=["1","2","3","4","5","6","7","8","9","⌫","0","OK"];
+  $("pinPad").innerHTML=keys.map(k=>`<button type="button" data-k="${k}">${k}</button>`).join("");
+  document.querySelectorAll("#pinPad button").forEach(b=>b.addEventListener("click",()=>{
+    const k=b.dataset.k;
+    if(k==="⌫"){pinBuffer=pinBuffer.slice(0,-1)}
+    else if(k==="OK"){checkPin()}
+    else if(pinBuffer.length<4){pinBuffer+=k}
+    renderPinDots();
+    if(pinBuffer.length===4) setTimeout(checkPin,120);
+  }));
+}
+function checkPin(){
+  const user=window.__pinCheckUser;
+  if(pinBuffer===user.pin){closeModal($("pinModal"));const cb=pinCallback;pinCallback=null;cb&&cb()}
+  else{showToast("Incorrect PIN");pinBuffer="";renderPinDots()}
+}
+
+/* ===================== BATCH FILTER / SELECTS ===================== */
+function fillBatchSelects(){
+  const batches=activeBatches();
+  const filterOpts=`<option value="all">All batches</option>`+batches.map(b=>`<option value="${b.id}">${b.name}</option>`).join("");
+  $("batchFilter").innerHTML=filterOpts;
+  $("batchFilter").value=state.activeBatchId;
+  const plainOpts=batches.map(b=>`<option value="${b.id}">${b.name} (${b.birdType})</option>`).join("")||`<option value="">No batches yet</option>`;
+  $("recordBatch").innerHTML=plainOpts;
+  $("vBatch").innerHTML=plainOpts;
+  if($("recordBatch").value===""&&batches[0]) $("recordBatch").value=batches[0].id;
+}
+$("batchFilter").addEventListener("change",e=>{state.activeBatchId=e.target.value;persist();renderAll()});
+
+/* ===================== RECORD FILTER HELPERS ===================== */
+function recordsOfType(type,batchId){
+  return state.records.filter(r=>r.type===type&&r.status==="approved"&&(batchId==="all"||r.batchId===batchId||r.batchId==="all"));
+}
+function todayRecordsOfType(type,batchId){
+  const d=todayISO();
+  return recordsOfType(type,batchId).filter(r=>r.date===d);
+}
+function eggsTotalPcs(list){return list.reduce((s,r)=>s+(Number(r.amount)||0)*30+(Number(r.pcs)||0),0)}
+function fmtEggs(totalPcs){return {crates:Math.floor(totalPcs/30),pcs:totalPcs%30}}
+
+/* ===================== FINANCE ===================== */
+function calcFinance(){
+  const revenue=state.records.filter(r=>r.type==="sale"&&r.status==="approved").reduce((s,r)=>s+r.amount,0);
+  const expenses=state.records.filter(r=>r.type==="expense"&&r.status==="approved").reduce((s,r)=>s+r.amount,0);
+  return{revenue,expenses,profit:revenue-expenses};
+}
+
+/* ===================== HEALTH ===================== */
+function calcHealth(batchId){
+  let start,birdType=null;
+  if(batchId==="all"){start=activeBatches().reduce((s,b)=>s+b.startingBirds,0)}
+  else{const b=batchById(batchId);start=b?b.startingBirds:0;birdType=b?b.birdType:null}
+  start=start||1;
+  const todayMort=todayRecordsOfType("mortality",batchId).reduce((s,r)=>s+r.amount,0);
+  const totalMort=recordsOfType("mortality",batchId).reduce((s,r)=>s+r.amount,0);
+  let score=100;
+  const mortalityRate=totalMort/start*100;
+  if(mortalityRate>0.5)score-=8; if(mortalityRate>1)score-=10; if(mortalityRate>2)score-=15;
+  if(todayMort>=3)score-=7; if(todayMort>=10)score-=12;
+  const recentDisease=state.records.filter(r=>r.type==="mortality"&&r.status==="approved"&&r.reason==="Disease"&&(batchId==="all"||r.batchId===batchId||r.batchId==="all")&&(Date.now()-new Date(r.createdAt).getTime()<7*86400000)).length;
+  if(recentDisease)score-=Math.min(15,recentDisease*5);
+  const treatments=recordsOfType("treatment",batchId).length;
+  if(treatments>=5)score-=4;
+  const latestWeight=recordsOfType("weight",batchId).at(-1);
+  if(birdType==="Broilers"&&latestWeight&&latestWeight.value<0.7)score-=8;
+  score=Math.max(0,Math.min(100,Math.round(score)));
+  const level=score>=90?"Excellent":score>=75?"Good":score>=60?"Watch closely":"Critical";
+  return{score,level,mortalityRate,totalMort,todayMort,recentDisease};
+}
+
+/* ===================== VACCINES ===================== */
+function vaccineStatus(v){
+  if(v.status==="done")return"done";
+  const today=todayISO();
+  if(v.dueDate<today)return"overdue";
+  if(v.dueDate===today)return"due";
+  return"upcoming";
+}
+$("vaccineForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  state.vaccines.push({id:uid(),batchId:$("vBatch").value,name:$("vName").value.trim(),dueDate:$("vDate").value,note:$("vNote").value.trim(),status:"upcoming"});
+  persist();e.target.reset();renderAll();showToast("Vaccine added to schedule.");
+});
+function markVaccineDone(id){
+  const v=state.vaccines.find(x=>x.id===id);if(!v)return;
+  const rec={id:uid(),type:"vaccine",batchId:v.batchId,date:todayISO(),createdAt:new Date().toISOString(),name:v.name,note:"Marked done from schedule",status:"approved",createdBy:state.currentUserId};
+  state.records.push(rec);v.status="done";v.doneRecordId=rec.id;
+  persist();renderAll();showToast("Vaccine marked as done.");
+}
+function deleteVaccine(id){state.vaccines=state.vaccines.filter(v=>v.id!==id);persist();renderAll()}
+
+function getAlerts(){
+  const due=state.vaccines.filter(v=>["due","overdue"].includes(vaccineStatus(v)));
+  const pending=state.records.filter(r=>r.status==="pending");
+  return{due,pending};
+}
+function maybeNotify(alerts){
+  if(!("Notification" in window)||Notification.permission!=="granted")return;
+  const seenKey="obaNotifSeen_"+todayISO();
+  if(sessionStorage.getItem(seenKey))return;
+  if(alerts.due.length){
+    new Notification("OBA Farm OS reminder",{body:`${alerts.due.length} vaccine(s) due or overdue — check your schedule.`});
+  }
+  sessionStorage.setItem(seenKey,"1");
+}
+
+/* ===================== APPROVALS ===================== */
+function approveRecord(id){
+  const r=state.records.find(x=>x.id===id);if(!r)return;
+  r.status="approved";
+  if(r.type==="mortality"){const b=batchById(r.batchId);if(b)b.birdsAlive=Math.max(0,b.birdsAlive-r.amount)}
+  persist();renderAll();showToast("Record approved.");
+}
+function declineRecord(id){
+  const r=state.records.find(x=>x.id===id);if(!r)return;
+  r.status="declined";persist();renderAll();showToast("Record declined.");
+}
+
+/* ===================== RENDER: shared bits ===================== */
+function factor(label,value,cls){return `<div class="factor"><span>${label}</span><strong class="${cls}">${value}</strong></div>`}
+function icon(t){return{mortality:"☠",feed:"🌾",vaccine:"💉",treatment:"💊",expense:"₦",sale:"↗",eggs:"🥚",weight:"⚖"}[t]||"•"}
+function userName(id){return state.users.find(u=>u.id===id)?.name||"Unknown"}
+function batchName(id){if(id==="all")return"Whole farm";return batchById(id)?.name||"—"}
+function recordTitle(r){
+  if(r.type==="mortality")return `${r.amount} bird${r.amount===1?"":"s"} mortality`;
+  if(r.type==="feed")return `Feed ${r.action}: ${r.amount} kg`;
+  if(r.type==="vaccine")return `Vaccination: ${r.name}`;
+  if(r.type==="treatment")return `Treatment: ${r.name}`;
+  if(r.type==="expense")return `Expense: ${money(r.amount)}`;
+  if(r.type==="sale")return `Sale: ${money(r.amount)}`;
+  if(r.type==="eggs")return `Eggs: ${r.amount} crate${r.amount===1?"":"s"}${r.pcs?` + ${r.pcs} pcs`:""}`;
+  if(r.type==="weight")return `Average weight: ${r.value} kg`;
+  return r.type;
+}
+function table(arr,cols){
+  if(!arr.length)return `<p class="muted">No records yet.</p>`;
+  return `<table class="data-table"><thead><tr>${cols.map(c=>`<th>${c[0]}</th>`).join("")}</tr></thead><tbody>${arr.map(r=>`<tr>${cols.map(c=>`<td>${c[1](r)}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+}
+
+/* ===================== MAIN RENDER ===================== */
+function renderAll(){
+  if(!state.farm){showSetup();return}
+  fillBatchSelects();
+  const u=currentUser();
+  $("currentUserName").textContent=u?.name||"—";
+  $("currentUserRoleChip").textContent=u?.role==="owner"?"Owner":"Manager";
+  $("currentUserRoleChip").className="chip "+(u?.role==="owner"?"owner":"manager");
+  document.querySelectorAll(".owner-only").forEach(el=>el.style.display=isOwner()?"":"none");
+
+  const batchId=state.activeBatchId||"all";
+  $("welcomeTitle").textContent=`${state.farm.name}, at a glance.`;
+  const activeBatchLabel=batchId==="all"?`${activeBatches().length} batch${activeBatches().length===1?"":"es"}`:batchName(batchId);
+  $("heroSub").textContent=`Managed by ${u?.name||"—"} • Viewing ${activeBatchLabel}`;
+
+  const birds=batchId==="all"?activeBatches().reduce((s,b)=>s+b.birdsAlive,0):(batchById(batchId)?.birdsAlive||0);
+  $("birdsAlive").textContent=birds.toLocaleString();
+  $("birdTypeLabel").textContent=batchId==="all"?"across all batches":(batchById(batchId)?.birdType||"—");
+
+  const h=calcHealth(batchId);
+  $("todayMortality").textContent=h.todayMort;
+  $("mortalityRate").textContent=`${h.mortalityRate.toFixed(2)}% total flock mortality`;
+  const eggsToday=fmtEggs(eggsTotalPcs(todayRecordsOfType("eggs",batchId)));
+  $("todayEggs").textContent=`${eggsToday.crates}c ${eggsToday.pcs}pcs`;
+  const fin=calcFinance();$("netProfit").textContent=money(fin.profit);
+  $("healthScore").textContent=h.score;$("heroHealth").textContent=h.score;
+  $("healthBadge").textContent=h.level.toUpperCase();
+  $("healthBadge").className="chip "+(h.score>=75?"approved":h.score>=60?"pending":"declined");
+  const headline=h.score>=90?"Flock is performing strongly.":h.score>=75?"Farm is healthy with a few items to watch.":h.score>=60?"Some indicators need attention.":"Immediate review recommended.";
+  $("healthHeadline").textContent=headline;
+  $("healthSummary").textContent=`Score is calculated from mortality, recent disease events, treatments and production indicators.`;
+  const factors=[
+    factor("Mortality rate",h.mortalityRate<1?"Healthy":"Needs attention",h.mortalityRate<1?"good":"warn"),
+    factor("Today's mortality",h.todayMort===0?"No mortality":"Review causes",h.todayMort===0?"good":"warn"),
+    factor("Recent disease events",h.recentDisease===0?"None recorded":"Detected",h.recentDisease===0?"good":"bad")
+  ];
+  $("healthFactors").innerHTML=factors.join("");
+  $("healthPageFactors").innerHTML=factors.join("");
+  $("healthPageScore").textContent=h.score;$("healthPageHeadline").textContent=headline;$("healthPageSummary").textContent=$("healthSummary").textContent;
+
+  renderAlerts();renderBell();renderActivity(batchId);renderNextVaccine(batchId);renderBatchQuick();
+  renderHealthEvents(batchId);renderFinance();renderProduction(batchId);
+  renderVaccineList();renderBatchList();renderApprovals();renderTeam();fillSettings();renderRecordFields();
+}
+
+function renderAlerts(){
+  const {due,pending}=getAlerts();
+  const zone=$("alertZone");let html="";
+  if(due.length){
+    const worst=due.some(v=>vaccineStatus(v)==="overdue");
+    html+=`<div class="alert-banner ${worst?"danger":""}"><span class="dot"></span><div><strong>${due.length} vaccine${due.length===1?"":"s"} ${worst?"overdue":"due today"}</strong><p>${due.slice(0,2).map(v=>v.name).join(", ")}${due.length>2?"…":""} — check the Vaccines page.</p></div><button class="ghost-btn" onclick="nav('vaccines')">View</button></div>`;
+  }
+  if(isOwner()&&pending.length){
+    html+=`<div class="alert-banner"><span class="dot"></span><div><strong>${pending.length} record${pending.length===1?"":"s"} waiting for your approval</strong><p>Submitted by your team — review before they count.</p></div><button class="ghost-btn" onclick="nav('approvals')">Review</button></div>`;
+  }
+  zone.innerHTML=html;
+  maybeNotify({due});
+}
+function renderBell(){
+  const {due,pending}=getAlerts();
+  const count=due.length+(isOwner()?pending.length:0);
+  let bellHtml="";
+  const btn=$("bellBtn");
+  let dotEl=btn.querySelector(".badge-dot");
+  if(count>0){
+    if(!dotEl){dotEl=document.createElement("span");dotEl.className="badge-dot";btn.appendChild(dotEl)}
+    dotEl.textContent=count>9?"9+":count;
+  } else if(dotEl){dotEl.remove()}
+
+  if(due.length) bellHtml+=due.map(v=>`<div class="bell-item"><span>💉</span><div><strong>${v.name}</strong><small>${batchName(v.batchId)} • due ${dateLabel(v.dueDate)}</small></div></div>`).join("");
+  if(isOwner()&&pending.length) bellHtml+=pending.map(r=>`<div class="bell-item"><span>⏳</span><div><strong>${recordTitle(r)}</strong><small>Pending your approval</small></div></div>`).join("");
+  if(!bellHtml) bellHtml=`<div class="bell-empty">All caught up — no alerts.</div>`;
+  if(typeof Notification!=="undefined"&&Notification.permission==="default"){
+    bellHtml+=`<div class="bell-enable" id="enableNotifBtn">🔔 Enable vaccine reminders</div>`;
+  }
+  $("bellPanel").innerHTML=bellHtml;
+  const enableBtn=$("enableNotifBtn");
+  if(enableBtn)enableBtn.addEventListener("click",()=>Notification.requestPermission().then(()=>renderBell()));
+}
+function renderActivity(batchId){
+  const list=state.records.filter(r=>batchId==="all"||r.batchId===batchId||r.batchId==="all").slice().reverse().slice(0,8);
+  $("activityList").innerHTML=list.length?list.map(r=>`<div class="activity"><div class="activity-icon">${icon(r.type)}</div><div style="flex:1"><strong>${recordTitle(r)}</strong><small>${dateLabel(r.date)} • ${batchName(r.batchId)} • by ${userName(r.createdBy)}</small></div>${r.status!=="approved"?`<span class="chip ${r.status}">${r.status}</span>`:""}</div>`).join(""):`<p class="muted">No records yet. Start with today's mortality, feed, eggs or another activity.</p>`;
+}
+function renderNextVaccine(batchId){
+  const upcoming=state.vaccines.filter(v=>v.status!=="done"&&(batchId==="all"||v.batchId===batchId)).sort((a,b)=>a.dueDate.localeCompare(b.dueDate))[0];
+  $("nextVaccineCard").innerHTML=upcoming?`<span class="eyebrow">${vaccineStatus(upcoming).toUpperCase()}</span><strong>${upcoming.name}</strong><p>${batchName(upcoming.batchId)} • due ${dateLabel(upcoming.dueDate)}</p>`:`<span class="eyebrow">NO VACCINE SCHEDULED</span><strong>Plan your next vaccine</strong><p>Add one from the Vaccines page to get reminders.</p>`;
+}
+function renderBatchQuick(){
+  if(activeBatches().length<2){$("batchQuickWrap").innerHTML="";return}
+  $("batchQuickWrap").innerHTML=`<article class="panel" style="margin-top:14px"><div class="panel-head"><div><span class="eyebrow">YOUR BATCHES</span><h3>Tap a batch to focus the dashboard</h3></div></div><div class="batch-mini-grid">${activeBatches().map(b=>{const h=calcHealth(b.id);return `<div class="batch-mini" data-batch="${b.id}"><strong>${b.name}</strong><div class="bm-row"><span>${b.birdType}</span><span class="good">${h.score}/100</span></div><div class="bm-row"><span>${b.birdsAlive.toLocaleString()} birds</span><span>${dateLabel(b.arrivalDate)}</span></div></div>`}).join("")}</div></article>`;
+  document.querySelectorAll(".batch-mini").forEach(el=>el.addEventListener("click",()=>{state.activeBatchId=el.dataset.batch;persist();renderAll()}));
+}
+function renderHealthEvents(batchId){
+  const arr=state.records.filter(r=>["mortality","treatment","vaccine"].includes(r.type)&&(batchId==="all"||r.batchId===batchId||r.batchId==="all")).slice().reverse().slice(0,20);
+  $("healthEvents").innerHTML=table(arr,[["Date",r=>dateLabel(r.date)],["Event",recordTitle],["Batch",r=>batchName(r.batchId)],["Status",r=>r.status],["Detail",r=>r.reason||r.note||"—"]]);
+}
+function renderFinance(){
+  const f=calcFinance();
+  $("financeRevenue").textContent=money(f.revenue);$("financeExpenses").textContent=money(f.expenses);$("financeProfit").textContent=money(f.profit);
+  $("financeTransactions").textContent=state.records.filter(r=>["sale","expense"].includes(r.type)&&r.status==="approved").length;
+  const arr=state.records.filter(r=>["sale","expense"].includes(r.type)).slice().reverse();
+  $("financeTable").innerHTML=table(arr,[["Date",r=>dateLabel(r.date)],["Type",r=>r.type],["Amount",r=>money(r.amount)],["Batch",r=>batchName(r.batchId)],["Status",r=>r.status],["Note",r=>r.note||"—"]]);
+}
+function renderProduction(batchId){
+  const eggsList=recordsOfType("eggs",batchId),weights=recordsOfType("weight",batchId),feed=recordsOfType("feed",batchId);
+  const eggsFmt=fmtEggs(eggsTotalPcs(eggsList));
+  $("productionEggs").textContent=`${eggsFmt.crates}c ${eggsFmt.pcs}pcs`;
+  $("productionWeight").textContent=weights.length?weights.at(-1).value:"—";
+  $("productionFeed").textContent=feed.filter(r=>r.action==="purchase").reduce((s,r)=>s+r.bags,0)-feed.filter(r=>r.action==="consume").reduce((s,r)=>s+r.bags,0);
+  $("productionConsumed").textContent=feed.filter(r=>r.action==="consume").reduce((s,r)=>s+r.amount,0);
+  const arr=state.records.filter(r=>["eggs","weight","feed"].includes(r.type)&&(batchId==="all"||r.batchId===batchId||r.batchId==="all")).slice().reverse();
+  $("productionTable").innerHTML=table(arr,[["Date",r=>dateLabel(r.date)],["Record",recordTitle],["Batch",r=>batchName(r.batchId)],["Note",r=>r.note||"—"]]);
+}
+function renderVaccineList(){
+  if(!state.vaccines.length){$("vaccineList").innerHTML=`<div class="empty-state">No vaccines scheduled yet. Add one above.</div>`;return}
+  const sorted=state.vaccines.slice().sort((a,b)=>a.dueDate.localeCompare(b.dueDate));
+  $("vaccineList").innerHTML=sorted.map(v=>{
+    const st=vaccineStatus(v);
+    return `<div class="list-card"><div class="lc-main"><strong>${v.name}</strong><small>${batchName(v.batchId)} • due ${dateLabel(v.dueDate)}${v.note?` • ${v.note}`:""}</small></div><span class="chip ${st}">${st}</span><div class="lc-actions">${st!=="done"?`<button class="ghost-btn" data-done="${v.id}">Mark done</button>`:""}<button class="ghost-btn" data-del="${v.id}">Remove</button></div></div>`;
+  }).join("");
+  document.querySelectorAll("[data-done]").forEach(b=>b.addEventListener("click",()=>markVaccineDone(b.dataset.done)));
+  document.querySelectorAll("[data-del]").forEach(b=>b.addEventListener("click",()=>deleteVaccine(b.dataset.del)));
+}
+function renderBatchList(){
+  if(!state.batches.length){$("batchList").innerHTML=`<div class="empty-state">No batches yet.</div>`;return}
+  $("batchList").innerHTML=state.batches.map(b=>{
+    const h=calcHealth(b.id);
+    return `<div class="list-card"><div class="lc-main"><strong>${b.name} ${b.archived?"(archived)":""}</strong><small>${b.birdType} • ${b.birdsAlive.toLocaleString()}/${b.startingBirds.toLocaleString()} birds • health ${h.score}/100 • arrived ${dateLabel(b.arrivalDate)}</small></div>${isOwner()?`<div class="lc-actions"><button class="ghost-btn" data-archive="${b.id}">${b.archived?"Restore":"Archive"}</button></div>`:""}</div>`;
+  }).join("");
+  document.querySelectorAll("[data-archive]").forEach(b=>b.addEventListener("click",()=>{
+    const batch=batchById(b.dataset.archive);batch.archived=!batch.archived;
+    if(state.activeBatchId===batch.id)state.activeBatchId="all";
+    persist();renderAll();
+  }));
+}
+function renderApprovals(){
+  const mine=isOwner()?state.records.filter(r=>r.status!=="approved"||APPROVAL_TYPES.includes(r.type)):state.records.filter(r=>r.createdBy===state.currentUserId&&r.status!=="approved");
+  const pending=mine.filter(r=>r.status==="pending").slice().reverse();
+  const resolved=mine.filter(r=>r.status==="declined").slice().reverse().slice(0,10);
+  $("approvalsSub").textContent=isOwner()?"Mortality, expense and treatment records from your team wait here until you confirm them.":"Your submitted records that needed the owner's confirmation.";
+  let html="";
+  if(!pending.length&&!resolved.length){html=`<div class="empty-state">Nothing waiting for approval. Records submitted by managers for mortality, expense or treatment will appear here.</div>`}
+  if(pending.length){
+    html+=pending.map(r=>`<div class="list-card"><div class="lc-main"><strong>${recordTitle(r)}</strong><small>${batchName(r.batchId)} • ${dateLabel(r.date)} • by ${userName(r.createdBy)}</small></div><span class="chip pending">Pending</span>${isOwner()?`<div class="lc-actions"><button class="primary-btn small" data-approve="${r.id}">Approve</button><button class="ghost-btn" data-decline="${r.id}">Decline</button></div>`:""}</div>`).join("");
+  }
+  if(resolved.length){
+    html+=`<div class="nav-label" style="margin-left:0">Recently declined</div>`+resolved.map(r=>`<div class="list-card"><div class="lc-main"><strong>${recordTitle(r)}</strong><small>${batchName(r.batchId)} • ${dateLabel(r.date)}</small></div><span class="chip declined">Declined</span></div>`).join("");
+  }
+  $("approvalsList").innerHTML=html;
+  document.querySelectorAll("[data-approve]").forEach(b=>b.addEventListener("click",()=>approveRecord(b.dataset.approve)));
+  document.querySelectorAll("[data-decline]").forEach(b=>b.addEventListener("click",()=>declineRecord(b.dataset.decline)));
+}
+function renderTeam(){
+  $("teamList").innerHTML=state.users.map(u=>`<div class="list-card"><div class="lc-main"><strong>${u.name}</strong><small>${u.pin?"PIN protected":"No PIN set"}</small></div><span class="chip ${u.role}">${u.role==="owner"?"Owner":"Manager"}</span></div>`).join("");
+}
+function fillSettings(){
+  $("setFarmName").value=state.farm.name;
+  const disabled=!isOwner();
+  $("settingsForm").querySelectorAll("input,select,button").forEach(el=>el.disabled=disabled);
+  $("resetBtn").style.display=isOwner()?"":"none";
+  document.querySelectorAll("#batchForm button, #teamForm input, #teamForm button").forEach(el=>{});
+}
+
+/* ===================== RECORD FORM ===================== */
+const fieldSets={
+ mortality:`<label>Birds lost<input id="fAmount" type="number" min="1" required placeholder="e.g. 2"></label><label>Cause<select id="fReason"><option>Natural / unknown</option><option>Disease</option><option>Stampede</option><option>Predator</option><option>Other</option></select></label><label>Details<input id="fNote" placeholder="Symptoms, observation, etc."></label>`,
+ feed:`<label>Action<select id="fAction"><option value="purchase">Purchase</option><option value="consume">Consumption</option></select></label><label>Quantity (kg)<input id="fAmount" type="number" min="0" step=".1" required></label><label>Bags involved<input id="fBags" type="number" min="0" step=".1" value="0"></label><label>Note<input id="fNote" placeholder="Feed type / supplier"></label>`,
+ vaccine:`<label>Vaccine name<input id="fName" required placeholder="e.g. Lasota"></label><label>Date<input id="fDate" type="date" required></label><label>Note<input id="fNote" placeholder="Dose / route / batch"></label>`,
+ treatment:`<label>Treatment / medication<input id="fName" required placeholder="Treatment name"></label><label>Date<input id="fDate" type="date" required></label><label>Note<input id="fNote" placeholder="Reason / dosage record"></label>`,
+ expense:`<label>Amount (₦)<input id="fAmount" type="number" min="0" required></label><label>Category<input id="fName" required placeholder="Feed, medicine, labour..."></label><label>Note<input id="fNote" placeholder="Optional details"></label>`,
+ sale:`<label>Amount received (₦)<input id="fAmount" type="number" min="0" required></label><label>Sale type<input id="fName" required placeholder="Eggs, birds, manure..."></label><label>Note<input id="fNote" placeholder="Customer / quantity"></label>`,
+ eggs:`<label>Crates produced<input id="fAmount" type="number" min="0" required placeholder="e.g. 48"></label><label>Extra pieces <span style="font-weight:400;color:#5d6b61">(0-29, not a full crate)</span><input id="fPcs" type="number" min="0" max="29" value="0"></label><label>Note<input id="fNote" placeholder="Grade / collection note"></label>`,
+ weight:`<label>Average weight (kg)<input id="fValue" type="number" min="0" step=".01" required placeholder="e.g. 1.85"></label><label>Sample size<input id="fSample" type="number" min="1" placeholder="e.g. 20"></label><label>Note<input id="fNote" placeholder="Scale / sampling note"></label>`
+};
+function renderRecordFields(){
+  const type=$("recordType").value;
+  $("recordFields").innerHTML=fieldSets[type];
+  const d=todayISO();
+  document.querySelectorAll("#recordFields input[type=date]").forEach(i=>i.value=d);
+  const notice=$("approvalNotice");
+  if(APPROVAL_TYPES.includes(type)&&!isOwner()){
+    notice.textContent="⚠ This record type needs the farm owner's approval before it counts on the dashboard.";
+    notice.classList.remove("hidden");
+  } else notice.classList.add("hidden");
+}
+document.querySelectorAll(".record-tab").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".record-tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");
+  $("recordType").value=b.dataset.record;renderRecordFields();
+}));
+$("recordForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const type=$("recordType").value;
+  const batchId=$("recordBatch").value;
+  if(!batchId){showToast("Add a batch first (Batches page).");return}
+  const needsApproval=APPROVAL_TYPES.includes(type)&&!isOwner();
+  const r={id:uid(),type,batchId,date:new Date().toISOString().slice(0,10),createdAt:new Date().toISOString(),createdBy:state.currentUserId,status:needsApproval?"pending":"approved"};
+  if(type==="mortality"){r.amount=Number($("fAmount").value);r.reason=$("fReason").value;r.note=$("fNote").value.trim();if(!needsApproval){const b=batchById(batchId);if(b)b.birdsAlive=Math.max(0,b.birdsAlive-r.amount)}}
+  if(type==="feed"){r.action=$("fAction").value;r.amount=Number($("fAmount").value);r.bags=Number($("fBags").value)||0;r.note=$("fNote").value.trim()}
+  if(type==="vaccine"||type==="treatment"){r.name=$("fName").value.trim();r.date=$("fDate").value;r.note=$("fNote").value.trim()}
+  if(type==="expense"||type==="sale"){r.amount=Number($("fAmount").value);r.name=$("fName").value.trim();r.note=$("fNote").value.trim()}
+  if(type==="eggs"){r.amount=Number($("fAmount").value);r.pcs=Number($("fPcs").value)||0;r.note=$("fNote").value.trim()}
+  if(type==="weight"){r.value=Number($("fValue").value);r.sample=Number($("fSample").value)||0;r.note=$("fNote").value.trim()}
+  state.records.push(r);persist();renderAll();e.target.reset();renderRecordFields();
+  showToast(needsApproval?"Saved — waiting for owner's approval.":"Record saved to your farm.");
+});
+
+/* ===================== BATCH FORM ===================== */
+$("batchForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const birdType=$("bBirdType").value==="Other"?($("bBirdTypeOther").value.trim()||"Other"):$("bBirdType").value;
+  const count=Number($("bCount").value);
+  state.batches.push({id:uid(),name:$("bName").value.trim(),birdType,startingBirds:count,birdsAlive:count,arrivalDate:$("bArrival").value,age:Number($("bAge").value),ageUnit:$("bAgeUnit").value,archived:false});
+  persist();e.target.reset();$("bOtherWrap").classList.add("hidden");renderAll();showToast("Batch added.");
+});
+
+/* ===================== TEAM FORM ===================== */
+$("teamForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const pin=$("tPin").value.trim();
+  if(!/^\d{4}$/.test(pin)){showToast("PIN must be exactly 4 digits.");return}
+  state.users.push({id:uid(),name:$("tName").value.trim(),role:"manager",pin});
+  persist();e.target.reset();renderAll();showToast("Manager added.");
+});
+
+/* ===================== SETTINGS ===================== */
+$("settingsForm").addEventListener("submit",e=>{
+  e.preventDefault();if(!isOwner())return;
+  state.farm.name=$("setFarmName").value.trim();persist();renderAll();showToast("Farm settings updated.");
+});
+$("resetBtn").addEventListener("click",()=>{
+  if(!isOwner())return;
+  if(confirm("Reset this farm and delete all batches, records and team members from this browser?")){
+    localStorage.removeItem(KEY);state=blankState();showSetup();showToast("Farm reset.");
+  }
+});
+
+/* ===================== INIT ===================== */
+if(window.innerWidth<=1000){$("menuBtn").style.display="inline-flex"}
+window.addEventListener("resize",()=>{$("menuBtn").style.display=window.innerWidth<=1000?"inline-flex":"none"});
+if(state.farm) showApp(); else showSetup();
+</script>
+</body>
+</html>
