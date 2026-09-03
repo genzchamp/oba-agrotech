@@ -1933,3 +1933,77 @@ img{display:block;width:100%;height:100%;object-fit:cover}
   }
 
 }
+
+
+
+
+/* ===== FHOF Steps — Clean Editorial Layout ===== */
+
+.steps div{
+  display:flex;
+  align-items:flex-start;
+  gap:18px;
+  padding:17px 10px;
+}
+
+.steps div > b{
+  flex:0 0 35px;
+  width:35px;
+}
+
+.steps div > strong{
+  flex:0 0 auto;
+}
+
+.steps div > span{
+  flex:1;
+  min-width:0;
+  max-width:100%;
+}
+
+/* ===== Desktop ===== */
+@media (min-width:901px){
+
+  .steps div{
+    gap:16px;
+    padding:17px 8px;
+  }
+
+  .steps div > b{
+    flex:0 0 55px;
+    width:55px;
+  }
+
+  .steps div > span{
+    max-width:420px;
+  }
+
+}
+
+/* ===== Mobile ===== */
+@media (max-width:900px){
+
+  .steps div{
+    display:block;
+    padding:18px 5px;
+  }
+
+  .steps div > b{
+    display:block;
+    margin-bottom:5px;
+  }
+
+  .steps div > strong{
+    display:block;
+    margin-bottom:4px;
+    font-size:12px;
+  }
+
+  .steps div > span{
+    display:block;
+    max-width:100%;
+    font-size:11px;
+    line-height:1.55;
+  }
+
+}
