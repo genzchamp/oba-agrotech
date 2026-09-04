@@ -127,3 +127,67 @@ function setupSwipeCarousel(trackSelector, cardSelector) {
 }
 
 setupSwipeCarousel(".solution-grid", ".solution-card");
+
+/* ================================================================
+   FARM OS — UX clarity layer
+   Presentation-only: it does not change storage, calculations, records,
+   or existing Farm OS business logic. It makes the existing workspace
+   easier to understand and navigate, especially on mobile.
+   ================================================================ */
+(function setupFarmOSClarity() {
+  const isFarmOS = document.querySelector(".app") && document.querySelector(".nav-item");
+  if (!isFarmOS) return;
+
+  const style = document.createElement("style");
+  style.textContent = `
+    .farm-focus-card{
+      border:1px solid var(--line);background:linear-gradient(135deg,rgba(216,255,101,.07),rgba(17,42,30,.72));
+      border-radius:18px;padding:17px 18px;margin:-6px 0 18px;display:flex;align-items:center;gap:16px;
+      box-shadow:0 10px 30px rgba(0,0,0,.16)
+    }
+    .farm-focus-mark{width:38px;height:38px;border-radius:12px;background:rgba(216,255,101,.12);color:var(--lime);display:grid;place-items:center;font-weight:900;flex:0 0 auto}
+    .farm-focus-copy{min-width:0;flex:1}.farm-focus-copy strong{display:block;font:800 .9rem Manrope;margin-bottom:3px}
+    .farm-focus-copy span{display:block;color:var(--muted);font-size:.72rem;line-height:1.5}
+    .farm-focus-actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+    .farm-focus-action{border:1px solid var(--line);background:rgba(7,18,13,.35);color:var(--text);border-radius:10px;padding:9px 11px;font-size:.7rem;font-weight:800;white-space:nowrap}
+    .farm-focus-action:hover{border-color:#3a4a3e;color:var(--lime)}
+    @media(max-width:700px){
+      .farm-focus-card{align-items:flex-start;padding:15px;margin:-2px 0 16px;gap:11px}
+      .farm-focus-mark{width:34px;height:34px;border-radius:10px}
+      .farm-focus-actions{width:100%;justify-content:flex-start;margin-top:4px}
+      .farm-focus-action{flex:1;min-width:0}
+    }
+  `;
+  document.head.appendChild(style);
+
+  const topbar = document.querySelector(".topbar");
+  if (!topbar || document.querySelector(".farm-focus-card")) return;
+
+  const card = document.createElement("div");
+  card.className = "farm-focus-card";
+  card.innerHTML = `
+    <div class="farm-focus-mark" aria-hidden="true">✓</div>
+    <div class="farm-focus-copy">
+      <strong>Farm focus</strong>
+      <span>Keep today simple: review health, record important events, then check the numbers that drive your farm.</span>
+    </div>
+    <div class="farm-focus-actions" aria-label="Farm OS quick navigation">
+      <button type="button" class="farm-focus-action" data-farm-focus="health">Health</button>
+      <button type="button" class="farm-focus-action" data-farm-focus="finance">Finance</button>
+      <button type="button" class="farm-focus-action" data-farm-focus="production">Production</button>
+    </div>
+  `;
+  topbar.insertAdjacentElement("afterend", card);
+
+  card.querySelectorAll("[data-farm-focus]").forEach(button => {
+    button.addEventListener("click", () => {
+      const target = button.dataset.farmFocus;
+      const nav = [...document.querySelectorAll(".nav-item")].find(item => {
+        const label = (item.textContent || "").trim().toLowerCase();
+        return label.includes(target);
+      });
+      nav?.click();
+      nav?.scrollIntoView({ block: "nearest" });
+    });
+  });
+})();
