@@ -1,0 +1,1 @@
+test: verify GitHub write access after reconnect
