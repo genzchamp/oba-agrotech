@@ -266,6 +266,57 @@ footer.appfoot img{height:16px;opacity:.6}
   .form-grid{grid-template-columns:1fr}
 }
 </style>
+
+
+<style>
+/* ===== OBA AgroTech bright theme override ===== */
+:root{
+  --bg:var(--paper);
+  --surface:#ffffff;
+  --surface2:#f0ece1;
+  --line:rgba(7,18,13,.12);
+  --text:var(--ink);
+  --muted:#7b827d;
+  --shadow:0 20px 50px rgba(7,18,13,.10);
+  --shadow-sm:0 10px 26px rgba(7,18,13,.08);
+}
+body{background:var(--bg)}
+.setup-card{background:rgba(255,255,255,.92)}
+.setup-note{color:#7b827d}
+input,select,textarea{background:#ffffff;color:var(--ink);border-color:var(--line)}
+.pin-pad button{background:#ffffff}
+.sidebar{background:var(--paper);border-right-color:var(--line)}
+.nav-item{color:#5c6b60}
+.nav-item:hover{background:rgba(18,61,40,.06)}
+.nav-item.active{background:rgba(216,255,101,.22);color:var(--green)}
+.brand-footer-link{color:#7b827d}
+.brand-footer-link:hover{color:var(--green)}
+.nav-label{color:#9aa39c}
+.health-orb{border-color:var(--line)}
+.score-ring{background:radial-gradient(circle,var(--surface) 58%,transparent 59%),conic-gradient(var(--lime) 0deg,#e7e2d4 0deg)}
+.score-ring:before{border-color:var(--line)}
+.factor{background:var(--paper);border-color:var(--line)}
+.action-grid button{background:var(--paper);color:#4b554e;border-color:var(--line)}
+.action-grid button:hover{border-color:var(--green);color:var(--green)}
+.vaccine-card{border-color:var(--line)}
+.record-tab{color:#6b756e}
+.record-tab.active{background:rgba(216,255,101,.22);color:var(--green);border-color:var(--green)}
+.data-table th,.data-table td{border-bottom-color:var(--line)}
+.user-pick .ic{color:var(--green)}
+footer.appfoot{color:#7b827d}
+.bottom-nav{background:rgba(251,250,246,.94);border-top-color:var(--line)}
+.bn-item{color:#7b827d}
+.bn-item.active{color:var(--green)}
+.bell-item:hover{background:var(--surface2)}
+.chip.owner,.chip.approved,.chip.done{color:var(--green)}
+.health-orb strong,.score-ring strong,.good,.vaccine-card strong,.bell-enable{color:var(--green)}
+.warn{color:#8a6b1f}
+.bad{color:#b23b3b}
+.chip.pending,.chip.due,.chip.manager{color:#8a6b1f}
+.chip.overdue,.chip.declined{color:#b23b3b}
+.eyebrow{color:#5c6b60}
+</style>
+
 </head>
 <body>
 <div id="toast" class="toast"></div>
