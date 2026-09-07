@@ -1,0 +1,11 @@
+{
+  "name": "OBA AgroTech",
+  "short_name": "OBA AgroTech",
+  "description": "Poultry health, farm optimization and practical digital tools for better farm performance.",
+  "start_url": "/oba-agrotech/",
+  "scope": "/oba-agrotech/",
+  "display": "standalone",
+  "background_color": "#07120d",
+  "theme_color": "#0a2418",
+  "icons": []
+}
