@@ -72,14 +72,6 @@ const OBA_CONFIG = {
       favicon.href = "favicon.svg";
       document.head.appendChild(favicon);
     }
-
-    const footerBottom = document.querySelector(".footer-bottom");
-    if (footerBottom && !footerBottom.querySelector(".legal-links")) {
-      const legal = document.createElement("div");
-      legal.className = "legal-links";
-      legal.innerHTML = '<a href="privacy.html">Privacy</a><a href="terms.html">Terms</a>';
-      footerBottom.appendChild(legal);
-    }
   }
 
   function setupHeader() {
