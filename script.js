@@ -1,8 +1,31 @@
 /* OBA AgroTech — edit only this number when you're ready */
 const OBA_CONFIG = {
-  whatsappNumber: "2348163431308",
+  whatsappNumber: "2348123958585",
   whatsappMessage: "Hello OBA AgroTech, I would like to learn more about your poultry health and farm solutions."
 };
+
+/* Brand + legal readiness */
+(function setupSiteBasics() {
+  if (!document.querySelector('link[rel="icon"]')) {
+    const favicon = document.createElement("link");
+    favicon.rel = "icon";
+    favicon.type = "image/svg+xml";
+    favicon.href = "favicon.svg";
+    document.head.appendChild(favicon);
+  }
+
+  const footerBottom = document.querySelector(".footer-bottom");
+  if (footerBottom && !footerBottom.querySelector(".legal-links")) {
+    const legal = document.createElement("div");
+    legal.className = "legal-links";
+    legal.innerHTML = `<a href="privacy.html">Privacy</a><a href="terms.html">Terms</a>`;
+    footerBottom.appendChild(legal);
+  }
+
+  const style = document.createElement("style");
+  style.textContent = `.legal-links{display:flex;gap:14px;margin-top:8px}.legal-links a{opacity:.72}.legal-links a:hover{opacity:1;color:var(--lime)}@media(max-width:700px){.legal-links{justify-content:flex-start;gap:16px}}`;
+  document.head.appendChild(style);
+})();
 
 document.querySelectorAll("[data-wa]").forEach(link => {
   const number = OBA_CONFIG.whatsappNumber.replace(/\D/g, "");
@@ -106,7 +129,7 @@ function setupSwipeCarousel(trackSelector, cardSelector) {
     let dismissed = false;
     onScroll = () => {
       if (!dismissed) { dismissed = true; hintEl.classList.add("is-hidden"); }
-      const cardWidth = cards[0].getBoundingClientRect().width + 16; // + gap
+      const cardWidth = cards[0].getBoundingClientRect().width + 16;
       const idx = Math.round(track.scrollLeft / cardWidth);
       dotsEl.querySelectorAll(".carousel-dot").forEach((d, i) =>
         d.classList.toggle("is-active", i === Math.min(idx, cards.length - 1))
