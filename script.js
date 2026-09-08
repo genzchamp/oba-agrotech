@@ -63,13 +63,15 @@ const OBA_CONFIG = {
   }
 
   function setupBasics() {
-    if (!document.querySelector('link[rel="icon"]')) {
-      const favicon = document.createElement("link");
-      favicon.rel = "icon";
-      favicon.type = "image/svg+xml";
-      favicon.href = "favicon.svg";
-      document.head.appendChild(favicon);
-    }
+    const favicon = document.querySelector('link[rel="icon"]') || document.createElement("link");
+    favicon.rel = "icon";
+    favicon.type = "image/png";
+    favicon.href = "favicon.png";
+    if (!favicon.parentNode) document.head.appendChild(favicon);
+    const apple = document.querySelector('link[rel="apple-touch-icon"]') || document.createElement("link");
+    apple.rel = "apple-touch-icon";
+    apple.href = "favicon.png";
+    if (!apple.parentNode) document.head.appendChild(apple);
   }
 
   function setupHeader() {
@@ -119,6 +121,33 @@ const OBA_CONFIG = {
     }, { passive: true });
   }
 
+  function setupFinalLaunchDetails() {
+    document.querySelectorAll("*").forEach(el => {
+      if (el.children.length === 0 && el.textContent.includes("₦5,000 / $5")) {
+        el.textContent = el.textContent.replaceAll("₦5,000 / $5", "₦10,000 / $10");
+      }
+      if (el.children.length === 0 && el.textContent.includes("₦5,000 or $5")) {
+        el.textContent = el.textContent.replaceAll("₦5,000 or $5", "₦10,000 or $10");
+      }
+    });
+    document.querySelectorAll("[aria-label]").forEach(el => {
+      const label = el.getAttribute("aria-label");
+      if (label && (label.includes("5000 naira") || label.includes("5 dollars"))) {
+        el.setAttribute("aria-label", label.replace("5000 naira", "10000 naira").replace("5 dollars", "10 dollars"));
+      }
+    });
+    document.querySelectorAll("a").forEach(link => {
+      const label = (link.textContent || "").toLowerCase();
+      const href = link.getAttribute("href") || "";
+      if (label.includes("oba farm os") || href.includes("farm-os.html") || href.includes("farm-os")) {
+        link.setAttribute("href", "obafarmos.html");
+      }
+    });
+    document.querySelectorAll('script[type="application/ld+json"]').forEach(script => {
+      script.textContent = script.textContent.replaceAll("₦5,000 or $5", "₦10,000 or $10");
+    });
+  }
+
   function init() {
     setupBasics();
     setupWhatsApp();
@@ -127,6 +156,7 @@ const OBA_CONFIG = {
     setupHeader();
     setupReveal();
     setupCarousel();
+    setupFinalLaunchDetails();
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });
   else init();
