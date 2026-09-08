@@ -49,12 +49,18 @@
 .social-links a{display:inline-flex;align-items:center;padding:10px 13px;border:1px solid var(--line);border-radius:999px;background:var(--cream);font-size:10px;font-weight:800}
 .social-links a:hover{border-color:var(--green);color:var(--green)}
 
-.hero-consult-card{background:#fffdf8!important;color:#07120d!important;border:1px solid rgba(7,18,13,.16)!important;box-shadow:0 18px 44px rgba(0,0,0,.24)!important;backdrop-filter:none!important}
-.hero-consult-card:hover{background:#ffffff!important;border-color:rgba(49,95,62,.45)!important}
-.hero-consult-card .hero-consult-kicker{color:#315f3e!important}
-.hero-consult-card .hero-consult-title,.hero-consult-card .hero-consult-price strong{color:#07120d!important}
-.hero-consult-card .hero-consult-meta,.hero-consult-card .hero-consult-time{color:#536057!important}
-.hero-consult-card .hero-consult-arrow{color:#315f3e!important}
+/* Premium consultation CTA: make it read as a designed secondary action, not a pasted white box. */
+.hero-actions{align-items:stretch}
+.hero-consult-card{background:rgba(10,36,24,.96)!important;color:#fff!important;border:1px solid rgba(216,255,101,.24)!important;border-radius:18px!important;box-shadow:0 18px 44px rgba(7,18,13,.22)!important;backdrop-filter:blur(12px)!important;padding:13px 15px!important;min-width:min(100%,390px);display:flex;align-items:center;justify-content:space-between;gap:20px;transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease)!important}
+.hero-consult-card:hover{background:var(--forest)!important;border-color:rgba(216,255,101,.52)!important;transform:translateY(-2px);box-shadow:0 20px 48px rgba(7,18,13,.28)!important}
+.hero-consult-card .hero-consult-copy{display:flex;flex-direction:column;gap:3px}
+.hero-consult-card .hero-consult-kicker{color:var(--lime)!important;font-size:9px!important;letter-spacing:1.3px!important;text-transform:uppercase}
+.hero-consult-card .hero-consult-title{color:#fff!important;font-size:12px!important;font-weight:800!important}
+.hero-consult-card .hero-consult-meta{color:#b9c4bc!important;font-size:9px!important}
+.hero-consult-card .hero-consult-price{display:flex;align-items:center;gap:8px;white-space:nowrap}
+.hero-consult-card .hero-consult-price strong{color:#fff!important;font-size:12px!important}
+.hero-consult-card .hero-consult-time{color:#b9c4bc!important;font-size:9px!important}
+.hero-consult-card .hero-consult-arrow{color:var(--lime)!important;font-size:18px!important;line-height:1}
 
 .mobile-sticky-cta{display:none}
 
@@ -70,5 +76,7 @@
   .offer-panel{padding:24px}
   .offer-panel h3{font-size:27px}
   .process-step{grid-template-columns:38px 1fr}
-  .hero-consult-card{min-height:64px}
+  .hero-consult-card{min-height:64px;min-width:100%;padding:12px 14px!important}
+  .hero-consult-card .hero-consult-price{gap:5px}
+  .hero-consult-card .hero-consult-price strong{font-size:11px!important}
 }
