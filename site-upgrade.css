@@ -36,6 +36,8 @@
 .offer-panel.featured .offer-list li{border-bottom-color:#ffffff1f;color:#c1cac3}
 .offer-list li:before{content:"✓";display:inline-block;margin-right:9px;color:var(--green);font-weight:900}
 .offer-panel.featured .offer-list li:before{color:var(--lime)}
+.offer-panel.featured .btn-primary{background:var(--lime);color:var(--forest)}
+.offer-panel.featured .btn-primary:hover{background:#e4ff8a}
 
 .faq-section{background:var(--cream)}
 .faq-list{max-width:900px;margin:40px auto 0;border-top:1px solid var(--line)}
