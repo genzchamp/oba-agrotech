@@ -1,0 +1,64 @@
+/* OBA AgroTech — final launch conversion + SEO presentation layer */
+
+/* Keep the transparent logo on bright surfaces only. */
+.footer{background:var(--paper);color:var(--ink);border-top:1px solid var(--line)}
+.footer-top{border-bottom-color:var(--line)}
+.footer-top p{color:var(--ink)}
+.footer-top p span{color:var(--muted)}
+.footer-bottom{color:var(--muted)}
+.footer-bottom a:hover{color:var(--green)}
+.footer-brand{display:inline-flex;align-items:center;padding:10px 14px;border-radius:16px;background:var(--cream);border:1px solid var(--line)}
+.footer-brand img{width:175px;height:58px;object-fit:contain}
+
+.launch-section{background:var(--paper)}
+.launch-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:8vw;align-items:start;margin-top:42px}
+.launch-intro h2,.offer-panel h3{font-family:Manrope;line-height:1;letter-spacing:-2px}
+.launch-intro h2{font-size:clamp(38px,5vw,66px)}
+.launch-intro p{margin-top:22px;color:var(--muted);line-height:1.7;max-width:470px}
+.process-list{border-top:1px solid var(--line)}
+.process-step{display:grid;grid-template-columns:48px 1fr;gap:16px;padding:20px 0;border-bottom:1px solid var(--line)}
+.process-step span{font-family:Manrope;font-weight:800;color:var(--green);font-size:11px}
+.process-step h3{font-family:Manrope;font-size:17px;margin-bottom:6px}
+.process-step p{font-size:11px;line-height:1.55;color:var(--muted)}
+
+.offer-section{background:#e9e5da}
+.offer-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:42px}
+.offer-panel{background:var(--paper);border:1px solid var(--line);border-radius:26px;padding:30px;box-shadow:var(--shadow-sm)}
+.offer-panel.featured{background:var(--forest);color:white;border-color:transparent}
+.offer-panel .section-kicker{margin-bottom:18px}
+.offer-panel.featured .section-kicker{color:var(--lime)}
+.offer-panel h3{font-size:30px;margin-bottom:12px}
+.offer-panel p{font-size:12px;line-height:1.65;color:var(--muted)}
+.offer-panel.featured p{color:#b9c4bc}
+.offer-list{margin:22px 0;border-top:1px solid var(--line)}
+.offer-panel.featured .offer-list{border-top-color:#ffffff1f}
+.offer-list li{list-style:none;padding:11px 0;border-bottom:1px solid var(--line);font-size:11px;color:#566058}
+.offer-panel.featured .offer-list li{border-bottom-color:#ffffff1f;color:#c1cac3}
+.offer-list li:before{content:"✓";display:inline-block;margin-right:9px;color:var(--green);font-weight:900}
+.offer-panel.featured .offer-list li:before{color:var(--lime)}
+
+.faq-section{background:var(--cream)}
+.faq-list{max-width:900px;margin:40px auto 0;border-top:1px solid var(--line)}
+.faq-item{padding:20px 0;border-bottom:1px solid var(--line)}
+.faq-item h3{font-family:Manrope;font-size:16px;margin-bottom:8px}
+.faq-item p{font-size:12px;line-height:1.65;color:var(--muted);max-width:760px}
+
+.social-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.social-links a{display:inline-flex;align-items:center;padding:10px 13px;border:1px solid var(--line);border-radius:999px;background:var(--cream);font-size:10px;font-weight:800}
+.social-links a:hover{border-color:var(--green);color:var(--green)}
+
+.mobile-sticky-cta{display:none}
+
+@media(max-width:900px){
+  .launch-grid,.offer-grid{grid-template-columns:1fr;gap:28px}
+  .mobile-sticky-cta{display:flex;position:fixed;left:14px;right:14px;bottom:14px;z-index:45;align-items:center;justify-content:center;gap:10px;background:var(--forest);color:white;border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:14px 18px;box-shadow:0 18px 45px rgba(7,18,13,.24);font-size:11px;font-weight:800}
+  .mobile-sticky-cta span{color:var(--lime);font-size:15px}
+  body{padding-bottom:68px}
+}
+
+@media(max-width:520px){
+  .footer-brand img{width:150px;height:52px}
+  .offer-panel{padding:24px}
+  .offer-panel h3{font-size:27px}
+  .process-step{grid-template-columns:38px 1fr}
+}

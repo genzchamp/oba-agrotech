@@ -10,7 +10,8 @@ const OBA_CONFIG = {
 
   function setupWhatsApp() {
     document.querySelectorAll("[data-wa]").forEach(link => {
-      link.href = wa();
+      const message = link.dataset.waMessage || OBA_CONFIG.whatsappMessage;
+      link.href = wa(message);
       link.target = "_blank";
       link.rel = "noopener noreferrer";
     });
@@ -20,7 +21,6 @@ const OBA_CONFIG = {
     const button = document.querySelector(".menu-btn");
     const menu = document.querySelector(".mobile-menu");
     if (!button || !menu) return;
-
     const close = () => {
       menu.classList.remove("open");
       button.classList.remove("is-open");
@@ -34,7 +34,6 @@ const OBA_CONFIG = {
       button.setAttribute("aria-expanded", String(open));
       button.setAttribute("aria-label", open ? "Close menu" : "Open menu");
     };
-
     button.type = "button";
     button.setAttribute("aria-expanded", "false");
     button.addEventListener("click", toggle);
@@ -55,7 +54,6 @@ const OBA_CONFIG = {
         history.replaceState(null, "", id);
       });
     });
-
     const contactUrl = wa("Hello OBA AgroTech, I would like to contact you about your poultry farm solutions.");
     document.querySelectorAll('a[href="#contact"]').forEach(link => {
       link.href = contactUrl;
@@ -83,7 +81,7 @@ const OBA_CONFIG = {
   }
 
   function setupReveal() {
-    const targets = document.querySelectorAll(".solution-card, .mini-grid article, .tool-link-card, .framework-visual");
+    const targets = document.querySelectorAll(".solution-card, .mini-grid article, .tool-link-card, .framework-visual, .process-step, .offer-panel, .faq-item");
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce || !("IntersectionObserver" in window)) {
       targets.forEach(el => el.classList.add("reveal", "is-visible"));
@@ -130,7 +128,6 @@ const OBA_CONFIG = {
     setupReveal();
     setupCarousel();
   }
-
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });
   else init();
 })();
