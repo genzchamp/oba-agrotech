@@ -871,13 +871,20 @@ function maybeNotify(alerts){
 
 /* ===================== APPROVALS ===================== */
 function approveRecord(id){
-  const r=state.records.find(x=>x.id===id);if(!r)return;
+  const r=state.records.find(x=>x.id===id);
+  if(!r||r.status!=="pending")return;
+  if(r.type==="mortality"){
+    const b=batchById(r.batchId),loss=Number(r.amount)||0;
+    if(!b){showToast("Batch not found. Record remains pending.");return}
+    if(loss<=0||loss>b.birdsAlive){showToast("Mortality exceeds recorded live birds. Check the record before approving.");return}
+    b.birdsAlive-=loss;
+  }
   r.status="approved";
-  if(r.type==="mortality"){const b=batchById(r.batchId);if(b)b.birdsAlive=Math.max(0,b.birdsAlive-r.amount)}
   persist();renderAll();showToast("Record approved.");
 }
 function declineRecord(id){
-  const r=state.records.find(x=>x.id===id);if(!r)return;
+  const r=state.records.find(x=>x.id===id);
+  if(!r||r.status!=="pending")return;
   r.status="declined";persist();renderAll();showToast("Record declined.");
 }
 
