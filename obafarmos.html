@@ -563,6 +563,7 @@ footer.appfoot{color:#7b827d}
     <section id="settings" class="section">
       <div class="page-heading"><span class="eyebrow">FARM CONFIGURATION</span><h1>Farm settings.</h1><p class="muted">Update the profile that powers your dashboard.</p></div>
       <article class="panel"><form id="settingsForm" class="form-grid"><label>Farm name<input id="setFarmName" required></label><div class="form-end"><button class="primary-btn" type="submit">Save changes</button></div></form></article>
+      <article class="panel" style="margin-top:14px"><div class="panel-head"><div><span class="eyebrow">DATA SAFETY</span><h3>Back up your farm records</h3></div></div><p class="muted" style="margin-bottom:14px">Farm data is currently stored in this browser on this device. Export a backup regularly and keep the file somewhere private. Restoring a backup replaces the data currently stored here.</p><div style="display:flex;gap:10px;flex-wrap:wrap"><button id="exportBackupBtn" class="primary-btn" type="button">⬇ Export backup</button><button id="importBackupBtn" class="ghost-btn" type="button">↥ Restore backup</button><input id="backupFileInput" type="file" accept=".json,application/json" class="hidden" aria-label="Choose OBA Farm OS backup file"></div><p class="field-note" style="margin-top:12px">Backup files may contain farm records and team PINs. Keep them secure and do not share them publicly.</p></article>
       <article class="panel" style="margin-top:14px"><div class="panel-head"><div><span class="eyebrow">DANGER ZONE</span><h3>Reset farm</h3></div></div><p class="muted" style="margin-bottom:14px">This permanently deletes all batches, records and team members from this browser.</p><button id="resetBtn" class="danger-btn">Reset this farm</button></article>
     </section>
 
@@ -621,7 +622,7 @@ const $=id=>document.getElementById(id);
 const money=n=>new Intl.NumberFormat("en-NG",{style:"currency",currency:"NGN",maximumFractionDigits:0}).format(Number(n)||0);
 const dateLabel=iso=>iso?new Date(iso+"T12:00:00").toLocaleDateString("en-NG",{day:"numeric",month:"short",year:"numeric"}):"—";
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
-const todayISO=()=>new Date().toISOString().slice(0,10);
+const todayISO=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`};
 const APPROVAL_TYPES=["mortality","expense","treatment"];
 
 let state=loadState();
@@ -802,9 +803,10 @@ function eggsTotalPcs(list){return list.reduce((s,r)=>s+(Number(r.amount)||0)*30
 function fmtEggs(totalPcs){return {crates:Math.floor(totalPcs/30),pcs:totalPcs%30}}
 
 /* ===================== FINANCE ===================== */
-function calcFinance(){
-  const revenue=state.records.filter(r=>r.type==="sale"&&r.status==="approved").reduce((s,r)=>s+r.amount,0);
-  const expenses=state.records.filter(r=>r.type==="expense"&&r.status==="approved").reduce((s,r)=>s+r.amount,0);
+function calcFinance(batchId="all"){
+  const inScope=r=>batchId==="all"||r.batchId===batchId||r.batchId==="all";
+  const revenue=state.records.filter(r=>r.type==="sale"&&r.status==="approved"&&inScope(r)).reduce((s,r)=>s+(Number(r.amount)||0),0);
+  const expenses=state.records.filter(r=>r.type==="expense"&&r.status==="approved"&&inScope(r)).reduce((s,r)=>s+(Number(r.amount)||0),0);
   return{revenue,expenses,profit:revenue-expenses};
 }
 
@@ -869,13 +871,20 @@ function maybeNotify(alerts){
 
 /* ===================== APPROVALS ===================== */
 function approveRecord(id){
-  const r=state.records.find(x=>x.id===id);if(!r)return;
+  const r=state.records.find(x=>x.id===id);
+  if(!r||r.status!=="pending")return;
+  if(r.type==="mortality"){
+    const b=batchById(r.batchId),loss=Number(r.amount)||0;
+    if(!b){showToast("Batch not found. Record remains pending.");return}
+    if(loss<=0||loss>b.birdsAlive){showToast("Mortality exceeds recorded live birds. Check the record before approving.");return}
+    b.birdsAlive-=loss;
+  }
   r.status="approved";
-  if(r.type==="mortality"){const b=batchById(r.batchId);if(b)b.birdsAlive=Math.max(0,b.birdsAlive-r.amount)}
   persist();renderAll();showToast("Record approved.");
 }
 function declineRecord(id){
-  const r=state.records.find(x=>x.id===id);if(!r)return;
+  const r=state.records.find(x=>x.id===id);
+  if(!r||r.status!=="pending")return;
   r.status="declined";persist();renderAll();showToast("Record declined.");
 }
 
@@ -924,7 +933,7 @@ function renderAll(){
   $("mortalityRate").textContent=`${h.mortalityRate.toFixed(2)}% total flock mortality`;
   const eggsToday=fmtEggs(eggsTotalPcs(todayRecordsOfType("eggs",batchId)));
   $("todayEggs").textContent=`${eggsToday.crates}c ${eggsToday.pcs}pcs`;
-  const fin=calcFinance();$("netProfit").textContent=money(fin.profit);
+  const fin=calcFinance(batchId);$("netProfit").textContent=money(fin.profit);
   $("healthScore").textContent=h.score;$("heroHealth").textContent=h.score;
   $("healthBadge").textContent=h.level.toUpperCase();
   $("healthBadge").className="chip "+(h.score>=75?"approved":h.score>=60?"pending":"declined");
@@ -997,10 +1006,12 @@ function renderHealthEvents(batchId){
   $("healthEvents").innerHTML=table(arr,[["Date",r=>dateLabel(r.date)],["Event",recordTitle],["Batch",r=>batchName(r.batchId)],["Status",r=>r.status],["Detail",r=>r.reason||r.note||"—"]]);
 }
 function renderFinance(){
-  const f=calcFinance();
+  const batchId=state.activeBatchId||"all";
+  const inScope=r=>batchId==="all"||r.batchId===batchId||r.batchId==="all";
+  const f=calcFinance(batchId);
   $("financeRevenue").textContent=money(f.revenue);$("financeExpenses").textContent=money(f.expenses);$("financeProfit").textContent=money(f.profit);
-  $("financeTransactions").textContent=state.records.filter(r=>["sale","expense"].includes(r.type)&&r.status==="approved").length;
-  const arr=state.records.filter(r=>["sale","expense"].includes(r.type)).slice().reverse();
+  $("financeTransactions").textContent=state.records.filter(r=>["sale","expense"].includes(r.type)&&r.status==="approved"&&inScope(r)).length;
+  const arr=state.records.filter(r=>["sale","expense"].includes(r.type)&&inScope(r)).slice().reverse();
   $("financeTable").innerHTML=table(arr,[["Date",r=>dateLabel(r.date)],["Type",r=>r.type],["Amount",r=>money(r.amount)],["Batch",r=>batchName(r.batchId)],["Status",r=>r.status],["Note",r=>r.note||"—"]]);
 }
 function renderProduction(batchId){
@@ -1059,6 +1070,7 @@ function fillSettings(){
   $("setFarmName").value=state.farm.name;
   const disabled=!isOwner();
   $("settingsForm").querySelectorAll("input,select,button").forEach(el=>el.disabled=disabled);
+  ["exportBackupBtn","importBackupBtn"].forEach(id=>{const el=$(id);if(el)el.disabled=disabled});
   $("resetBtn").style.display=isOwner()?"":"none";
   document.querySelectorAll("#batchForm button, #teamForm input, #teamForm button").forEach(el=>{});
 }
@@ -1095,7 +1107,7 @@ $("recordForm").addEventListener("submit",e=>{
   const batchId=$("recordBatch").value;
   if(!batchId){showToast("Add a batch first (Batches page).");return}
   const needsApproval=APPROVAL_TYPES.includes(type)&&!isOwner();
-  const r={id:uid(),type,batchId,date:new Date().toISOString().slice(0,10),createdAt:new Date().toISOString(),createdBy:state.currentUserId,status:needsApproval?"pending":"approved"};
+  const r={id:uid(),type,batchId,date:todayISO(),createdAt:new Date().toISOString(),createdBy:state.currentUserId,status:needsApproval?"pending":"approved"};
   if(type==="mortality"){r.amount=Number($("fAmount").value);r.reason=$("fReason").value;r.note=$("fNote").value.trim();if(!needsApproval){const b=batchById(batchId);if(b)b.birdsAlive=Math.max(0,b.birdsAlive-r.amount)}}
   if(type==="feed"){r.action=$("fAction").value;r.amount=Number($("fAmount").value);r.bags=Number($("fBags").value)||0;r.note=$("fNote").value.trim()}
   if(type==="vaccine"||type==="treatment"){r.name=$("fName").value.trim();r.date=$("fDate").value;r.note=$("fNote").value.trim()}
@@ -1125,6 +1137,33 @@ $("teamForm").addEventListener("submit",e=>{
 });
 
 /* ===================== SETTINGS ===================== */
+$("exportBackupBtn").addEventListener("click",()=>{
+  if(!isOwner()){showToast("Only the farm owner can export a backup.");return}
+  try{
+    const payload={app:"OBA Farm OS",formatVersion:1,exportedAt:new Date().toISOString(),data:state};
+    const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
+    const url=URL.createObjectURL(blob);const a=document.createElement("a");
+    const safeName=(state.farm?.name||"farm").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"farm";
+    a.href=url;a.download=`oba-farm-os-${safeName}-backup-${todayISO()}.json`;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+    showToast("Backup exported. Keep the file private.");
+  }catch(err){showToast("Could not export backup on this device.");}
+});
+$("importBackupBtn").addEventListener("click",()=>{if(!isOwner()){showToast("Only the farm owner can restore a backup.");return} $("backupFileInput").click()});
+$("backupFileInput").addEventListener("change",async e=>{
+  const file=e.target.files?.[0];if(!file)return;
+  if(!isOwner()){showToast("Only the farm owner can restore a backup.");e.target.value="";return}
+  try{
+    const parsed=JSON.parse(await file.text());
+    const incoming=parsed?.app==="OBA Farm OS"?parsed.data:parsed;
+    const valid=incoming&&typeof incoming==="object"&&incoming.farm&&Array.isArray(incoming.users)&&Array.isArray(incoming.batches)&&Array.isArray(incoming.records)&&Array.isArray(incoming.vaccines);
+    if(!valid){showToast("That file does not look like a valid OBA Farm OS backup.");return}
+    if(!confirm("Restore this backup? The farm data currently stored in this browser will be replaced. Export a backup of the current data first if you may need it."))return;
+    state=incoming;persist();
+    if(state.farm)showApp();else showSetup();
+    renderAll();showToast("Backup restored successfully.");
+  }catch(err){showToast("Could not read that backup file. Your current data was not intentionally changed.");}
+  finally{e.target.value=""}
+});
 $("settingsForm").addEventListener("submit",e=>{
   e.preventDefault();if(!isOwner())return;
   state.farm.name=$("setFarmName").value.trim();persist();renderAll();showToast("Farm settings updated.");
