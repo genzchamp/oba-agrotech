@@ -26,3 +26,8 @@ A mobile-first premium brand website for OBA AgroTech.
 **Observe → Prevent → Respond → Optimize**
 
 The site is intentionally designed as a premium, editorial-style agricultural technology brand rather than a generic farm website.
+
+
+## FarmLink — USPF Agriculture Challenge prototype
+
+A new additive mobile-first prototype is available at `farm-link.html`. It includes a post-harvest loss estimator, produce handling checklist and a device-local directory for buyer, storage, input and transport contacts. Listings are explicitly unverified and remain on the current device; see [FARMLINK-PROTOTYPE.md](FARMLINK-PROTOTYPE.md) for functionality, limitations and validation steps.
